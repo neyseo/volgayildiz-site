@@ -6,16 +6,18 @@
   if (!h || !createClass || !CMS) return;
 
   var css = [
-    '.tw{background:#fff;padding:18px;border-radius:6px}',
-    '.tw-hint{font-size:12px;color:#888;margin:0 0 16px}',
-    '.tw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:28px 22px;margin:0 0 22px}',
+    '.tw{background:#fff;padding:4px 0 0}',
+    '.tw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:30px 24px;margin:0 0 24px}',
+    /* page title (e.g. Interior): no grey box, bold */
+    'label[for^="title-field"]{display:none!important}',
+    'input[id^="title-field"]{border:0!important;box-shadow:none!important;background:transparent!important;font-weight:700!important;font-size:24px!important;padding:6px 0!important;margin:0!important}',
     '.tw-item{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:8px;border-radius:8px;outline:2px solid transparent;outline-offset:6px;transition:outline-color .15s}',
     '.tw-item.over{outline-color:#3a69c7}',
     '.tw-item.dragging{opacity:.35}',
-    '.tw-img{position:relative;height:230px;display:flex;align-items:flex-end;cursor:grab}',
+    '.tw-img{position:relative;height:276px;display:flex;align-items:flex-end;cursor:grab}',
     '.tw-img:active{cursor:grabbing}',
-    '.tw-img img{max-height:230px;max-width:100%;border-radius:6px;display:block;pointer-events:none;box-shadow:0 1px 3px rgba(0,0,0,.08)}',
-    '.tw-missing{width:170px;height:230px;border-radius:6px;background:#f2f2f2;color:#888;font-size:11px;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px;box-sizing:border-box}',
+    '.tw-img img{max-height:276px;max-width:100%;border-radius:6px;display:block;pointer-events:none;box-shadow:0 1px 3px rgba(0,0,0,.08)}',
+    '.tw-missing{width:204px;height:276px;border-radius:6px;background:#f2f2f2;color:#888;font-size:11px;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px;box-sizing:border-box}',
     '.tw-bar{position:absolute;left:8px;top:8px;display:flex;gap:2px;background:rgba(40,40,40,.88);border-radius:8px;padding:4px;opacity:0;transform:translateY(-4px);transition:opacity .15s,transform .15s;pointer-events:none;z-index:2}',
     '.tw-item:hover .tw-bar,.tw-item:focus-within .tw-bar{opacity:1;transform:none;pointer-events:auto}',
     '.tw-bar button{width:32px;height:32px;border:0;border-radius:6px;background:transparent;color:#ddd;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}',
@@ -57,6 +59,28 @@
       this.controlID = 'thumbs-' + Math.random().toString(36).slice(2);
       this.handled = null;
       return { drag: null, over: null, editing: null };
+    },
+
+    componentDidMount: function () {
+      var self = this;
+      setTimeout(function () { self.tidy(); }, 0);
+      setTimeout(function () { self.tidy(); }, 400);
+    },
+
+    // Hides the "Fotoğraflar" label and lets the editor use the full page width
+    tidy: function () {
+      var el = this.root;
+      if (!el) return;
+      var label = this.props.forID && document.querySelector('label[for="' + this.props.forID + '"]');
+      if (label) label.style.display = 'none';
+      var n = el.parentElement;
+      while (n && n !== document.body) {
+        var cs = window.getComputedStyle(n);
+        if (cs.maxWidth && cs.maxWidth !== 'none') n.style.maxWidth = 'none';
+        n = n.parentElement;
+      }
+      var pane = el.closest && el.closest('form, [class*="ControlPane"]');
+      if (pane) { pane.style.paddingLeft = '48px'; pane.style.paddingRight = '48px'; }
     },
 
     // Picks up photos chosen in the media library
@@ -122,8 +146,7 @@
       var self = this;
       var items = toArr(this.props.value);
       var st = this.state;
-      return h('div', { className: 'tw' },
-        h('p', { className: 'tw-hint' }, 'Sırayı değiştirmek için fotoğrafı tutup sürükleyin. Fareyle üzerine gelince ayarlar çıkar.'),
+      return h('div', { className: 'tw', ref: function (el) { self.root = el; } },
         h('div', { className: 'tw-grid' }, items.map(function (it, i) {
           var editing = st.editing === i;
           var cls = 'tw-item' + (st.over === i && st.drag !== null && st.drag !== i ? ' over' : '') + (st.drag === i ? ' dragging' : '');
