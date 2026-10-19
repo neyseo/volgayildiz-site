@@ -15,7 +15,7 @@
 
   var E = '#/collections/';
   var MENU = [
-    { head: 'Ana menü' },
+    { head: 'Main navigation' },
     { label: 'Interior', icon: 'gallery', href: E + 'galleries/entries/interior', chev: true },
     { label: 'Editorial', icon: 'gallery', href: E + 'galleries/entries/editorial', chev: true },
     { label: 'Exhibits', icon: 'folder', folder: true },
@@ -25,14 +25,14 @@
     { label: 'Quick Art', icon: 'page', href: E + 'pages/entries/quick-art', sub: true, last: true },
     { label: 'In Print', icon: 'gallery', href: E + 'galleries/entries/inprint', chev: true },
     { label: 'Home', icon: 'gallery', href: E + 'galleries/entries/home', chev: true },
-    { head: 'İkincil menü' },
+    { head: 'Secondary navigation' },
     { label: 'About', icon: 'page', href: E + 'pages/entries/about' },
     { label: 'Behance', icon: 'link', href: E + 'site/entries/settings' },
     { label: 'Instagram', icon: 'link', href: E + 'site/entries/settings' },
     { label: 'Contact', icon: 'link', href: E + 'site/entries/settings' },
     { head: 'Site' },
-    { label: 'Açılış sayfası', icon: 'home', href: E + 'site/entries/cover' },
-    { label: 'Site ayarları', icon: 'gear', href: E + 'site/entries/settings' }
+    { label: 'Cover page', icon: 'home', href: E + 'site/entries/cover' },
+    { label: 'Site settings', icon: 'gear', href: E + 'site/entries/settings' }
   ];
 
   var css = [

@@ -67,7 +67,7 @@
       setTimeout(function () { self.tidy(); }, 400);
     },
 
-    // Hides the "Fotoğraflar" label and lets the editor use the full page width
+    // Hides the "Photos" label and lets the editor use the full page width
     tidy: function () {
       var el = this.root;
       if (!el) return;
@@ -117,7 +117,7 @@
     },
 
     remove: function (i) {
-      if (!window.confirm('Bu fotoğraf galeriden kaldırılsın mı?')) return;
+      if (!window.confirm('Remove this photo from the gallery?')) return;
       var arr = toArr(this.props.value);
       arr.splice(i, 1);
       this.setState({ editing: null });
@@ -169,27 +169,27 @@
                 src: it.image, alt: '',
                 onError: function (e) { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }
               }) : null,
-              h('div', { className: 'tw-missing', style: { display: it.image ? 'none' : 'flex' } }, 'Önizleme kaydettikten sonra görünür'),
+              h('div', { className: 'tw-missing', style: { display: it.image ? 'none' : 'flex' } }, 'Preview appears after publishing'),
               h('div', { className: 'tw-bar' },
-                h('button', { type: 'button', title: 'Sola taşı', disabled: i === 0, onClick: function () { self.move(i, i - 1); } }, icon(ICON.left)),
-                h('button', { type: 'button', title: 'Sağa taşı', disabled: i === items.length - 1, onClick: function () { self.move(i, i + 1); } }, icon(ICON.right)),
-                h('button', { type: 'button', title: 'Açıklamayı düzenle', onClick: function () { self.setState({ editing: editing ? null : i }); } }, icon(ICON.edit)),
-                h('button', { type: 'button', title: 'Kaldır', className: 'del', onClick: function () { self.remove(i); } }, icon(ICON.trash))
+                h('button', { type: 'button', title: 'Move left', disabled: i === 0, onClick: function () { self.move(i, i - 1); } }, icon(ICON.left)),
+                h('button', { type: 'button', title: 'Move right', disabled: i === items.length - 1, onClick: function () { self.move(i, i + 1); } }, icon(ICON.right)),
+                h('button', { type: 'button', title: 'Edit caption', onClick: function () { self.setState({ editing: editing ? null : i }); } }, icon(ICON.edit)),
+                h('button', { type: 'button', title: 'Remove', className: 'del', onClick: function () { self.remove(i); } }, icon(ICON.trash))
               ),
               h('span', { className: 'tw-num' }, String(i + 1))
             ),
             editing
               ? h('textarea', {
                   className: 'tw-cap', rows: 2, autoFocus: true,
-                  placeholder: 'Açıklama (sol altta görünür)',
+                  placeholder: 'Caption (shown bottom-left)',
                   value: it.caption || '',
                   onChange: function (e) { self.setCaption(i, e.target.value); }
                 })
-              : h('div', { className: 'tw-cap-text' + (it.caption ? '' : ' empty') }, it.caption || 'açıklama yok'),
-            editing ? h('button', { type: 'button', className: 'tw-done', onClick: function () { self.setState({ editing: null }); } }, 'Tamam') : null
+              : h('div', { className: 'tw-cap-text' + (it.caption ? '' : ' empty') }, it.caption || 'no caption'),
+            editing ? h('button', { type: 'button', className: 'tw-done', onClick: function () { self.setState({ editing: null }); } }, 'Done') : null
           );
         })),
-        h('button', { type: 'button', className: 'tw-add', onClick: this.add }, '+ Fotoğraf ekle')
+        h('button', { type: 'button', className: 'tw-add', onClick: this.add }, '+ Add photos')
       );
     }
   });

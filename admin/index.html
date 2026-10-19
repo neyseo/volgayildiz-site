@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="tr">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
-  <title>Yönetim Paneli — VOLGA YILDIZ</title>
+  <title>Admin — VOLGA YILDIZ</title>
   <link rel="icon" href="/images/site/logo-yuvarlakx.png">
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <style>
@@ -22,7 +22,7 @@
   <script>
     // Shorter top-bar wording in the editor
     (function () {
-      var base = CMS.getLocale && CMS.getLocale('tr');
+      var base = CMS.getLocale && CMS.getLocale('en');
       if (!base) return;
       var p = JSON.parse(JSON.stringify(base));
       var t = p.editor && p.editor.editorToolbar;
@@ -39,7 +39,7 @@
       if (hdr) { hdr.content = 'Menu'; hdr.media = 'Media'; }
       var toast = p.ui && p.ui.toast;
       if (toast) { toast.entrySaved = 'Saved'; toast.entryPublished = 'Saved'; }
-      CMS.registerLocale('tr', p);
+      CMS.registerLocale('en', p);
     })();
   </script>
   <script>
