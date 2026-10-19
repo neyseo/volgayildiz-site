@@ -35,6 +35,8 @@
       t.publishing = 'Publishing...';
       t.publishNow = 'Publish now';
       t.deployButtonLabel = 'View Live';
+      var hdr = p.app && p.app.header;
+      if (hdr) { hdr.content = 'Menu'; hdr.media = 'Media'; }
       var toast = p.ui && p.ui.toast;
       if (toast) { toast.entrySaved = 'Saved'; toast.entryPublished = 'Saved'; }
       CMS.registerLocale('tr', p);
