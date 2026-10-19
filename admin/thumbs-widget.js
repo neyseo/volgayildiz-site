@@ -146,6 +146,7 @@
       var self = this;
       var items = toArr(this.props.value);
       var st = this.state;
+      var showCap = this.props.field.get('captions') !== false;
       return h('div', { className: 'tw', ref: function (el) { self.root = el; } },
         h('div', { className: 'tw-grid' }, items.map(function (it, i) {
           var editing = st.editing === i;
@@ -173,12 +174,12 @@
               h('div', { className: 'tw-bar' },
                 h('button', { type: 'button', title: 'Move left', disabled: i === 0, onClick: function () { self.move(i, i - 1); } }, icon(ICON.left)),
                 h('button', { type: 'button', title: 'Move right', disabled: i === items.length - 1, onClick: function () { self.move(i, i + 1); } }, icon(ICON.right)),
-                h('button', { type: 'button', title: 'Edit caption', onClick: function () { self.setState({ editing: editing ? null : i }); } }, icon(ICON.edit)),
+                showCap ? h('button', { type: 'button', title: 'Edit caption', onClick: function () { self.setState({ editing: editing ? null : i }); } }, icon(ICON.edit)) : null,
                 h('button', { type: 'button', title: 'Remove', className: 'del', onClick: function () { self.remove(i); } }, icon(ICON.trash))
               ),
               h('span', { className: 'tw-num' }, String(i + 1))
             ),
-            editing
+            !showCap ? null : editing
               ? h('textarea', {
                   className: 'tw-cap', rows: 2, autoFocus: true,
                   placeholder: 'Caption (shown bottom-left)',
@@ -186,7 +187,7 @@
                   onChange: function (e) { self.setCaption(i, e.target.value); }
                 })
               : h('div', { className: 'tw-cap-text' + (it.caption ? '' : ' empty') }, it.caption || 'no caption'),
-            editing ? h('button', { type: 'button', className: 'tw-done', onClick: function () { self.setState({ editing: null }); } }, 'Done') : null
+            showCap && editing ? h('button', { type: 'button', className: 'tw-done', onClick: function () { self.setState({ editing: null }); } }, 'Done') : null
           );
         })),
         h('button', { type: 'button', className: 'tw-add', onClick: this.add }, '+ Add photos')

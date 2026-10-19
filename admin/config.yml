@@ -57,15 +57,13 @@ collections:
           - { name: text, label: Text, widget: text, required: false, hint: "Press Enter for a new line." }
           - name: images
             label: Photos
-            label_singular: photo
-            widget: list
-            collapsed: true
+            widget: thumbs
             required: false
             fields:
               - { name: image, label: Photo, widget: image }
               - { name: caption, label: Caption, widget: text, required: false }
-          - { name: video, label: Video (optional), widget: file, required: false, hint: "MP4 file, under 50 MB." }
-          - { name: video_poster, label: Video cover image (optional), widget: image, required: false }
+          - { name: video, label: Video, widget: file, required: false, hint: "MP4 file, under 50 MB." }
+          - { name: video_poster, label: Video cover image, widget: image, required: false }
       - { <<: *page, name: book-lab, label: "Exhibits › Book Lab", file: content/pages/book-lab.json }
       - { <<: *page, name: auction, label: "Exhibits › Auction", file: content/pages/auction.json }
       - { <<: *page, name: fresh-brains, label: "Exhibits › Fresh Brains", file: content/pages/fresh-brains.json }
@@ -83,8 +81,8 @@ collections:
           - { name: button, label: Button text, widget: string, default: "come in" }
           - name: slides
             label: Cover photos
-            label_singular: photo
-            widget: list
+            widget: thumbs
+            captions: false
             fields:
               - { name: image, label: Photo, widget: image }
       - name: settings
