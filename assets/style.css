@@ -109,8 +109,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 /* thumbnails */
 .thumbs {
   display: none;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
   align-items: center;
 }
 .thumbs.on { display: grid; }
