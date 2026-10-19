@@ -115,8 +115,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   align-items: flex-start;
 }
 .thumbs.on { display: flex; }
-.thumbs button { display: block; height: 200px; background: transparent; }
-.thumbs img { height: 100%; width: auto; max-width: none; display: block; opacity: .92; transition: opacity .2s; }
+.thumbs button { display: block; width: 25%; height: 200px; background: transparent; overflow: hidden; }
+.thumbs img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: .92; transition: opacity .2s; }
 .thumbs button:hover img { opacity: 1; }
 
 /* Exhibits pages: first image, text, then the rest */
@@ -205,5 +205,4 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   }
   .stage .mobile-cap .count { color: var(--muted); font-family: var(--font-nav); letter-spacing: 1px; white-space: nowrap; }
   .thumbs { gap: 8px; }
-  .thumbs button { height: 110px; }
 }
