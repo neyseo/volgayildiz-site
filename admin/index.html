@@ -7,6 +7,13 @@
   <title>Yönetim Paneli — VOLGA YILDIZ</title>
   <link rel="icon" href="/images/site/logo-yuvarlakx.png">
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <style>
+    /* Notification after publishing: deep red */
+    .Toastify__toast--success, .Toastify__toast--success * {
+      background: #7a0c0c !important; color: #fff !important; border-color: #7a0c0c !important;
+    }
+    .Toastify__toast--success svg { fill: #fff !important; }
+  </style>
 </head>
 <body>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
@@ -26,6 +33,8 @@
       t.published = 'Published';
       t.publishing = 'Publishing...';
       t.publishNow = 'Publish now';
+      var toast = p.ui && p.ui.toast;
+      if (toast) { toast.entrySaved = 'Saved'; toast.entryPublished = 'Saved'; }
       CMS.registerLocale('tr', p);
     })();
   </script>
