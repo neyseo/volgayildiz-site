@@ -31,11 +31,7 @@ collections:
           - { name: title, label: Başlık, widget: string }
           - name: photos
             label: Fotoğraflar
-            label_singular: fotoğraf
-            widget: list
-            collapsed: true
-            summary: "{{fields.caption}}"
-            hint: "Sırayı değiştirmek için fotoğrafları sürükleyin. Üstteki fotoğraf ilk gösterilir."
+            widget: thumbs
             fields:
               - { name: image, label: Fotoğraf, widget: image }
               - name: caption
