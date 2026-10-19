@@ -107,15 +107,16 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .stage .mobile-cap { display: none; }
 
 /* thumbnails */
+/* thumbnails: one row height, every photo keeps its own shape (as on the old site) */
 .thumbs {
   display: none;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 24px;
-  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: flex-start;
 }
-.thumbs.on { display: grid; }
-.thumbs button { display: flex; align-items: center; justify-content: center; aspect-ratio: 1; background: transparent; }
-.thumbs img { max-width: 100%; max-height: 100%; display: block; opacity: .92; transition: opacity .2s; }
+.thumbs.on { display: flex; }
+.thumbs button { display: block; height: 200px; background: transparent; }
+.thumbs img { height: 100%; width: auto; max-width: none; display: block; opacity: .92; transition: opacity .2s; }
 .thumbs button:hover img { opacity: 1; }
 
 /* Exhibits pages: first image, text, then the rest */
@@ -203,5 +204,6 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
     font-size: 11px; line-height: 1.8; white-space: pre-line; padding-top: 10px;
   }
   .stage .mobile-cap .count { color: var(--muted); font-family: var(--font-nav); letter-spacing: 1px; white-space: nowrap; }
-  .thumbs { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .thumbs { gap: 8px; }
+  .thumbs button { height: 110px; }
 }
