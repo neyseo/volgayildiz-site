@@ -46,6 +46,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   margin: 0 0 42px;
 }
 .menu-toggle { display: none; }
+.logo-m { display: none; }
+.logo-d { display: block; width: 30px; height: 30px; margin-top: 28px; }
 
 .nav, .nav-sub, .nav-2 { list-style: none; margin: 0; padding: 0; }
 .nav { font-family: var(--font-nav); font-size: 15px; letter-spacing: 1.6px; line-height: 1.45; }
@@ -187,7 +189,9 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
     flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between;
     border-bottom: 1px solid var(--rule);
   }
-  .brand { margin: 0; }
+  .brand { margin: 0; display: inline-flex; align-items: center; gap: 12px; }
+  .logo-m { display: block; width: 22px; height: 22px; }
+  .logo-d { display: none; }
   .menu-toggle { display: block; font-family: var(--font-nav); font-size: 12px; letter-spacing: 1.4px; }
   .navwrap { display: none; width: 100%; padding: 18px 0 6px; }
   .navwrap.open { display: block; }

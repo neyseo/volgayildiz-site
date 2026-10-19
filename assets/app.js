@@ -80,7 +80,10 @@
   /* ---------------------------------------------------------------- sidebar */
   function renderSide(settings) {
     var side = el('aside', { class: 'side' });
-    side.appendChild(el('a', { class: 'brand', href: ROOT + (PRETTY ? '' : 'index.html'), text: settings.title }));
+    // Name, plus the round logo beside it on phones
+    var brand = el('a', { class: 'brand', href: ROOT + (PRETTY ? '' : 'index.html') }, [document.createTextNode(settings.title)]);
+    if (settings.logo) brand.appendChild(el('img', { class: 'logo-m', src: url(settings.logo), alt: '' }));
+    side.appendChild(brand);
     var toggle = el('button', { class: 'menu-toggle', type: 'button', text: 'Menu', 'aria-expanded': 'false' });
     side.appendChild(toggle);
 
@@ -111,6 +114,8 @@
     if (settings.instagram) nav2.appendChild(el('li', null, [el('a', { href: settings.instagram, target: '_blank', rel: 'noopener', text: 'Instagram' })]));
     if (settings.email) nav2.appendChild(el('li', null, [el('a', { href: 'mailto:' + settings.email, text: 'Contact' })]));
     navwrap.appendChild(nav2);
+    // Round logo under the menu on larger screens
+    if (settings.logo) navwrap.appendChild(el('img', { class: 'logo-d', src: url(settings.logo), alt: settings.title }));
     side.appendChild(navwrap);
 
     toggle.addEventListener('click', function () {
