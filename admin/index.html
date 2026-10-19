@@ -12,6 +12,24 @@
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
   <script src="/admin/thumbs-widget.js"></script>
   <script>
+    // Shorter top-bar wording in the editor
+    (function () {
+      var base = CMS.getLocale && CMS.getLocale('tr');
+      if (!base) return;
+      var p = JSON.parse(JSON.stringify(base));
+      var t = p.editor && p.editor.editorToolbar;
+      if (!t) return;
+      t.backCollection = 'Menu';
+      t.unsavedChanges = 'Save';
+      t.changesSaved = 'Saved';
+      t.publish = 'Publish';
+      t.published = 'Published';
+      t.publishing = 'Publishing...';
+      t.publishNow = 'Publish now';
+      CMS.registerLocale('tr', p);
+    })();
+  </script>
+  <script>
     // Captions keep their line breaks in the panel preview, as on the site.
     CMS.registerPreviewStyle('figcaption, .caption { white-space: pre-line; }', { raw: true });
   </script>
