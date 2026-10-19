@@ -194,7 +194,7 @@
         }
         Array.prototype.forEach.call(thumbs.children, function (b) {
           row.push(b); sum += (b._ar || 1);
-          if (sum * target + gap * (row.length - 1) >= W) {
+          if (row.length >= 4 || sum * target + gap * (row.length - 1) >= W) {
             place(row, (W - gap * (row.length - 1)) / sum);
             row = []; sum = 0;
           }
