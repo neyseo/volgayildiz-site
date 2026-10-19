@@ -1,0 +1,102 @@
+# Yönetim paneli ayarları (Decap CMS)
+backend:
+  name: git-gateway
+  branch: main
+  commit_messages:
+    create: "Yeni: {{collection}} “{{slug}}”"
+    update: "Güncellendi: {{collection}} “{{slug}}”"
+    delete: "Silindi: {{collection}} “{{slug}}”"
+    uploadMedia: "Fotoğraf yüklendi: {{path}}"
+    deleteMedia: "Fotoğraf silindi: {{path}}"
+
+locale: tr
+site_url: https://www.volgayildiz.com
+display_url: https://www.volgayildiz.com
+logo_url: /images/site/logo-yuvarlakx.png
+
+media_folder: images/uploads
+public_folder: /images/uploads
+
+collections:
+  # ------------------------------------------------------------ galleries
+  - name: galleries
+    label: Galeriler
+    editor: { preview: false }
+    files:
+      - &gallery
+        name: interior
+        label: Interior
+        file: content/galleries/interior.json
+        fields: &galleryFields
+          - { name: title, label: Başlık, widget: string }
+          - name: photos
+            label: Fotoğraflar
+            label_singular: fotoğraf
+            widget: list
+            collapsed: true
+            summary: "{{fields.caption}}"
+            hint: "Sırayı değiştirmek için fotoğrafları sürükleyin. Üstteki fotoğraf ilk gösterilir."
+            fields:
+              - { name: image, label: Fotoğraf, widget: image }
+              - name: caption
+                label: Açıklama (sol altta görünen yazı)
+                widget: text
+                required: false
+                hint: "Alt satıra geçmek için Enter'a basın. Boş bırakılırsa fotoğraf yazısız görünür."
+      - { <<: *gallery, name: editorial, label: Editorial, file: content/galleries/editorial.json }
+      - { <<: *gallery, name: inprint, label: In Print, file: content/galleries/inprint.json }
+      - { <<: *gallery, name: home, label: Home, file: content/galleries/home.json }
+
+  # ------------------------------------------------------------ pages
+  - name: pages
+    label: Sayfalar
+    editor: { preview: false }
+    files:
+      - &page
+        name: about
+        label: About
+        file: content/pages/about.json
+        fields: &pageFields
+          - { name: title, label: Başlık, widget: string }
+          - { name: text, label: Metin, widget: text, required: false, hint: "Enter ile yeni satıra geçebilirsiniz." }
+          - name: images
+            label: Fotoğraflar
+            label_singular: fotoğraf
+            widget: list
+            collapsed: true
+            required: false
+            fields:
+              - { name: image, label: Fotoğraf, widget: image }
+              - { name: caption, label: Açıklama, widget: text, required: false }
+          - { name: video, label: Video (isteğe bağlı), widget: file, required: false, hint: "MP4 dosyası. 50 MB'tan küçük olmalı." }
+          - { name: video_poster, label: Video kapak görseli (isteğe bağlı), widget: image, required: false }
+      - { <<: *page, name: book-lab, label: "Exhibits › Book Lab", file: content/pages/book-lab.json }
+      - { <<: *page, name: auction, label: "Exhibits › Auction", file: content/pages/auction.json }
+      - { <<: *page, name: fresh-brains, label: "Exhibits › Fresh Brains", file: content/pages/fresh-brains.json }
+      - { <<: *page, name: quick-art, label: "Exhibits › Quick Art", file: content/pages/quick-art.json }
+
+  # ------------------------------------------------------------ cover + settings
+  - name: site
+    label: Açılış ve Ayarlar
+    editor: { preview: false }
+    files:
+      - name: cover
+        label: Açılış sayfası
+        file: content/cover.json
+        fields:
+          - { name: button, label: Buton yazısı, widget: string, default: "come in" }
+          - name: slides
+            label: Açılış fotoğrafları
+            label_singular: fotoğraf
+            widget: list
+            fields:
+              - { name: image, label: Fotoğraf, widget: image }
+      - name: settings
+        label: Site ayarları
+        file: content/settings.json
+        fields:
+          - { name: title, label: Site adı, widget: string }
+          - { name: logo, label: Logo (sekme simgesi), widget: image, required: false }
+          - { name: email, label: E-posta (Contact), widget: string }
+          - { name: behance, label: Behance adresi, widget: string, required: false }
+          - { name: instagram, label: Instagram adresi, widget: string, required: false }

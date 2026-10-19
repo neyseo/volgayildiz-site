@@ -1,0 +1,24 @@
+[build]
+  publish = "."
+
+# Old Squarespace addresses keep working
+[[redirects]]
+  from = "/about"
+  to = "/contact/"
+  status = 301
+
+[[redirects]]
+  from = "/exhibits"
+  to = "/book-lab/"
+  status = 301
+
+# Content files must never be served stale after an edit in the panel
+[[headers]]
+  for = "/content/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
