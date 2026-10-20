@@ -14,6 +14,8 @@ backend:
 locale: en
 site_url: https://www.volgayildiz.com
 display_url: https://www.volgayildiz.com
+# The site link at the top right opens the live site; no per-page preview links
+show_preview_links: false
 logo_url: /images/site/logo-yuvarlakx.png
 
 media_folder: images/uploads
