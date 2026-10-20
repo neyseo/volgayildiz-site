@@ -56,7 +56,20 @@ collections:
         file: content/pages/about.json
         fields: &pageFields
           - { name: title, label: Title, widget: string }
-          - { name: text, label: Text, widget: text, required: false, hint: "Press Enter for a new line." }
+          - { name: text, label: Text, widget: text, required: false }
+          - name: images
+            label: Photos
+            widget: thumbs
+            required: false
+            fields:
+              - { name: image, label: Photo, widget: image }
+              - { name: caption, label: Caption, widget: text, required: false }
+      - name: book-lab
+        label: "Exhibits › Book Lab"
+        file: content/pages/book-lab.json
+        fields:
+          - { name: title, label: Title, widget: string }
+          - { name: text, label: Text, widget: text, required: false }
           - name: images
             label: Photos
             widget: thumbs
@@ -66,7 +79,6 @@ collections:
               - { name: caption, label: Caption, widget: text, required: false }
           - { name: video, label: Video, widget: file, required: false, hint: "MP4 file, under 50 MB." }
           - { name: video_poster, label: Video cover image, widget: image, required: false }
-      - { <<: *page, name: book-lab, label: "Exhibits › Book Lab", file: content/pages/book-lab.json }
       - { <<: *page, name: auction, label: "Exhibits › Auction", file: content/pages/auction.json }
       - { <<: *page, name: fresh-brains, label: "Exhibits › Fresh Brains", file: content/pages/fresh-brains.json }
       - { <<: *page, name: quick-art, label: "Exhibits › Quick Art", file: content/pages/quick-art.json }

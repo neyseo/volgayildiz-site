@@ -10,6 +10,10 @@
     '.tw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:30px 24px;margin:0 0 24px}',
     /* page title (e.g. Interior): no grey box, bold */
     'label[for^="title-field"]{display:none!important}',
+    /* clean field labels everywhere: no grey tabs, light boxes */
+    'label[for]{background:transparent!important;border:0!important;color:#999!important;font-size:12px!important;font-weight:600!important;letter-spacing:.06em!important;padding:0 0 6px!important;margin:18px 0 0!important}',
+    'label[for] + div, label[for] ~ textarea, label[for] ~ div > textarea{border-color:#e6e6e6!important;border-width:1px!important;border-radius:6px!important;box-shadow:none!important}',
+    'textarea[id^="text-field"]{border:1px solid #e6e6e6!important;border-radius:6px!important;padding:14px!important;font-size:14px!important;line-height:1.7!important}',
     'input[id^="title-field"]{border:0!important;box-shadow:none!important;background:transparent!important;font-weight:700!important;font-size:24px!important;padding:6px 0!important;margin:0!important}',
     '.tw-item{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:8px;border-radius:8px;outline:2px solid transparent;outline-offset:6px;transition:outline-color .15s}',
     '.tw-item.over{outline-color:#3a69c7}',
@@ -34,6 +38,16 @@
     '.tw-add{border:1px dashed #b5b5bd;background:#fff;border-radius:8px;padding:12px 18px;cursor:pointer;font-weight:600;color:#444}',
     '.tw-add:hover{border-color:#3a69c7;color:#3a69c7}'
   ].join('\n');
+  // Remove the "(optional)" suffix Decap adds to labels
+  function stripOptional(root) {
+    var walker = document.createTreeWalker(root.body || root, NodeFilter.SHOW_TEXT, null);
+    var n;
+    while ((n = walker.nextNode())) {
+      if (/\(optional\)/i.test(n.nodeValue)) n.nodeValue = n.nodeValue.replace(/\s*\(optional\)/ig, '');
+    }
+  }
+  new MutationObserver(function () { stripOptional(document); }).observe(document.documentElement, { childList: true, subtree: true });
+
   var style = document.createElement('style');
   style.textContent = css;
   document.head.appendChild(style);
