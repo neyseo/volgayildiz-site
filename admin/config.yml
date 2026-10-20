@@ -3,7 +3,7 @@ backend:
   name: github
   repo: neyseo/volgayildiz-site
   branch: main
-  base_url: WORKER_URL_PLACEHOLDER
+  base_url: https://volgayildiz-panel-login.volgayildiz.workers.dev
   commit_messages:
     create: "Create {{collection}} “{{slug}}”"
     update: "Update {{collection}} “{{slug}}”"
