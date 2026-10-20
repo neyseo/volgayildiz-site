@@ -1,7 +1,9 @@
 # Admin panel settings (Decap CMS)
 backend:
-  name: git-gateway
+  name: github
+  repo: neyseo/volgayildiz-site
   branch: main
+  base_url: WORKER_URL_PLACEHOLDER
   commit_messages:
     create: "Create {{collection}} “{{slug}}”"
     update: "Update {{collection}} “{{slug}}”"
