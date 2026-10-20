@@ -49,6 +49,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   align-items: center;
   gap: 16px;
   align-self: flex-start;
+  white-space: nowrap;
 }
 .menu-toggle { display: none; }
 .logo-m { display: block; width: 40px; height: 40px; }
