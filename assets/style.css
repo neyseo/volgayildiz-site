@@ -52,7 +52,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   white-space: nowrap;
 }
 .menu-toggle { display: none; }
-.logo-m { display: block; width: 32px; height: 32px; }
+.logo-m { display: block; width: 28px; height: 28px; }
 .logo-d { display: none; }
 
 .nav, .nav-sub, .nav-2 { list-style: none; margin: 0; padding: 0; }
