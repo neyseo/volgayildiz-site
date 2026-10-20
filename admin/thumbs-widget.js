@@ -46,7 +46,14 @@
       if (/\(optional\)/i.test(n.nodeValue)) n.nodeValue = n.nodeValue.replace(/\s*\(optional\)/ig, '');
     }
   }
-  new MutationObserver(function () { stripOptional(document); }).observe(document.documentElement, { childList: true, subtree: true });
+  // Hide the harmless "Failed to load preview" notice (the panel checks for a
+  // deploy preview the site does not use)
+  function hidePreviewNotice() {
+    document.querySelectorAll('.Toastify__toast').forEach(function (t) {
+      if (/Failed to load preview/i.test(t.textContent)) t.style.display = 'none';
+    });
+  }
+  new MutationObserver(function () { stripOptional(document); hidePreviewNotice(); }).observe(document.documentElement, { childList: true, subtree: true });
 
   var style = document.createElement('style');
   style.textContent = css;
