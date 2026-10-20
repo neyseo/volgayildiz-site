@@ -195,5 +195,15 @@
     }
   });
 
-  CMS.registerWidget('thumbs', ThumbsControl);
+  // Simple preview so the panel never tries to read a missing value
+  var ThumbsPreview = createClass({
+    render: function () {
+      var items = toArr(this.props.value);
+      return h('div', null, items.map(function (it, i) {
+        return it && it.image ? h('img', { key: i, src: it.image, style: { maxWidth: '120px', margin: '4px' } }) : null;
+      }));
+    }
+  });
+
+  CMS.registerWidget('thumbs', ThumbsControl, ThumbsPreview);
 })();
