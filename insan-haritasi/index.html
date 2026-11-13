@@ -1871,13 +1871,15 @@ function loop(){
     LBLS.push({L,x:sA.x,y:sA.y,z:sA.z,op,pr:{core:0,hub:1,trio:2,sub:3}[n.kind]});
   });
 
+  // uzaklaşınca yazılar küçülsün
+  const ZS=Math.min(1,Math.max(.55,ovPos().distanceTo(OVERVIEW.target)/camera.position.distanceTo(controls.target)));
   // isimleri üst üste bindirmeden yerleştir
   LBLS.sort((a,b)=>a.pr-b.pr||a.z-b.z);
   const placed=[];
   LBLS.forEach(l=>{
     const L=l.L;
     if(l.op<.03){L.style.visibility='hidden';return;}
-    const w=L._w||80,h=L._h||24;
+    const w=(L._w||80)*ZS,h=(L._h||24)*ZS;
     l.x=Math.min(Math.max(l.x,w/2+6),W-w/2-6);
     let tdx=0,tdy=0;
     const C2=[[0,0],[w*.22,0],[-w*.22,0],[w*.45,0],[-w*.45,0],[0,h*.9],[0,-h*.9-6],[w*.35,h*.9],[-w*.35,h*.9],[0,h*1.8],[0,-h*1.8-6],[0,h*2.7]];
@@ -1889,7 +1891,7 @@ function loop(){
     L._dx=(L._dx===undefined?tdx:L._dx+(tdx-L._dx)*k);L._dy=(L._dy===undefined?tdy:L._dy+(tdy-L._dy)*k);
     placed.push({a:l.x+tdx-w/2+7,b:l.x+tdx+w/2-7,c:l.y+tdy+3,d:l.y+tdy+h-3});
     L.style.visibility='visible';L.style.opacity=l.op.toFixed(2);
-    L.style.transform=`translate(${(l.x+L._dx).toFixed(1)}px,${(l.y+L._dy).toFixed(1)}px) translate(-50%,0)`;
+    L.style.transform=`translate(${(l.x+L._dx).toFixed(1)}px,${(l.y+L._dy).toFixed(1)}px) translate(-50%,0) scale(${ZS.toFixed(3)})`;L.style.transformOrigin='50% 0';
   });
 
   // hologramı küreye bağla
@@ -1953,8 +1955,8 @@ function loop(){
     w.sp.material.opacity=Math.sin(u*Math.PI)*(.7+.3*glowS);w.sp.scale.setScalar(.7+.5*glowS);});}
   FLOWS.forEach(f=>{const u=(t*f.speed*sp+f.o)%1;f.sp.position.lerpVectors(f.A,f.B,u);f.sp.material.color.copy(f.ca).lerp(f.cb,u);f.sp.material.opacity=Math.sin(u*Math.PI)*.95;});
   coreLight.intensity=1.5+Math.sin(t*1.2)*.2;
-  {tmp2.copy(BY.sevgi.P).addScaledVector(up,BY.sevgi.r+4);toScreen(tmp2,sA);MUP.style.transform=`translate(${sA.x.toFixed(1)}px,${sA.y.toFixed(1)}px) translate(-50%,-50%)`;MUP.style.visibility=sA.z<1?'visible':'hidden';
-   tmp2.copy(BY.denge.P).addScaledVector(up,-(BY.denge.r+6.8));toScreen(tmp2,sA);MDN.style.transform=`translate(${sA.x.toFixed(1)}px,${sA.y.toFixed(1)}px) translate(-50%,-50%)`;MDN.style.visibility=sA.z<1?'visible':'hidden';}
+  {const MZ=Math.min(1,Math.max(.55,ovPos().distanceTo(OVERVIEW.target)/camera.position.distanceTo(controls.target))).toFixed(3);tmp2.copy(BY.sevgi.P).addScaledVector(up,BY.sevgi.r+4);toScreen(tmp2,sA);MUP.style.transform=`translate(${sA.x.toFixed(1)}px,${sA.y.toFixed(1)}px) translate(-50%,-50%) scale(${MZ})`;MUP.style.visibility=sA.z<1?'visible':'hidden';
+   tmp2.copy(BY.denge.P).addScaledVector(up,-(BY.denge.r+6.8));toScreen(tmp2,sA);MDN.style.transform=`translate(${sA.x.toFixed(1)}px,${sA.y.toFixed(1)}px) translate(-50%,-50%) scale(${MZ})`;MDN.style.visibility=sA.z<1?'visible':'hidden';}
   renderer.render(scene,camera);
   requestAnimationFrame(loop);
 }
