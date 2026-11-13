@@ -79,6 +79,7 @@ body.focused .legend,body.focused .brand p{opacity:0;pointer-events:none;}
   text-shadow:0 0 14px #05060d,0 0 5px #05060d,0 0 1px #05060d;}
 #list.on{opacity:1;visibility:visible;transition:opacity .4s ease,visibility 0s;}
 #holo .crumbs,#holo .kicker{display:none;}
+#holo > .row.lead{margin:0 0 14px;padding:0 2px;}
 #list.inholo{position:static;transform:none!important;margin:6px 0 14px;flex:none;}
 #list.inholo .slot{width:16px;height:16px;margin:0 3px;border-radius:50%;background:radial-gradient(circle at 34% 30%,#fff 0,var(--c) 42%,var(--cl) 100%);box-shadow:0 0 12px var(--c),0 0 3px var(--c);opacity:0;transform:scale(.3);transition:opacity .35s ease calc(var(--d) + 650ms),transform .45s cubic-bezier(.2,.8,.2,1.4) calc(var(--d) + 650ms);}
 #list.inholo .it.in .slot{opacity:1;transform:none;}
@@ -1409,6 +1410,7 @@ const NODES = [
  {id:'denge', parent:'simdi', kind:'trio', shape:'octa', name:'DENGE', kicker:'Dayanak Noktası', color:C.gold, pos:[0,-14,0], r:1.7, noLink:true,
   ring:[{t:'Eril & Dişil'},{t:'İyi & Kötü'},{t:'Gece & Gündüz'},{t:'Ayık & Uyku'},{t:'Yapıcı & Yıkıcı'}], ringTitle:'Zıtlıklar',
   panel:[
+   {t:'quote', lead:true, text:'Ana rahminden önce biriz. Bu dünyaya geldiğimizde zıtlıklar dünyasına varırız. Hayatımız boyunca bu zıtlıkların yarattığı dengesizlikleri dengelemeye ve bir olduğumuzu hatırlamaya çalışırız.'},
    {t:'quote', text:'As within so without'},
    {t:'quote', text:'Kural: Hayatta her şeyin avantajı ve dezavantajı vardır.'}
   ]},
@@ -1621,11 +1623,11 @@ function fillHolo(n){
   const rows=[],notes=[];
   n.panel.forEach(s=>{
     if(s.t==='note')notes.push(s.text);
-    if(s.t==='quote')rows.push({h:s.h,hb:s.hb,text:s.text});
+    if(s.t==='quote')rows.push({h:s.h,hb:s.hb,text:s.text,lead:s.lead});
     if(s.t==='quotes')s.items.forEach(q=>rows.push({text:q}));
     if(s.t==='question')rows.push({h:s.h,text:s.text,q:true});
   });
-  let h=rows.map((r,i)=>`<div class="row${r.q?' question':''}" style="--d:${i*160}ms"><span class="orb"></span><div class="txt">${r.h?`<h3${r.hb?' class="big"':''}>${esc(r.h)}</h3>`:''}<p>${fmt(r.text)}</p></div></div>`).join('');
+  let h=rows.map((r,i)=>`<div class="row${r.q?' question':''}${r.lead?' lead':''}" style="--d:${i*160}ms"><span class="orb"></span><div class="txt">${r.h?`<h3${r.hb?' class="big"':''}>${esc(r.h)}</h3>`:''}<p>${fmt(r.text)}</p></div></div>`).join('');
   h=notes.map(t=>`<p class="note">${esc(t)}</p>`).join('')+h;
   if(n.triad) h+=`<div class="sec"><h3>Hayatın temel üçlemesi</h3><div class="kids">`+n.triad.map(id=>{const c=BY[id];return `<button type="button" data-go="${id}" style="--kc:${hex(c.color)}"><i aria-hidden="true">→</i><span>${esc(c.title||c.name)}</span></button>`;}).join('')+'</div></div>';
   if(n.links) h+=`<div class="sec"><h3>Bağlantı</h3><div class="kids">`+n.links.map(l=>{const c=BY[l.go];return `<button type="button" data-go="${l.go}" style="--kc:${hex(c.color)}"><i aria-hidden="true">→</i><span>${esc(l.label)}</span><small>${esc(l.note)}</small></button>`;}).join('')+'</div></div>';
@@ -1633,7 +1635,7 @@ function fillHolo(n){
   if(kidsV.length) h+=`<div class="sec"><h3>${n.kind==='core'?'Haritadaki yollar':n.kind==='hub'?'Bu kümedeki küreler':'Bağlı küreler'}</h3><div class="kids">`+
     kidsV.map(c=>`<button type="button" data-go="${c.id}" style="--kc:${hex(c.color)}"><i aria-hidden="true">→</i><span>${esc(c.title||c.name)}</span></button>`).join('')+'</div></div>';
   document.body.appendChild(listEl);
-  hBody.innerHTML=h;hBody.scrollTop=0;
+  holo.querySelectorAll('.row.lead').forEach(r=>r.remove());hBody.innerHTML=h;hBody.scrollTop=0;
   revealed=false;
   listT=0;listEl.classList.remove('on','inpanel','inholo');holo.classList.remove('haslist','withlist');
   listEl.style.setProperty('--c',hex(n.color));
@@ -1647,7 +1649,8 @@ function fillHolo(n){
 const pt=a=>a.map(([w,c])=>`<span style="color:${c}">${esc(w)}</span>`).join(' – ');
 const listEl=document.getElementById('list'),fanG=document.getElementById('fan');
 let slots=[],rowsEl=[],fanLines=[],listT=0,listMode=null,sceneR=60,sceneExt=75;
-function toPanel(){listMode='panel';listEl.classList.add('inpanel');hBody.prepend(listEl);holo.classList.add('haslist');fanG.innerHTML='';fanLines=[];}
+function placeLead(){holo.querySelectorAll('.row.lead').forEach(r=>listEl.parentNode.insertBefore(r,listEl));}
+function toPanel(){listMode='panel';listEl.classList.add('inpanel');hBody.prepend(listEl);placeLead();holo.classList.add('haslist');fanG.innerHTML='';fanLines=[];}
 const threadsG=document.getElementById('threads');let threads=[],revealed=false,revealT=0;
 function reveal(){
   revealed=true;revealT=performance.now();
@@ -1679,7 +1682,7 @@ function focus(id,quiet){
   if(listMode==='scene'){
     sceneR=(n.kind==='core'||n.hidden)?58:Math.min(85,Math.max(48,H*.1));
     sceneExt=sceneR*((n.kind==='core'||n.hidden)?2.7:1.25);
-    holo.insertBefore(listEl,hBody);listEl.classList.add('inholo');holo.classList.add('withlist');
+    holo.insertBefore(listEl,hBody);listEl.classList.add('inholo');holo.classList.add('withlist');placeLead();
     const need=24+2*sceneExt+48+holo.offsetWidth+16;
     if(W<need||holo.offsetHeight>H-40){listEl.classList.remove('inholo');holo.classList.remove('withlist');toPanel();}
   }
