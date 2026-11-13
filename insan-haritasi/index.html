@@ -1407,6 +1407,8 @@ const NODES = [
  {id:'zihin', parent:'simdi', kind:'trio', name:'ZİHİN', kicker:'İç Mekanizma · Kararı Uygulayan', color:C.amber, pos:[10,-8.5,0], r:1.9, noLink:true,
   panel:[{t:'quote', text:'Zihin aktifken farkında olmadan nefesimizi tutarız.'},{t:'quote', text:'Şüphe yok'},{t:'quote', h:'YYYY: Yargı Yok Yorum Yok', hb:true, text:'Zıtlıklar birbirini tamamlar; bu yüzden hiçbir şeyi yorumlamaya veya yargılamaya gerek yoktur. Yorum ve yargı, zaman kaybı olduğu kadar enerji de tüketir. Haklı olsak bile egomuzu şişirir; çoğu zaman negatif enerji taşır ve bu da bedenimize iyi gelmez.'},{t:'quote', text:'Geçmişte misin? Şüphede misin? Yargılıyor musun?'}],
   links:[{go:'secim', label:'Zihin & Seçimler', note:''}]},
+ {id:'kz', parent:'simdi', kind:'sub', name:'Kalp – Zihin Dengesi', kicker:'Kalp – Zihin', color:0xdfe8ff, pos:[0,-8.5,0], r:.5, noLink:true,
+  panel:[{t:'quote', text:'Her insan ya zihin ağırlıklı ya da kalp ağırlıklı doğar. Farkında olursa güçsüz olan tarafını güçlendirip dengeye gelebilir. Örneğin duygusal ağırlıklı doğan birinin zihni çok aktif değildir; ama zamanla ve farkındalıkla zihnini güçlendirip dengeye gelebilir.'}]},
  {id:'denge', parent:'simdi', kind:'trio', shape:'octa', name:'DENGE', kicker:'Dayanak Noktası', color:C.gold, pos:[0,-14,0], r:1.7, noLink:true,
   ring:[{t:'Eril & Dişil'},{t:'İyi & Kötü'},{t:'Gece & Gündüz'},{t:'Ayık & Uyku'},{t:'Yapıcı & Yıkıcı'}], ringTitle:'Zıtlıklar',
   panel:[
@@ -1528,7 +1530,7 @@ flow(sEdgeL,BY.gecmis.P,C.gold,0xc9b8ff,2,.16,1.1);
 flow(sEdgeR,BY.gelecek.P,C.gold,0xffc98a,2,.16,1.1);
 flow(BY.kalp.P,BY.zihin.P,C.rose,C.amber,3,.09,.9);
 // kalp–zihin kolunun gövdeye bağlandığı nokta
-(function(){const j=new THREE.Mesh(new THREE.SphereGeometry(.32,16,12),new THREE.MeshBasicMaterial({color:0xdfe8ff}));j.position.set(0,-8.5,0);scene.add(j);
+(function(){return;const j=new THREE.Mesh(new THREE.SphereGeometry(.32,16,12),new THREE.MeshBasicMaterial({color:0xdfe8ff}));j.position.set(0,-8.5,0);scene.add(j);
   const jh=new THREE.Sprite(new THREE.SpriteMaterial(additive({map:GLOW,color:0xdfe8ff,opacity:.6})));jh.scale.setScalar(2.2);jh.position.copy(j.position);scene.add(jh);})();
 // SEVGİ → ŞİMDİ: enerji · frekans · titreşim (dalgalı akış)
 const sevgiBeam=beam(BY.sevgi.P,BY.simdi.P,0xffa65a,.09,.35);
