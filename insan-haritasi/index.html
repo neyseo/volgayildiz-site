@@ -1354,6 +1354,7 @@ body.focused #hsh{opacity:0;}
 <script>
 (function(){
 document.documentElement.lang='tr';
+document.addEventListener('contextmenu',e=>e.preventDefault());
 const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const C = {gold:0xffd98f, violet:0xb994ff, teal:0x86d0cb, leaf:0x96d6a4, rose:0xff8aa5, sky:0xcfe6ff, amber:0xffc46b};
 const hex = n => '#'+n.toString(16).padStart(6,'0');
