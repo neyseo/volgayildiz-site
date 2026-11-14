@@ -1396,12 +1396,12 @@ const NODES = [
  {id:'yaratim', parent:'fark', kind:'trio', hidden:true, host:'simdi', name:'Nasıl yaratıyoruz?', kicker:'Yaratım', color:0xffcf85, pos:[0,1,0], r:2.4, noLink:true,
   panel:[{t:'quote', text:'Niyetlerini sesle, sevgiyle ve hayal kurarak pratik et.'},{t:'quote', text:'Her şeyin titreşimden yaratıldığını unutma.'},{t:'quote', text:'Zaman\'a zaman ver ( Beklenti yok ).'},{t:'quote', text:'Düşünce > Söz > Gerçeklik ( düşünce söze dönüşür, söz gerçekliğe )'}],
   links:[{go:'zhn', label:'Niyetten Gerçeğe', note:'Zihinsel'},{go:'sevgi', label:'SEVGİ', note:'Kaynak'}]},
- {id:'gecmis', parent:'simdi', kind:'trio', name:'Geçmiş', kicker:'Zaman Ekseni', color:0xc9b8ff, pos:[-14,1,0], r:1.9, noLink:true,
+ {id:'gecmis', parent:'simdi', kind:'trio', name:'Geçmiş', kicker:'Zaman Ekseni', color:0xc9b8ff, vc:0xc9c4bb, pos:[-14,1,0], r:1.9, noLink:true,
   panel:[
    {t:'quote', text:'Değişebilir'},
    {t:'quote', text:'Geçmişteki duygusal yükün kısmen boşaltılması ile şu an\'da daha hafif hissederiz ve bunun verdiği güçle, niyetimiz ve sözlerimiz aracılığıyla yarını istediğimiz gibi yaratabiliriz.'}
   ]},
- {id:'gelecek', parent:'simdi', kind:'trio', name:'Gelecek', kicker:'Zaman Ekseni', color:0xffc98a, pos:[14,1,0], r:1.9, noLink:true,
+ {id:'gelecek', parent:'simdi', kind:'trio', name:'Gelecek', kicker:'Zaman Ekseni', color:0xffc98a, vc:0xf2a48c, pos:[14,1,0], r:1.9, noLink:true,
   panel:[{t:'quote', text:'Farkındalıkla istenilen yaratılabilir'}],
   links:[{go:'zhn', label:'Niyetten Gerçeğe', note:'Zihinsel'}]},
  {id:'kalp', parent:'simdi', kind:'trio', name:'KALP', kicker:'İç Mekanizma · Karar Veren', color:C.rose, vc:0xe2523e, pos:[-10,-8.5,0], r:1.9, noLink:true,
@@ -1530,8 +1530,8 @@ const FLOWS=[];
 function flow(A,B,ca,cb,n,speed,size){for(let i=0;i<n;i++){const sp=new THREE.Sprite(new THREE.SpriteMaterial(additive({map:GLOW,color:ca,opacity:.9})));
   sp.scale.setScalar(size);scene.add(sp);FLOWS.push({sp,A:A.clone(),B:B.clone(),ca:new THREE.Color(ca),cb:new THREE.Color(cb),o:i/n,speed});}}
 const sEdgeL=BY.simdi.P.clone().add(new THREE.Vector3(-BY.simdi.r,0,0)),sEdgeR=BY.simdi.P.clone().add(new THREE.Vector3(BY.simdi.r,0,0));
-flow(sEdgeL,BY.gecmis.P,C.gold,0xc9b8ff,2,.16,1.1);
-flow(sEdgeR,BY.gelecek.P,C.gold,0xffc98a,2,.16,1.1);
+flow(sEdgeL,BY.gecmis.P,C.gold,BY.gecmis.vc,2,.16,1.1);
+flow(sEdgeR,BY.gelecek.P,C.gold,BY.gelecek.vc,2,.16,1.1);
 flow(BY.kalp.P,BY.zihin.P,BY.kalp.vc,BY.zihin.vc,3,.09,.9);
 // kalp–zihin kolunun gövdeye bağlandığı nokta
 (function(){return;const j=new THREE.Mesh(new THREE.SphereGeometry(.32,16,12),new THREE.MeshBasicMaterial({color:0xdfe8ff}));j.position.set(0,-8.5,0);scene.add(j);
