@@ -1634,7 +1634,7 @@ function fillHolo(n){
     if(s.t==='quotes')s.items.forEach(q=>rows.push({text:q}));
     if(s.t==='question')rows.push({h:s.h,text:s.text,q:true});
   });
-  let h=rows.map((r,i)=>`<div class="row${r.q?' question':''}${r.lead?' lead':''}" style="--d:${i*160}ms"><span class="orb"></span><div class="txt">${r.h?`<h3${r.hb?' class="big"':''}>${/^YYYY/.test(r.h)?esc(r.h).replace(/Y/g,'<span style="color:#e8604b">Y</span>'):esc(r.h)}</h3>`:''}<p>${fmt(r.text)}</p></div></div>`).join('');
+  let h=rows.map((r,i)=>`<div class="row${r.q?' question':''}${r.lead?' lead':''}" style="--d:${i*160}ms"><span class="orb"></span><div class="txt">${r.h?`<h3${r.hb?' class="big"':''}>${/^YYYY/.test(r.h)?esc(r.h).replace(/Y/g,'<span style="color:var(--c)">Y</span>'):esc(r.h)}</h3>`:''}<p>${fmt(r.text)}</p></div></div>`).join('');
   h=notes.map(t=>`<p class="note">${esc(t)}</p>`).join('')+h;
   if(n.triad) h+=`<div class="sec"><h3>Hayatın temel üçlemesi</h3><div class="kids">`+n.triad.map(id=>{const c=BY[id];return `<button type="button" data-go="${id}" style="--kc:${hex(c.color)}"><i aria-hidden="true">→</i><span>${esc(c.title||c.name)}</span></button>`;}).join('')+'</div></div>';
   if(n.links) h+=`<div class="sec"><h3>Bağlantı</h3><div class="kids">`+n.links.map(l=>{const c=BY[l.go];return `<button type="button" data-go="${l.go}" style="--kc:${hex(c.color)}"><i aria-hidden="true">→</i><span>${esc(l.label)}</span><small>${esc(l.note)}</small></button>`;}).join('')+'</div></div>';
