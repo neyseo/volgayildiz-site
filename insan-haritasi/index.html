@@ -1411,7 +1411,7 @@ const NODES = [
   links:[{go:'secim', label:'Zihin & Seçimler', note:''}]},
  {id:'kz', parent:'simdi', kind:'sub', name:'Tahterevalli', kicker:'Kalp – Zihin', color:0xdfe8ff, pos:[0,-8.5,0], r:1.4, noLink:true,
   panel:[{t:'quote', text:'Her insan ya zihin ağırlıklı ya da kalp ağırlıklı doğar. Farkında olursa güçsüz olan tarafını güçlendirip dengeye gelebilir. Örneğin duygusal ağırlıklı doğan birinin zihni çok aktif değildir; ama zamanla ve farkındalıkla zihnini güçlendirip dengeye gelebilir.'}]},
- {id:'denge', parent:'simdi', kind:'trio', shape:'octa', name:'DENGE', kicker:'Dayanak Noktası', color:C.gold, pos:[0,-14,0], r:1.7, noLink:true,
+ {id:'denge', parent:'simdi', kind:'trio', shape:'octa', name:'DENGE', kicker:'Dayanak Noktası', color:C.gold, vc:0xf4f1ea, pos:[0,-14,0], r:1.7, noLink:true,
   ring:[{t:'Eril & Dişil'},{t:'İyi & Kötü'},{t:'Gece & Gündüz'},{t:'Ayık & Uyku'},{t:'Yapıcı & Yıkıcı'}], ringTitle:'Zıtlıklar',
   panel:[
    {t:'quote', lead:true, text:'Ana rahminden önce biriz. Bu dünyaya geldiğimizde zıtlıklar dünyasına varırız: eril ile dişil, iyi ile kötü, gece ile gündüz… Kötü aslında kötü değildir; iyinin var olabilmesi için kötünün de olması gerekir. Zıtlıklar birbirini tamamlar. Hayatımız boyunca bu zıtlıkların yarattığı dengesizlikleri dengelemeye ve bir olduğumuzu hatırlamaya çalışırız.'},
@@ -1544,7 +1544,14 @@ const NLINK={pulses:[]};
 
 /* ---------- DÜĞÜMLER ve UYDULAR ---------- */
 const hitMeshes=[],satHits=[],O={};
-const octaGeo=new THREE.SphereGeometry(1,48,32,0,Math.PI*2,0,Math.PI/2),octaGeo2=new THREE.SphereGeometry(1,48,32,0,Math.PI*2,Math.PI/2,Math.PI/2);
+const octaGeo=new THREE.CircleGeometry(1,96);
+const YY=(function(){const S=512,c=document.createElement('canvas');c.width=c.height=S;const g=c.getContext('2d'),r=S/2-6,cx=S/2,cy=S/2,W='#f4f1ea',B='#16161a';
+  g.beginPath();g.arc(cx,cy,r,0,Math.PI*2);g.fillStyle=W;g.fill();
+  g.beginPath();g.arc(cx,cy,r,-Math.PI/2,Math.PI/2);g.arc(cx,cy+r/2,r/2,Math.PI/2,-Math.PI/2,true);g.arc(cx,cy-r/2,r/2,Math.PI/2,-Math.PI/2,false);g.closePath();g.fillStyle=B;g.fill();
+  g.beginPath();g.arc(cx,cy-r/2,r/7,0,Math.PI*2);g.fillStyle=W;g.fill();
+  g.beginPath();g.arc(cx,cy+r/2,r/7,0,Math.PI*2);g.fillStyle=B;g.fill();
+  g.beginPath();g.arc(cx,cy,r,0,Math.PI*2);g.lineWidth=5;g.strokeStyle='rgba(244,241,234,.9)';g.stroke();
+  const t=new THREE.CanvasTexture(c);t.anisotropy=4;return t;})();
 const sphereGeo=new THREE.SphereGeometry(1,48,32),lowGeo=new THREE.SphereGeometry(1,12,8);
 const satLayer=document.getElementById('sats');
 NODES.forEach(n=>{
@@ -1552,7 +1559,7 @@ NODES.forEach(n=>{
   const SC=n.vc||n.sc||n.color;
   const mesh=new THREE.Mesh(n.shape==='octa'?octaGeo:sphereGeo,new THREE.MeshPhongMaterial({color:SC,emissive:SC,emissiveIntensity:n.kind==='core'?.9:n.shape==='octa'?.45:.55,shininess:60,flatShading:false,transparent:true,opacity:.95}));
   mesh.scale.setScalar(n.r);g.add(mesh);
-  let dark=null;if(n.shape==='octa'){dark=new THREE.Mesh(octaGeo2,new THREE.MeshPhongMaterial({color:0x6b4a2e,emissive:0x3a2414,emissiveIntensity:.5,shininess:60,transparent:true,opacity:.95}));mesh.add(dark);mesh.rotation.z=.6;}
+  const dark=null;if(n.shape==='octa'){mesh.material=new THREE.MeshBasicMaterial({map:YY,transparent:true,opacity:.95,side:THREE.DoubleSide});mesh.scale.setScalar(n.r*1.25);}
   const halo=new THREE.Sprite(new THREE.SpriteMaterial(additive({map:GLOW,color:SC,opacity:n.kind==='core'?.75:.55})));
   halo.scale.setScalar(n.r*(n.kind==='core'?7:5));g.add(halo);
   const hit=new THREE.Mesh(lowGeo,new THREE.MeshBasicMaterial());hit.visible=false;hit.scale.setScalar(n.r*1.6);hit.userData.node=n;g.add(hit);if(!n.hidden)hitMeshes.push(hit);
@@ -1835,7 +1842,7 @@ function loop(){
     const o=O[n.id],focused=current===n;
     const br=n.breath?1+.14*Math.sin(t*Math.PI*2/8)*Math.min(1,sp*4):1+Math.sin(t*1.4+o.phase)*.04*sp;
     o.mesh.scale.setScalar(n.r*br);if(n.breath)o.halo.scale.setScalar(n.r*(n.kind==='core'?7:5)*(.85+.3*(br-.86)/.28));
-    if(n.shape==='octa')o.mesh.rotation.z+=dt*.25*sp;
+    if(n.shape==='octa'){o.spin+=dt*.3*sp;o.mesh.quaternion.copy(camera.quaternion);o.mesh.rotateZ(o.spin);}
     o.rings.forEach(r=>r.o.rotation[r.ax]+=r.s*dt*sp*3);
     const tw=focused&&n.ring.length&&tk>.55?1:0;
     o.w+=(tw-o.w)*Math.min(1,dt*2.6);
