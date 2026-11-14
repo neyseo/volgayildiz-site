@@ -1544,14 +1544,15 @@ const NLINK={pulses:[]};
 
 /* ---------- DÜĞÜMLER ve UYDULAR ---------- */
 const hitMeshes=[],satHits=[],O={};
-const octaGeo=new THREE.OctahedronGeometry(1,0);octaGeo.scale(1,1.35,1);
+const octaGeo=new THREE.SphereGeometry(1,48,32,0,Math.PI*2,0,Math.PI/2),octaGeo2=new THREE.SphereGeometry(1,48,32,0,Math.PI*2,Math.PI/2,Math.PI/2);
 const sphereGeo=new THREE.SphereGeometry(1,48,32),lowGeo=new THREE.SphereGeometry(1,12,8);
 const satLayer=document.getElementById('sats');
 NODES.forEach(n=>{
   const g=new THREE.Group();g.position.copy(n.P);scene.add(g);if(n.hidden)g.visible=false;
   const SC=n.vc||n.sc||n.color;
-  const mesh=new THREE.Mesh(n.shape==='octa'?octaGeo:sphereGeo,new THREE.MeshPhongMaterial({color:SC,emissive:SC,emissiveIntensity:n.kind==='core'?.9:n.shape==='octa'?.45:.55,shininess:60,flatShading:n.shape==='octa',transparent:true,opacity:.95}));
+  const mesh=new THREE.Mesh(n.shape==='octa'?octaGeo:sphereGeo,new THREE.MeshPhongMaterial({color:SC,emissive:SC,emissiveIntensity:n.kind==='core'?.9:n.shape==='octa'?.45:.55,shininess:60,flatShading:false,transparent:true,opacity:.95}));
   mesh.scale.setScalar(n.r);g.add(mesh);
+  let dark=null;if(n.shape==='octa'){dark=new THREE.Mesh(octaGeo2,new THREE.MeshPhongMaterial({color:0x6b4a2e,emissive:0x3a2414,emissiveIntensity:.5,shininess:60,transparent:true,opacity:.95}));mesh.add(dark);mesh.rotation.z=.6;}
   const halo=new THREE.Sprite(new THREE.SpriteMaterial(additive({map:GLOW,color:SC,opacity:n.kind==='core'?.75:.55})));
   halo.scale.setScalar(n.r*(n.kind==='core'?7:5));g.add(halo);
   const hit=new THREE.Mesh(lowGeo,new THREE.MeshBasicMaterial());hit.visible=false;hit.scale.setScalar(n.r*1.6);hit.userData.node=n;g.add(hit);if(!n.hidden)hitMeshes.push(hit);
@@ -1607,7 +1608,7 @@ NODES.forEach(n=>{
       const gh=new THREE.Sprite(new THREE.SpriteMaterial(additive({map:GLOW,color:c,opacity:.55})));gh.scale.setScalar(2.6);gh.position.copy(m.position);tg.add(gh);});
     g.add(tg);n.triG=tg;}
   rings.forEach(r=>r.b=r.o.material.opacity);
-  O[n.id]={g,mesh,halo,hb:halo.material.opacity,dim:1,rings,sats,phase:Math.random()*6,w:0,spin:0};
+  O[n.id]={g,mesh,dark,halo,hb:halo.material.opacity,dim:1,rings,sats,phase:Math.random()*6,w:0,spin:0};
 });
 
 /* ---------- ETİKETLER ---------- */
@@ -1834,7 +1835,7 @@ function loop(){
     const o=O[n.id],focused=current===n;
     const br=n.breath?1+.14*Math.sin(t*Math.PI*2/8)*Math.min(1,sp*4):1+Math.sin(t*1.4+o.phase)*.04*sp;
     o.mesh.scale.setScalar(n.r*br);if(n.breath)o.halo.scale.setScalar(n.r*(n.kind==='core'?7:5)*(.85+.3*(br-.86)/.28));
-    if(n.shape==='octa')o.mesh.rotation.y+=dt*.25*sp;
+    if(n.shape==='octa')o.mesh.rotation.z+=dt*.25*sp;
     o.rings.forEach(r=>r.o.rotation[r.ax]+=r.s*dt*sp*3);
     const tw=focused&&n.ring.length&&tk>.55?1:0;
     o.w+=(tw-o.w)*Math.min(1,dt*2.6);
@@ -1861,7 +1862,7 @@ function loop(){
       } else if(s.mini.visible)s.mini.visible=false;
     });
     const inFam=family(n), solo=current&&listMode==='scene'&&n!==current&&current.host!==n.id, tOut=tour.on&&!tour.hl.has(n.id);
-    o.mesh.material.opacity+=((solo||tOut?.16:inFam?.95:.3)-o.mesh.material.opacity)*.08;
+    o.mesh.material.opacity+=((solo||tOut?.16:inFam?.95:.3)-o.mesh.material.opacity)*.08;if(o.dark)o.dark.material.opacity=o.mesh.material.opacity;
     o.dim+=((solo||tOut?.18:1)-o.dim)*.08;
     o.halo.material.opacity=o.hb*o.dim;o.rings.forEach(r=>r.o.material.opacity=r.b*o.dim);
 
