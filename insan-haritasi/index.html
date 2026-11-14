@@ -1548,8 +1548,6 @@ const octaGeo=new THREE.CircleGeometry(1,96);
 const YY=(function(){const S=512,c=document.createElement('canvas');c.width=c.height=S;const g=c.getContext('2d'),r=S/2-6,cx=S/2,cy=S/2,W='#f4f1ea',B='#16161a';
   g.beginPath();g.arc(cx,cy,r,0,Math.PI*2);g.fillStyle=W;g.fill();
   g.beginPath();g.arc(cx,cy,r,-Math.PI/2,Math.PI/2);g.arc(cx,cy+r/2,r/2,Math.PI/2,-Math.PI/2,true);g.arc(cx,cy-r/2,r/2,Math.PI/2,-Math.PI/2,false);g.closePath();g.fillStyle=B;g.fill();
-  g.beginPath();g.arc(cx,cy-r/2,r/7,0,Math.PI*2);g.fillStyle=W;g.fill();
-  g.beginPath();g.arc(cx,cy+r/2,r/7,0,Math.PI*2);g.fillStyle=B;g.fill();
   g.beginPath();g.arc(cx,cy,r,0,Math.PI*2);g.lineWidth=5;g.strokeStyle='rgba(244,241,234,.9)';g.stroke();
   const t=new THREE.CanvasTexture(c);t.anisotropy=4;return t;})();
 const sphereGeo=new THREE.SphereGeometry(1,48,32),lowGeo=new THREE.SphereGeometry(1,12,8);
