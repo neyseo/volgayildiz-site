@@ -1373,7 +1373,7 @@ const NODES = [
    {t:'quote', text:'Sevgiden yola çıkar, zıtlıkların dünyasına geliriz; hayat bu zıtlıklarla var olur ve bu yüzden hayatımız boyunca dengeyi ararız. Dengede olabilmek için Şu an\'da olmamız gerekir. Şu an\'da olabilmek için de Nefes\'e ihtiyacımız vardır. Nefes\'le de şu anın farkındalığına varırız; bu farkındalıkla da anı yaratırız.'},
    {t:'quote', text:'Sevgi > Zıtlık > Denge > Şu an > Nefes > Farkındalık'}
   ]},
- {id:'efv', parent:'sevgi', kind:'trio', shape:'wave', name:'Hayatın Temel Üçlemesi', title:'Hayatın Temel Üçlemesi', kicker:'Hayatın Temel Üçlemesi', color:0xffd2e0, pos:[0,9.8,0], r:.55, noLink:true,
+ {id:'efv', parent:'sevgi', kind:'trio', shape:'wave', name:'Hayatın Temel Üçlemesi', title:'Hayatın Temel Üçlemesi', kicker:'Hayatın Temel Üçlemesi', color:0xffd2e0, pos:[0,9.8,0], r:1.6, tri:true, noLink:true,
   ring:[{t:'Enerji – Titreşim – Frekans',kw:'efv-acik',nou:true},
    ...['Düşünce > Söz > Gerçeklik','Mer – Ka – Ba = Işık – Ruh – Beden','Zaman – Mekân – Madde','Yükseklik – Genişlik – Derinlik','Katı – Sıvı – Gaz','Sarı – Mavi – Kırmızı','Zihin – Beden – Ruh','Baba – Anne – Çocuk','Doğum – Yaşam – Ölüm','Geçmiş – Şimdi – Gelecek','3 – 6 – 9'].map(t=>({t}))],
   panel:[]},
@@ -1597,6 +1597,11 @@ NODES.forEach(n=>{
       el.style.opacity='0';el.style.visibility='hidden';satLayer.appendChild(el);}
     return {g:sg,dot,sh,mini,miniR,slotW:new THREE.Vector3(),p:0,f:0,on:false,cx:0,cy:0,u,v,radius,a:(i/count)*Math.PI*2+Math.random()*.3,s:(.12+Math.random()*.12)*(Math.random()<.5?1:-1),lay:layout[i],el,free:new THREE.Vector3(),cls:''};
   });
+  if(n.tri){mesh.visible=false;halo.scale.setScalar(n.r*3.2);halo.material.opacity=.35;
+    const tg=new THREE.Group();[0xffd27a,0xc9a6ff,0x7fe3e0].forEach((c,i)=>{const a=Math.PI/2+i*Math.PI*2/3;
+      const m=new THREE.Mesh(sphereGeo,new THREE.MeshPhongMaterial({color:c,emissive:c,emissiveIntensity:.6,shininess:80}));m.scale.setScalar(.62);m.position.set(Math.cos(a)*1.3,Math.sin(a)*1.3,0);tg.add(m);
+      const gh=new THREE.Sprite(new THREE.SpriteMaterial(additive({map:GLOW,color:c,opacity:.55})));gh.scale.setScalar(2.6);gh.position.copy(m.position);tg.add(gh);});
+    g.add(tg);n.triG=tg;}
   rings.forEach(r=>r.b=r.o.material.opacity);
   O[n.id]={g,mesh,halo,hb:halo.material.opacity,dim:1,rings,sats,phase:Math.random()*6,w:0,spin:0};
 });
@@ -1835,7 +1840,7 @@ function loop(){
       s.a+=s.s*dt*sp;const c=Math.cos(s.a)*s.radius,si=Math.sin(s.a)*s.radius;
       s.g.position.set(n.P.x+s.u.x*c+s.v.x*si,n.P.y+s.u.y*c+s.v.y*si,n.P.z+s.u.z*c+s.v.z*si);
       const fade=s.mini?1-o.w:1;
-      s.dot.material.opacity=fade;s.sh.material.opacity=.6*fade;s.g.visible=fade>.02&&!n.hidden;
+      s.dot.material.opacity=fade;s.sh.material.opacity=.6*fade;s.g.visible=fade>.02&&!n.hidden&&!n.tri;
       if(!s.mini)return;
       if(focused){
         if(listMode==='scene'&&slots[i]){
@@ -1955,6 +1960,7 @@ function loop(){
     w.sp.material.opacity=Math.sin(u*Math.PI)*(.7+.3*glowS);w.sp.scale.setScalar(.7+.5*glowS);});}
   FLOWS.forEach(f=>{const u=(t*f.speed*sp+f.o)%1;f.sp.position.lerpVectors(f.A,f.B,u);f.sp.material.color.copy(f.ca).lerp(f.cb,u);f.sp.material.opacity=Math.sin(u*Math.PI)*.95;});
   coreLight.intensity=1.5+Math.sin(t*1.2)*.2;
+  if(BY.efv.triG&&!REDUCED)BY.efv.triG.rotation.z=t*.35;
   {const MZ=Math.min(1,Math.max(.55,ovPos().distanceTo(OVERVIEW.target)/camera.position.distanceTo(controls.target))).toFixed(3);tmp2.copy(BY.sevgi.P).addScaledVector(up,BY.sevgi.r+4);toScreen(tmp2,sA);MUP.style.transform=`translate(${sA.x.toFixed(1)}px,${sA.y.toFixed(1)}px) translate(-50%,-50%) scale(${MZ})`;MUP.style.visibility=sA.z<1?'visible':'hidden';
    tmp2.copy(BY.denge.P).addScaledVector(up,-(BY.denge.r+6.8));toScreen(tmp2,sA);MDN.style.transform=`translate(${sA.x.toFixed(1)}px,${sA.y.toFixed(1)}px) translate(-50%,-50%) scale(${MZ})`;MDN.style.visibility=sA.z<1?'visible':'hidden';}
   renderer.render(scene,camera);
