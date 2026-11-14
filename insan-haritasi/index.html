@@ -106,6 +106,8 @@ body.focused .legend,body.focused .brand p{opacity:0;pointer-events:none;}
 .kw:hover i,.kw:focus-visible i{transform:translateX(3px);}
 .kw:focus-visible{outline:2px solid var(--c);outline-offset:3px;border-radius:4px;}
 @media (min-width:761px){#list.nw .it .lbl{white-space:nowrap;}}
+.it.hd .slot{visibility:hidden;}
+.it.hd .lbl{font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--c);opacity:.9;}
 .it .lbl .ih{display:block;font-size:.82em;font-weight:700;color:var(--ink);opacity:.8;margin-bottom:2px;}
 .it .lbl .in{font-weight:600;color:var(--ink);}
 .it .lbl b{font-weight:800;color:var(--c);}
@@ -1435,7 +1437,9 @@ const NODES = [
 
  {id:'bdn', parent:'simdi', kind:'hub', name:'Bedensel', title:'Bedensel', kicker:'Hayatın Temel Üçlemesi · 3', color:C.leaf, sc:0x96d6a4, vc:0x7cb062, pos:[0,-33.5,-14], r:2.2, panel:[], links:[{go:'sifa', label:'Şifalanmanın Yolu', note:''}]},
  {id:'beden-ihtiyac', parent:'bdn', kind:'sub', name:'Bedenin Temel İhtiyaçları', kicker:'Bedensel Alan', color:C.leaf, sc:0x96d6a4, vc:0x7cb062, off:[10.5,3,-3], r:1.25,
-  ring:['Tuz','Tahin','İsveç şurubu','Spirulina','Chlorella','Zeytin','Shilajit','Karbonat','Zerdeçal-Zencefil-Keten tohumu','Sarımsak','Ceviz-badem-fındık-Çekirdek','Bitkisel çaylar','Limon/Lime','Küçük balık','Susam yağı ( Ağız çalkalama )','Maca powder','Sirke','Magnezyum','Krill yağı','Safran','Probiyotik','Bentonite Clay','Cayenne pepper'].map(t=>({t})),
+  rows:15,
+  ring:[{t:'Besleyenler',hd:true},...['Tuz','Tahin','Spirulina','Zeytin','Shilajit','Zerdeçal-Zencefil-Keten tohumu','Sarımsak','Ceviz-badem-fındık-Çekirdek','Bitkisel çaylar','Küçük balık','Maca powder','Magnezyum','Krill yağı','Probiyotik'].map(t=>({t})),
+   {t:'Arındıranlar',hd:true},...['İsveç şurubu','Chlorella','Karbonat','Limon/Lime','Susam yağı ( Ağız çalkalama )','Sirke','Safran','Bentonite Clay','Cayenne pepper'].map(t=>({t}))],
   panel:[]},
  {id:'sifa', parent:'bdn', kind:'sub', hidden:true, host:'bdn', noLink:true, name:'Şifalanmanın Yolu', kicker:'Bedensel Alan', color:C.leaf, off:[0,0,0], r:2.2,
   panel:[{t:'quotes', items:['Şifanın Allah\'tan ( Yaratıcı\'dan ) geldiğini bilirsen, şifanın her yerden ve her formdan gelebileceğini de bilirsin.','Şifalanmak için: Sonuca değil, sorunun özündeki sebebe bakıp, görüp, kabul ettikten sonra da özdeki sorunu organik yolla çözdüğümüzde şifalanma gerçekleşir.','Beden sakinken, huzurluyken rahatça iyileşebilir.']}]}
@@ -1587,7 +1591,7 @@ NODES.forEach(n=>{
     const radius=n.kind==='core'?n.r*3.3:n.r*(1.9+(i%3)*.45+Math.random()*.25);
     let el=null,mini=null;
     const miniR=n.kind==='core'?.55:.3;
-    if(item){
+    if(item&&!item.hd){
       mini=new THREE.Group();
       mini.add(new THREE.Mesh(sphereGeo,new THREE.MeshPhongMaterial({color:n.color,emissive:n.color,emissiveIntensity:.6,shininess:90})));
       const mh=new THREE.Sprite(new THREE.SpriteMaterial(additive({map:GLOW,color:n.color,opacity:.75})));mh.scale.setScalar(3.4);mini.add(mh);
@@ -1647,8 +1651,8 @@ function fillHolo(n){
   listT=0;listEl.classList.remove('on','inpanel','inholo');holo.classList.remove('haslist','withlist');
   listEl.style.setProperty('--c',hex(n.color));
   const N=n.ring.length,cols=(N>12&&!n.oneCol)?2:1;listEl.classList.toggle('nw',!!n.oneCol);
-  listEl.style.gridTemplateRows=N?`repeat(${Math.ceil(N/cols)},auto)`:'';
-  listEl.innerHTML=n.ring.map((it,i)=>`<div class="it${it.go?' go':''}${it.more?' multi':''}"${it.go?` data-go="${it.go}" role="button" tabindex="0"`:''} style="--d:${300+i*45}ms"><span class="slot"></span><span class="lbl">${it.h?`<span class="ih">${esc(it.h)}</span>`:''}${it.kw?`<button type="button" class="kw${it.nou?' nou':''}" data-go="${it.kw}">${it.parts?pt(it.parts):esc(it.t)}<i aria-hidden="true">→</i></button>`:it.parts?pt(it.parts)+esc(it.tail||''):it.more?esc(it.t)+it.more.map(x=>'<br>'+esc(x)).join(''):it.d?(it.inline?`<b${it.tc?` style="color:${it.tc}"`:''}>${esc(it.t)}</b> <span class="in">${esc(it.d)}</span>`:`<b>${esc(it.t)}</b><small>${esc(it.d)}</small>`):esc(it.t)}</span></div>`).join('');
+  listEl.style.gridTemplateRows=N?`repeat(${n.rows||Math.ceil(N/cols)},auto)`:'';
+  listEl.innerHTML=n.ring.map((it,i)=>`<div class="it${it.hd?' hd':''}${it.go?' go':''}${it.more?' multi':''}"${it.go?` data-go="${it.go}" role="button" tabindex="0"`:''} style="--d:${300+i*45}ms"><span class="slot"></span><span class="lbl">${it.h?`<span class="ih">${esc(it.h)}</span>`:''}${it.kw?`<button type="button" class="kw${it.nou?' nou':''}" data-go="${it.kw}">${it.parts?pt(it.parts):esc(it.t)}<i aria-hidden="true">→</i></button>`:it.parts?pt(it.parts)+esc(it.tail||''):it.more?esc(it.t)+it.more.map(x=>'<br>'+esc(x)).join(''):it.d?(it.inline?`<b${it.tc?` style="color:${it.tc}"`:''}>${esc(it.t)}</b> <span class="in">${esc(it.d)}</span>`:`<b>${esc(it.t)}</b><small>${esc(it.d)}</small>`):esc(it.t)}</span></div>`).join('');
   slots=[...listEl.querySelectorAll('.slot')];rowsEl=[...listEl.querySelectorAll('.it')];
   fanG.innerHTML='';fanLines=n.ring.map(()=>{const l=document.createElementNS('http://www.w3.org/2000/svg','line');l.setAttribute('stroke',hex(n.color));l.setAttribute('stroke-width','1');l.setAttribute('opacity','0');fanG.appendChild(l);return l;});
   threadsG.innerHTML='';threads=[...hBody.querySelectorAll('.row')].map(r=>{const l=document.createElementNS('http://www.w3.org/2000/svg','line');l.setAttribute('stroke',hex(n.color));l.setAttribute('stroke-width','1');l.setAttribute('opacity','0');threadsG.appendChild(l);return{r,l,orb:r.querySelector('.orb'),d:parseFloat(r.style.getPropertyValue('--d'))||0};});
