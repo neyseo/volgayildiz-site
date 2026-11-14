@@ -1420,7 +1420,7 @@ const NODES = [
  {id:'ruh', parent:'kalp', kind:'hub', name:'Ruhu Besleyen Pratikler', title:'Ruhu Besleyen Pratikler', kicker:'Ruhsal', oneCol:true, color:C.violet, pos:[-31,5,-6], r:2.2,
   ring:['Joy: Her anın hediye olduğunu hatırlamak','Söz büyüdür / Niyet / Mantra','Rehberlik ediliyorum – Korunuyorum – Seviliyorum','Yeni şeyler Öğrenmek','Sosyallik / Çember / Dostlar','Akışta farkında olmak','Şükretmek','Sarılmak','Hayal kurmak','Paylaşmak','Çocuk gibi Kahkaha ( hayat bir oyun )','Meditasyon','Negatif Duygu sağaltımı'].map(t=>({t})),
   panel:[]},
- {id:'ruh-ihtiyac', parent:'bdn', kind:'sub', name:'Bedenin Temel Pratikleri', kicker:'Bedensel Alan', color:C.leaf, sc:0x96d6a4, off:[-10.5,3,-3], r:1.25,
+ {id:'ruh-ihtiyac', parent:'bdn', kind:'sub', name:'Bedenin Temel Pratikleri', kicker:'Bedensel Alan', color:C.leaf, sc:0x96d6a4, vc:0x7cb062, off:[-10.5,3,-3], r:1.25,
   ring:['Su\'yu içmeden önce suya konuşmak','Nefes Pratikleri','Kendi sesimizle iyileşme: Om sesi','Her gün tüm bedene masaj-vuruş','Fiziksel esneklik ve Hareket ( kas-esnemek )','Sabah egzersizleri','Uyku - Dinlenmek','Enerji - Qi Gong','Fasting','Geç kahvaltı','Güneşlenmek','Terlemek','Dil temizliği','Çıplak ayak topraklanmak ve Ağaca sarılmak'].map(t=>t==='Nefes Pratikleri'?{t,go:'ruh-nefes'}:{t}),
   panel:[]},
  {id:'ruh-nefes', parent:'ruh-ihtiyac', kind:'sub', hidden:true, host:'ruh-ihtiyac', noLink:true, name:'Nefes Çeşitleri', kicker:'Bedensel', color:C.leaf, off:[0,0,0], r:1.25,
@@ -1433,8 +1433,8 @@ const NODES = [
  {id:'secim', parent:'zihin', kind:'trio', hidden:true, host:'zihin', noLink:true, name:'Zihin & Seçimler', kicker:'Zihin', color:C.amber, pos:[10,-8.5,0], r:1.9,
   panel:[{t:'quotes', items:['Zihin sonsuz bir evren olduğundan dolayı kaosa açıktır.','Her şey seçim meselesidir.','Seçimler ise bilinçaltının nasıl kodlandığı ile alakalıdır.','Genlerden gelenler sadece çıkış noktasıdır; etkileri değişebilir.']}]},
 
- {id:'bdn', parent:'simdi', kind:'hub', name:'Bedensel', title:'Bedensel', kicker:'Hayatın Temel Üçlemesi · 3', color:C.leaf, sc:0x96d6a4, pos:[0,-33.5,-14], r:2.2, panel:[], links:[{go:'sifa', label:'Şifalanmanın Yolu', note:''}]},
- {id:'beden-ihtiyac', parent:'bdn', kind:'sub', name:'Bedenin Temel İhtiyaçları', kicker:'Bedensel Alan', color:C.leaf, sc:0x96d6a4, off:[10.5,3,-3], r:1.25,
+ {id:'bdn', parent:'simdi', kind:'hub', name:'Bedensel', title:'Bedensel', kicker:'Hayatın Temel Üçlemesi · 3', color:C.leaf, sc:0x96d6a4, vc:0x7cb062, pos:[0,-33.5,-14], r:2.2, panel:[], links:[{go:'sifa', label:'Şifalanmanın Yolu', note:''}]},
+ {id:'beden-ihtiyac', parent:'bdn', kind:'sub', name:'Bedenin Temel İhtiyaçları', kicker:'Bedensel Alan', color:C.leaf, sc:0x96d6a4, vc:0x7cb062, off:[10.5,3,-3], r:1.25,
   ring:['Tuz','Tahin','İsveç şurubu','Spirulina','Chlorella','Zeytin','Shilajit','Karbonat','Zerdeçal-Zencefil-Keten tohumu','Sarımsak','Ceviz-badem-fındık-Çekirdek','Oolong-Moringa çayı','Avocado','Limon/Lime','Küçük balık','Susam yağı ( Ağız çalkalama )','Maca powder','Sirke','Magnezyum','Krill yağı','Safran','Probiyotik','Bentonite Clay','Cayenne pepper'].map(t=>({t})),
   panel:[{t:'quote', text:'Bağırsaklar soğuk sıvıyı sevmez'}]},
  {id:'sifa', parent:'bdn', kind:'sub', hidden:true, host:'bdn', noLink:true, name:'Şifalanmanın Yolu', kicker:'Bedensel Alan', color:C.leaf, off:[0,0,0], r:2.2,
@@ -1500,13 +1500,13 @@ function nebula(center,color,spread,count){
   const p=new THREE.Points(g,new THREE.PointsMaterial(additive({size:.35,map:DOT,color,opacity:.75})));
   p.position.set(0,0,0); scene.add(p); return p;
 }
-const dusts=[nebula(BY.sevgi.P,0xff9a4a,11,450),nebula(BY.simdi.P,C.gold,16,500),nebula(BY.ruh.P,C.violet,16,700),nebula(BY.zhn.P,0x86d0cb,16,700),nebula(BY.bdn.P,0x96d6a4,15,650)];
+const dusts=[nebula(BY.sevgi.P,0xff9a4a,11,450),nebula(BY.simdi.P,C.gold,16,500),nebula(BY.ruh.P,C.violet,16,700),nebula(BY.zhn.P,0x86d0cb,16,700),nebula(BY.bdn.P,0x7cb062,15,650)];
 
 function link(A,B,color,curve,rad,op){
   let c; if(curve){const mid=A.clone().add(B).multiplyScalar(.5);mid.y+=curve;c=new THREE.QuadraticBezierCurve3(A,mid,B);} else c=new THREE.LineCurve3(A,B);
   scene.add(new THREE.Mesh(new THREE.TubeGeometry(c,curve?64:8,rad,8,false),new THREE.MeshBasicMaterial(additive({color,opacity:op}))));
 }
-NODES.forEach(n=>{if(n.parent&&!n.noLink) link(BY[n.parent].P,n.P,n.sc||n.color,n.kind==='hub'?(n.id==='bdn'?0:-7):0,n.kind==='hub'?.11:.065,n.kind==='hub'?.42:.5);});
+NODES.forEach(n=>{if(n.parent&&!n.noLink) link(BY[n.parent].P,n.P,n.vc||n.sc||n.color,n.kind==='hub'?(n.id==='bdn'?0:-7):0,n.kind==='hub'?.11:.065,n.kind==='hub'?.42:.5);});
 function beam(A,B,color,rad,op){
   const d=B.clone().sub(A),len=d.length();
   const m=new THREE.Mesh(new THREE.CylinderGeometry(rad,rad,len,10,1,true),new THREE.MeshBasicMaterial(additive({color,opacity:op})));
