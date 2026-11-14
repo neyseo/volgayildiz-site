@@ -1588,8 +1588,8 @@ NODES.forEach(n=>{
   const count=N||n.deco||0;
   const sats=[...Array(count)].map((_,i)=>{
     const sg=new THREE.Group();scene.add(sg);
-    const dot=new THREE.Mesh(lowGeo,new THREE.MeshBasicMaterial({color:n.color,transparent:true}));dot.scale.setScalar(n.kind==='core'?.22:.17);sg.add(dot);
-    const sh=new THREE.Sprite(new THREE.SpriteMaterial(additive({map:GLOW,color:n.color,opacity:.6})));sh.scale.setScalar(.9);sg.add(sh);
+    const dot=new THREE.Mesh(lowGeo,new THREE.MeshBasicMaterial({color:n.vc||n.color,transparent:true}));dot.scale.setScalar(n.kind==='core'?.22:.17);sg.add(dot);
+    const sh=new THREE.Sprite(new THREE.SpriteMaterial(additive({map:GLOW,color:n.vc||n.color,opacity:.6})));sh.scale.setScalar(.9);sg.add(sh);
     const item=n.ring[i];
     if(item){const h=new THREE.Mesh(lowGeo,new THREE.MeshBasicMaterial());h.visible=false;h.scale.setScalar(.5);h.userData={sat:item.t+(item.d?' '+item.d:''),node:n};sg.add(h);satHits.push(h);}
     const axis=new THREE.Vector3(Math.random()-.5,Math.random()*1.5+.4,Math.random()-.5).normalize();
@@ -1599,8 +1599,8 @@ NODES.forEach(n=>{
     const miniR=n.kind==='core'?.55:.3;
     if(item&&!item.hd){
       mini=new THREE.Group();
-      mini.add(new THREE.Mesh(sphereGeo,new THREE.MeshPhongMaterial({color:n.color,emissive:n.color,emissiveIntensity:.6,shininess:90})));
-      const mh=new THREE.Sprite(new THREE.SpriteMaterial(additive({map:GLOW,color:n.color,opacity:.75})));mh.scale.setScalar(3.4);mini.add(mh);
+      mini.add(new THREE.Mesh(sphereGeo,new THREE.MeshPhongMaterial({color:n.vc||n.color,emissive:n.vc||n.color,emissiveIntensity:.6,shininess:90})));
+      const mh=new THREE.Sprite(new THREE.SpriteMaterial(additive({map:GLOW,color:n.vc||n.color,opacity:.75})));mh.scale.setScalar(3.4);mini.add(mh);
       mini.visible=false;scene.add(mini);
       el=document.createElement('div');el.className='sat';el.style.setProperty('--c',hex(n.color));
       el.innerHTML=item.d?`<b>${esc(item.t)}</b><small>${esc(item.d)}</small>`:esc(item.t);
