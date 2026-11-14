@@ -1421,7 +1421,7 @@ const NODES = [
   ring:['Joy: Her anın hediye olduğunu hatırlamak','Söz büyüdür / Niyet / Mantra','Rehberlik ediliyorum – Korunuyorum – Seviliyorum','Yeni şeyler Öğrenmek','Sosyallik / Çember / Dostlar','Akışta farkında olmak','Şükretmek','Sarılmak','Hayal kurmak','Paylaşmak','Çocuk gibi Kahkaha ( hayat bir oyun )','Meditasyon','Negatif Duygu sağaltımı'].map(t=>({t})),
   panel:[]},
  {id:'ruh-ihtiyac', parent:'bdn', kind:'sub', name:'Bedenin Temel Pratikleri', kicker:'Bedensel Alan', color:C.leaf, sc:0x96d6a4, vc:0x7cb062, off:[-10.5,3,-3], r:1.25,
-  ring:['Su\'yu içmeden önce suya konuşmak','Nefes Pratikleri','Kendi sesimizle iyileşme: Om sesi','Her gün tüm bedene masaj-vuruş','Fiziksel esneklik ve Hareket ( kas-esnemek )','Sabah egzersizleri','Uyku - Dinlenmek','Enerji - Qi Gong','Fasting','Geç kahvaltı','Güneşlenmek','Terlemek','Dil temizliği','Çıplak ayak topraklanmak ve Ağaca sarılmak'].map(t=>t==='Nefes Pratikleri'?{t,go:'ruh-nefes'}:{t}),
+  ring:['Su\'yu içmeden önce suya konuşmak','Bağırsaklar soğuk sıvıyı sevmez','Nefes Pratikleri','Kendi sesimizle iyileşme: Om sesi','Her gün tüm bedene masaj-vuruş','Fiziksel esneklik ve Hareket ( kas-esnemek )','Sabah egzersizleri','Uyku - Dinlenmek','Enerji - Qi Gong','Fasting','Geç kahvaltı','Güneşlenmek','Terlemek','Dil temizliği','Çıplak ayak topraklanmak ve Ağaca sarılmak'].map(t=>t==='Nefes Pratikleri'?{t,go:'ruh-nefes'}:{t}),
   panel:[]},
  {id:'ruh-nefes', parent:'ruh-ihtiyac', kind:'sub', hidden:true, host:'ruh-ihtiyac', noLink:true, name:'Nefes Çeşitleri', kicker:'Bedensel', color:C.leaf, off:[0,0,0], r:1.25,
   ring:[['Meditasyon','burundan kısa, ağızdan uzun','#C9A0FF'],['Sıkıntıyı serbest bırakır','ağızdan uzun al ve uzun ver','#7FB8FF'],['Topraklanma ve beden bağlantısı','ağızdan O şeklinde al ver','#7DE39A'],['Enerji artışı','ağızdan nefes alıp vermek','#FFE066'],['Coşku ve enerjiyi artırır','burundan hızlı al-ver','#FFA552'],['Anında neşe','ağızdan nefes alıp vererek ıslık çal','#FF6B6B']].map(([t,d,tc])=>({t:t+':',d,tc,inline:true})),
@@ -1435,8 +1435,8 @@ const NODES = [
 
  {id:'bdn', parent:'simdi', kind:'hub', name:'Bedensel', title:'Bedensel', kicker:'Hayatın Temel Üçlemesi · 3', color:C.leaf, sc:0x96d6a4, vc:0x7cb062, pos:[0,-33.5,-14], r:2.2, panel:[], links:[{go:'sifa', label:'Şifalanmanın Yolu', note:''}]},
  {id:'beden-ihtiyac', parent:'bdn', kind:'sub', name:'Bedenin Temel İhtiyaçları', kicker:'Bedensel Alan', color:C.leaf, sc:0x96d6a4, vc:0x7cb062, off:[10.5,3,-3], r:1.25,
-  ring:['Tuz','Tahin','İsveç şurubu','Spirulina','Chlorella','Zeytin','Shilajit','Karbonat','Zerdeçal-Zencefil-Keten tohumu','Sarımsak','Ceviz-badem-fındık-Çekirdek','Oolong-Moringa çayı','Avocado','Limon/Lime','Küçük balık','Susam yağı ( Ağız çalkalama )','Maca powder','Sirke','Magnezyum','Krill yağı','Safran','Probiyotik','Bentonite Clay','Cayenne pepper'].map(t=>({t})),
-  panel:[{t:'quote', text:'Bağırsaklar soğuk sıvıyı sevmez'}]},
+  ring:['Tuz','Tahin','İsveç şurubu','Spirulina','Chlorella','Zeytin','Shilajit','Karbonat','Zerdeçal-Zencefil-Keten tohumu','Sarımsak','Ceviz-badem-fındık-Çekirdek','Bitkisel çaylar','Limon/Lime','Küçük balık','Susam yağı ( Ağız çalkalama )','Maca powder','Sirke','Magnezyum','Krill yağı','Safran','Probiyotik','Bentonite Clay','Cayenne pepper'].map(t=>({t})),
+  panel:[]},
  {id:'sifa', parent:'bdn', kind:'sub', hidden:true, host:'bdn', noLink:true, name:'Şifalanmanın Yolu', kicker:'Bedensel Alan', color:C.leaf, off:[0,0,0], r:2.2,
   panel:[{t:'quotes', items:['Şifanın Allah\'tan ( Yaratıcı\'dan ) geldiğini bilirsen, şifanın her yerden ve her formdan gelebileceğini de bilirsin.','Şifalanmak için: Sonuca değil, sorunun özündeki sebebe bakıp, görüp, kabul ettikten sonra da özdeki sorunu organik yolla çözdüğümüzde şifalanma gerçekleşir.','Beden sakinken, huzurluyken rahatça iyileşebilir.']}]}
 ];
