@@ -1402,9 +1402,9 @@ const NODES = [
  {id:'gelecek', parent:'simdi', kind:'trio', name:'Gelecek', kicker:'Zaman Ekseni', color:0xffc98a, pos:[14,1,0], r:1.9, noLink:true,
   panel:[{t:'quote', text:'Farkındalıkla istenilen yaratılabilir'}],
   links:[{go:'zhn', label:'Niyetten Gerçeğe', note:'Zihinsel'}]},
- {id:'kalp', parent:'simdi', kind:'trio', name:'KALP', kicker:'İç Mekanizma · Karar Veren', color:C.rose, pos:[-10,-8.5,0], r:1.9, noLink:true,
+ {id:'kalp', parent:'simdi', kind:'trio', name:'KALP', kicker:'İç Mekanizma · Karar Veren', color:C.rose, vc:0xe58a74, pos:[-10,-8.5,0], r:1.9, noLink:true,
   panel:[{t:'quote', text:'Kendine şefkatin var mı?\nKendini seviyor musun?'},{t:'quote', text:'Kırma - Kırılma'}]},
- {id:'zihin', parent:'simdi', kind:'trio', name:'ZİHİN', kicker:'İç Mekanizma · Kararı Uygulayan', color:C.amber, pos:[10,-8.5,0], r:1.9, noLink:true,
+ {id:'zihin', parent:'simdi', kind:'trio', name:'ZİHİN', kicker:'İç Mekanizma · Kararı Uygulayan', color:C.amber, vc:0xe9b35f, pos:[10,-8.5,0], r:1.9, noLink:true,
   panel:[{t:'quote', text:'Zihin aktifken farkında olmadan nefesimizi tutarız.'},{t:'quote', text:'Şüphe yok'},{t:'quote', h:'YYYY: Yargı Yok Yorum Yok', hb:true, text:'Zıtlıklar birbirini tamamlar; bu yüzden hiçbir şeyi yorumlamaya veya yargılamaya gerek yoktur. Yorum ve yargı, zaman kaybı olduğu kadar enerji de tüketir. Haklı olsak bile egomuzu şişirir; çoğu zaman negatif enerji taşır ve bu da bedenimize iyi gelmez.'},{t:'quote', text:'Geçmişte misin? Şüphede misin? Yargılıyor musun?'}],
   links:[{go:'secim', label:'Zihin & Seçimler', note:''}]},
  {id:'kz', parent:'simdi', kind:'sub', name:'Tahterevalli', kicker:'Kalp – Zihin', color:0xdfe8ff, pos:[0,-8.5,0], r:1.4, noLink:true,
@@ -1519,7 +1519,7 @@ beam(BY.simdi.P,BY.denge.P,0xdfe8ff,.08,.4);
 const triMat=new THREE.MeshBasicMaterial(additive({color:0xe8e2ff,opacity:.07}));
 
 // kol uçlarında küçük işaret halkaları
-[BY.gecmis,BY.gelecek,BY.kalp,BY.zihin].forEach(n=>{const t=new THREE.Mesh(new THREE.TorusGeometry(n.r*1.5,.03,6,90),new THREE.MeshBasicMaterial(additive({color:n.color,opacity:.4})));
+[BY.gecmis,BY.gelecek,BY.kalp,BY.zihin].forEach(n=>{const t=new THREE.Mesh(new THREE.TorusGeometry(n.r*1.5,.03,6,90),new THREE.MeshBasicMaterial(additive({color:n.vc||n.color,opacity:.4})));
   t.position.copy(n.P);scene.add(t);});
 // ışık akışları: Şimdi'den geçmişe ve geleceğe ( farkındalıkla yaratım ), Kalp'ten Zihin'e (karar → uygulama), Nefes'ten Şimdi'ye
 const FLOWS=[];
@@ -1528,7 +1528,7 @@ function flow(A,B,ca,cb,n,speed,size){for(let i=0;i<n;i++){const sp=new THREE.Sp
 const sEdgeL=BY.simdi.P.clone().add(new THREE.Vector3(-BY.simdi.r,0,0)),sEdgeR=BY.simdi.P.clone().add(new THREE.Vector3(BY.simdi.r,0,0));
 flow(sEdgeL,BY.gecmis.P,C.gold,0xc9b8ff,2,.16,1.1);
 flow(sEdgeR,BY.gelecek.P,C.gold,0xffc98a,2,.16,1.1);
-flow(BY.kalp.P,BY.zihin.P,C.rose,C.amber,3,.09,.9);
+flow(BY.kalp.P,BY.zihin.P,BY.kalp.vc,BY.zihin.vc,3,.09,.9);
 // kalp–zihin kolunun gövdeye bağlandığı nokta
 (function(){return;const j=new THREE.Mesh(new THREE.SphereGeometry(.32,16,12),new THREE.MeshBasicMaterial({color:0xdfe8ff}));j.position.set(0,-8.5,0);scene.add(j);
   const jh=new THREE.Sprite(new THREE.SpriteMaterial(additive({map:GLOW,color:0xdfe8ff,opacity:.6})));jh.scale.setScalar(2.2);jh.position.copy(j.position);scene.add(jh);})();
@@ -1545,7 +1545,7 @@ const sphereGeo=new THREE.SphereGeometry(1,48,32),lowGeo=new THREE.SphereGeometr
 const satLayer=document.getElementById('sats');
 NODES.forEach(n=>{
   const g=new THREE.Group();g.position.copy(n.P);scene.add(g);if(n.hidden)g.visible=false;
-  const SC=n.sc||n.color;
+  const SC=n.vc||n.sc||n.color;
   const mesh=new THREE.Mesh(n.shape==='octa'?octaGeo:sphereGeo,new THREE.MeshPhongMaterial({color:SC,emissive:SC,emissiveIntensity:n.kind==='core'?.9:n.shape==='octa'?.45:.55,shininess:60,flatShading:n.shape==='octa',transparent:true,opacity:.95}));
   mesh.scale.setScalar(n.r);g.add(mesh);
   const halo=new THREE.Sprite(new THREE.SpriteMaterial(additive({map:GLOW,color:SC,opacity:n.kind==='core'?.75:.55})));
@@ -1611,7 +1611,7 @@ const labelsEl=document.getElementById('labels');
 NODES.forEach(n=>{
   const b=document.createElement('button');b.type='button';
   b.className='label '+(n.kind==='core'?'core':(n.kind==='hub'||n.kind==='trio')?'hub':'');
-  b.style.setProperty('--c',hex(n.sc||n.color));
+  b.style.setProperty('--c',hex(n.vc||n.sc||n.color));
   b.innerHTML='<span class="dot"></span>'+esc(n.name);
   b.addEventListener('click',e=>{e.stopPropagation();focus(n.id);});
   labelsEl.appendChild(b);n.label=b;
