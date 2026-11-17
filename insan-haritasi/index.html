@@ -107,6 +107,10 @@ body.focused .legend,body.focused .brand p{opacity:0;pointer-events:none;}
 .kw:focus-visible{outline:2px solid var(--c);outline-offset:3px;border-radius:4px;}
 @media (min-width:761px){#list.nw .it .lbl{white-space:nowrap;}}
 .it.hd .slot{visibility:hidden;}
+#list.nodot .slot{visibility:hidden;width:0!important;margin:0!important;}
+#list.nodot .it{grid-template-columns:0 minmax(0,1fr);gap:0;}
+#list.nodot{column-gap:56px!important;margin-left:48px!important;}
+#list.nodot.inpanel{grid-template-columns:repeat(2,auto);grid-auto-flow:column;grid-template-rows:repeat(3,auto)!important;justify-content:start;}
 .it.hd .lbl{font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--c);opacity:.9;}
 .it .lbl .ih{display:block;font-size:.82em;font-weight:700;color:var(--ink);opacity:.8;margin-bottom:2px;}
 .it .lbl .in{font-weight:600;color:var(--ink);}
@@ -179,6 +183,7 @@ body.focused #hsh{opacity:0;}
 #fsBtn:hover{border-color:rgba(255,217,143,.5);}
 #fsBtn:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
 #fsBtn svg{width:14px;height:14px;flex:none;}
+@media (max-width:760px){body.focused #fsBtn{opacity:0;pointer-events:none;}}
 @media (max-width:760px){#fsBtn{bottom:calc(84px + env(safe-area-inset-bottom,0px));}}
 /* ses */
 #sound{position:fixed;top:calc(16px + env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px));display:flex;align-items:center;gap:10px;
@@ -1409,7 +1414,7 @@ const NODES = [
  {id:'zihin', parent:'simdi', kind:'trio', name:'ZİHİN', kicker:'İç Mekanizma · Kararı Uygulayan', color:C.amber, vc:0xe9b35f, pos:[10,-8.5,0], r:1.9, noLink:true,
   panel:[{t:'quote', text:'Zihin aktifken farkında olmadan nefesimizi tutarız.'},{t:'quote', text:'Şüphe yok'},{t:'quote', h:'YYYY: Yargı Yok Yorum Yok', hb:true, text:'Zıtlıklar birbirini tamamlar; bu yüzden hiçbir şeyi yorumlamaya veya yargılamaya gerek yoktur. Yorum ve yargı, zaman kaybı olduğu kadar enerji de tüketir. Haklı olsak bile egomuzu şişirir; çoğu zaman negatif enerji taşır ve bu da bedenimize iyi gelmez.'},{t:'quote', h:'Zihnin nasıl?', hb:true, text:'Geçmişte misin? Şüphede misin? Yargılıyor musun?'}],
   links:[{go:'secim', label:'Zihin & Seçimler', note:''}]},
- {id:'denge', parent:'simdi', kind:'trio', shape:'octa', name:'DENGE', kicker:'Dayanak Noktası', color:C.gold, vc:0xf4f1ea, pos:[0,-8.5,0], r:1.7, noLink:true,
+ {id:'denge', parent:'simdi', kind:'trio', shape:'octa', noDot:true, cols:2, name:'DENGE', kicker:'Dayanak Noktası', color:C.gold, vc:0xf4f1ea, pos:[0,-8.5,0], r:1.7, noLink:true,
   ring:[{t:'Eril & Dişil'},{t:'İyi & Kötü'},{t:'Gece & Gündüz'},{t:'Ayık & Uyku'},{t:'Yapıcı & Yıkıcı'},{t:'Kalp & Zihin'}], ringTitle:'Zıtlıklar',
   panel:[
    {t:'quote', lead:true, text:'Ana rahminden önce biriz. Bu dünyaya geldiğimizde zıtlıklar dünyasına varırız: eril ile dişil, iyi ile kötü, gece ile gündüz… Kötü aslında kötü değildir; iyinin var olabilmesi için kötünün de olması gerekir. Zıtlıklar birbirini tamamlar. Hayatımız boyunca bu zıtlıkların yarattığı dengesizlikleri dengelemeye ve bir olduğumuzu hatırlamaya çalışırız.'},
@@ -1686,7 +1691,7 @@ function fillHolo(n){
   revealed=false;
   listT=0;listEl.classList.remove('on','inpanel','inholo');holo.classList.remove('haslist','withlist');
   listEl.style.setProperty('--c',hex(n.color));
-  const N=n.ring.length,cols=(N>12&&!n.oneCol)?2:1;listEl.classList.toggle('nw',!!n.oneCol);
+  const N=n.ring.length,cols=n.cols||((N>12&&!n.oneCol)?2:1);listEl.classList.toggle('nw',!!n.oneCol);listEl.classList.toggle('nodot',!!n.noDot);
   listEl.style.gridTemplateRows=N?`repeat(${n.rows||Math.ceil(N/cols)},auto)`:'';
   listEl.innerHTML=n.ring.map((it,i)=>`<div class="it${it.hd?' hd':''}${it.go?' go':''}${it.more?' multi':''}"${it.go?` data-go="${it.go}" role="button" tabindex="0"`:''} style="--d:${300+i*45}ms"><span class="slot"></span><span class="lbl">${it.h?`<span class="ih">${esc(it.h)}</span>`:''}${it.kw?`<button type="button" class="kw${it.nou?' nou':''}" data-go="${it.kw}">${it.parts?pt(it.parts):esc(it.t)}<i aria-hidden="true">→</i></button>`:it.parts?pt(it.parts)+esc(it.tail||''):it.more?esc(it.t)+it.more.map(x=>'<br>'+esc(x)).join(''):it.d?(it.inline?`<b${it.tc?` style="color:${it.tc}"`:''}>${esc(it.t)}</b> <span class="in">${esc(it.d)}</span>`:`<b>${esc(it.t)}</b><small>${esc(it.d)}</small>`):esc(it.t)}</span></div>`).join('');
   slots=[...listEl.querySelectorAll('.slot')];rowsEl=[...listEl.querySelectorAll('.it')];
@@ -1696,7 +1701,7 @@ function fillHolo(n){
 const pt=a=>a.map(([w,c])=>`<span style="color:${c}">${esc(w)}</span>`).join(' – ');
 const listEl=document.getElementById('list'),fanG=document.getElementById('fan');
 let slots=[],rowsEl=[],fanLines=[],listT=0,listMode=null,sceneR=60,sceneExt=75;
-function placeLead(){holo.querySelectorAll('.row.lead').forEach(r=>listEl.parentNode.insertBefore(r,listEl));}
+function placeLead(){const L=[...holo.querySelectorAll('.row.lead')],P=listEl.parentNode;if(!L.length)return;const split=listEl.classList.contains('nodot');let ref=listEl;L.forEach((r,k)=>{if(k===0||!split)P.insertBefore(r,listEl);else{P.insertBefore(r,ref.nextSibling);}ref=(k===0||!split)?listEl:r;});}
 function toPanel(){listMode='panel';listEl.classList.add('inpanel');hBody.prepend(listEl);placeLead();holo.classList.add('haslist');fanG.innerHTML='';fanLines=[];}
 const threadsG=document.getElementById('threads');let threads=[],revealed=false,revealT=0;
 function reveal(){
