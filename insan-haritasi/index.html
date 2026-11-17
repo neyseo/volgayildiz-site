@@ -1520,9 +1520,9 @@ const FIG=(function(){
   cap(0,10.6,0,0,5.6,4.1,2200);
   cap(0,0,0,-6.6,4.1,4.7,900);
   [-1,1].forEach(sg=>{
-    cap(6.2*sg,10.6,15*sg,10.6,1.7,1.25,560);
-    cap(15*sg,10.6,23.4*sg,10.6,1.2,.85,420);
-    cap(23.4*sg,10.6,26.7*sg,10.6,.85,.55,110);
+    cap(6.2*sg,10.6,12.6*sg,10.6,1.7,1.25,460);
+    cap(12.6*sg,10.6,18.4*sg,10.6,1.2,.85,320);
+    cap(18.4*sg,10.6,20.6*sg,10.6,.85,.55,90);
     cap(2.6*sg,-6.6,3.2*sg,-19.8,2.9,1.9,1000);
     cap(3.2*sg,-19.8,3.6*sg,-32,1.9,1.05,640);
     cap(3.6*sg,-32.6,5.6*sg,-33.4,.85,.6,80);
@@ -1531,9 +1531,9 @@ const FIG=(function(){
   const mat=new THREE.PointsMaterial(additive({size:.5,map:DOT,color:0xfff0dc,opacity:.4}));
   const p=new THREE.Points(g,mat);
   const grp=new THREE.Group();grp.add(p);
-  const fog=[];[[0,16.6,7],[0,6,11],[0,-3,10],[-12,10.6,6],[12,10.6,6],[-21,10.6,4.5],[21,10.6,4.5],[-2.9,-14,6.5],[2.9,-14,6.5],[-3.4,-27,5],[3.4,-27,5]].forEach(([x,y,sc])=>{
+  const fog=[];[[0,16.6,7],[0,6,11],[0,-3,10],[-12,10.6,6],[12,10.6,6],[-17,10.6,4.5],[17,10.6,4.5],[-2.9,-14,6.5],[2.9,-14,6.5],[-3.4,-27,5],[3.4,-27,5]].forEach(([x,y,sc])=>{
     const sp=new THREE.Sprite(new THREE.SpriteMaterial(additive({map:GLOW,color:0xffe2bd,opacity:.05})));sp.position.set(x,y,Z-1);sp.scale.setScalar(sc);grp.add(sp);fog.push(sp);});
-  const FS=1.3;grp.scale.setScalar(FS);grp.position.set(0,-6.7*(1-FS)-1.2,0);scene.add(grp);
+  const FS=1;grp.scale.setScalar(FS);grp.position.set(0,-6.7*(1-FS)-1.2,0);scene.add(grp);
   return {grp,mat,fog,base:.4,fbase:.07,a:1,s:FS};
 })();
 
