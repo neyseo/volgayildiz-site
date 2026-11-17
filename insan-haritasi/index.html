@@ -1422,7 +1422,7 @@ const NODES = [
  {id:'ruh', parent:'kalp', kind:'hub', name:'Ruhu Besleyen Pratikler', title:'Ruhu Besleyen Pratikler', kicker:'Ruhsal', oneCol:true, color:C.violet, vc:0x9b6fe0, pos:[-26,9,-4.5], r:2.2,
   ring:['Joy: Her anın hediye olduğunu hatırlamak','Söz büyüdür / Niyet / Mantra','Rehberlik ediliyorum – Korunuyorum – Seviliyorum','Yeni şeyler Öğrenmek','Sosyallik / Çember / Dostlar','Akışta farkında olmak','Şükretmek','Sarılmak','Hayal kurmak','Paylaşmak','Çocuk gibi Kahkaha ( hayat bir oyun )','Meditasyon','Negatif Duygu sağaltımı'].map(t=>({t})),
   panel:[]},
- {id:'ruh-ihtiyac', parent:'bdn', kind:'sub', name:'Bedenin Temel Pratikleri', kicker:'Bedensel Alan', color:C.leaf, sc:0x96d6a4, vc:0x8a6a50, off:[-10.5,3,-3], r:1.25,
+ {id:'ruh-ihtiyac', parent:'bdn', kind:'sub', name:'Bedenin Temel Pratikleri', kicker:'Bedensel Alan', color:C.leaf, sc:0x96d6a4, vc:0x8a6a50, noSat:true, off:[-10.5,3,-3], r:1.25,
   ring:['Su\'yu içmeden önce suya konuşmak','Bağırsaklar soğuk sıvıyı sevmez','Nefes Pratikleri','Kendi sesimizle iyileşme: Om sesi','Her gün tüm bedene masaj-vuruş','Fiziksel esneklik ve Hareket ( kas-esnemek )','Sabah egzersizleri','Uyku - Dinlenmek','Enerji - Qi Gong','Fasting','Geç kahvaltı','Güneşlenmek','Terlemek','Dil temizliği','Çıplak ayak topraklanmak ve Ağaca sarılmak'].map(t=>t==='Nefes Pratikleri'?{t,go:'ruh-nefes'}:{t}),
   panel:[]},
  {id:'ruh-nefes', parent:'ruh-ihtiyac', kind:'sub', hidden:true, host:'ruh-ihtiyac', noLink:true, name:'Nefes Çeşitleri', kicker:'Bedensel', color:C.leaf, off:[0,0,0], r:1.25,
@@ -1436,7 +1436,7 @@ const NODES = [
   panel:[{t:'quotes', items:['Her an bir seçimdir.','Seçimler ise bilinçaltının nasıl kodlandığı ile alakalıdır.','Genlerden gelenler sadece çıkış noktasıdır; etkileri değişebilir.','Zihin sonsuz bir evren olduğundan dolayı kaosa açıktır.']}]},
 
  {id:'bdn', parent:'simdi', kind:'hub', name:'Bedensel', title:'Bedensel', kicker:'Hayatın Temel Üçlemesi · 3', color:C.leaf, sc:0x96d6a4, vc:0x8a6a50, pos:[0,-31.5,-9], r:2.2, panel:[], links:[{go:'sifa', label:'Şifalanmanın Yolu', note:''}]},
- {id:'beden-ihtiyac', parent:'bdn', kind:'sub', name:'Bedenin Temel İhtiyaçları', kicker:'Bedensel Alan', color:C.leaf, sc:0x96d6a4, vc:0x8a6a50, off:[10.5,3,-3], r:1.25,
+ {id:'beden-ihtiyac', parent:'bdn', kind:'sub', name:'Bedenin Temel İhtiyaçları', kicker:'Bedensel Alan', color:C.leaf, sc:0x96d6a4, vc:0x8a6a50, noSat:true, off:[10.5,3,-3], r:1.25,
   rows:15,
   ring:[{t:'Besleyenler',hd:true},...['Tuz','Tahin','Spirulina','Zeytin','Shilajit','Zerdeçal-Zencefil-Keten tohumu','Sarımsak','Ceviz-badem-fındık-Çekirdek','Bitkisel çaylar','Küçük balık','Maca powder','Magnezyum','Krill yağı','Probiyotik'].map(t=>({t})),
    {t:'Arındıranlar',hd:true},...['İsveç şurubu','Chlorella','Karbonat','Limon/Lime','Susam yağı ( Ağız çalkalama )','Sirke','Safran','Bentonite Clay','Cayenne pepper'].map(t=>({t}))],
@@ -1504,7 +1504,7 @@ function nebula(center,color,spread,count){
   const p=new THREE.Points(g,new THREE.PointsMaterial(additive({size:.35,map:DOT,color,opacity:.75})));
   p.position.set(0,0,0); scene.add(p); return p;
 }
-const dusts=[nebula(BY.sevgi.P,0xff9a4a,11,450),nebula(BY.simdi.P,C.gold,16,500),nebula(BY.ruh.P,0x9b6fe0,16,700),nebula(BY.zhn.P,0x86d0cb,16,700),nebula(BY.bdn.P,0x8a6a50,15,650)];
+const dusts=[nebula(BY.sevgi.P,0xff9a4a,11,450),nebula(BY.simdi.P,C.gold,16,500),nebula(BY.ruh.P,0x9b6fe0,16,700),nebula(BY.zhn.P,0x86d0cb,16,700),nebula(BY.bdn.P,0x8a6a50,15,650),nebula(BY['ruh-ihtiyac'].P,0x8a6a50,5,260),nebula(BY['beden-ihtiyac'].P,0x8a6a50,5,260)];
 
 /* enerji bedeni: kollarını açmış ayakta insan figürü (ışık zerreleri + sis) */
 const FIG=(function(){
@@ -1881,7 +1881,7 @@ function loop(){
       s.a+=s.s*dt*sp;const c=Math.cos(s.a)*s.radius,si=Math.sin(s.a)*s.radius;
       s.g.position.set(n.P.x+s.u.x*c+s.v.x*si,n.P.y+s.u.y*c+s.v.y*si,n.P.z+s.u.z*c+s.v.z*si);
       const fade=s.mini?1-o.w:1;
-      s.dot.material.opacity=fade;s.sh.material.opacity=.6*fade;s.g.visible=fade>.02&&!n.hidden&&!n.tri;
+      s.dot.material.opacity=fade;s.sh.material.opacity=.6*fade;s.g.visible=fade>.02&&!n.hidden&&!n.tri&&!n.noSat;
       if(!s.mini)return;
       if(focused){
         if(listMode==='scene'&&slots[i]){
