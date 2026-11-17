@@ -1533,8 +1533,8 @@ const FIG=(function(){
   const grp=new THREE.Group();grp.add(p);
   const fog=[];[[0,16.6,7],[0,6,11],[0,-3,10],[-12,10.6,6],[12,10.6,6],[-21,10.6,4.5],[21,10.6,4.5],[-2.9,-14,6.5],[2.9,-14,6.5],[-3.4,-27,5],[3.4,-27,5]].forEach(([x,y,sc])=>{
     const sp=new THREE.Sprite(new THREE.SpriteMaterial(additive({map:GLOW,color:0xffe2bd,opacity:.05})));sp.position.set(x,y,Z-1);sp.scale.setScalar(sc);grp.add(sp);fog.push(sp);});
-  grp.position.set(0,-1.2,0);scene.add(grp);
-  return {grp,mat,fog,base:.4,fbase:.07,a:1};
+  const FS=1.3;grp.scale.setScalar(FS);grp.position.set(0,-6.7*(1-FS)-1.2,0);scene.add(grp);
+  return {grp,mat,fog,base:.4,fbase:.07,a:1,s:FS};
 })();
 
 function link(A,B,color,curve,rad,op){
@@ -2002,7 +2002,7 @@ function loop(){
   FLOWS.forEach(f=>{const u=(t*f.speed*sp+f.o)%1;f.sp.position.lerpVectors(f.A,f.B,u);f.sp.material.color.copy(f.ca).lerp(f.cb,u);f.sp.material.opacity=Math.sin(u*Math.PI)*.95;});
   coreLight.intensity=1.5+Math.sin(t*1.2)*.2;
   {const tgt=current?0:1;FIG.a+=(tgt-FIG.a)*.035;FIG.mat.opacity=FIG.base*FIG.a;FIG.fog.forEach(f=>f.material.opacity=FIG.fbase*FIG.a);FIG.grp.visible=FIG.a>.01;
-   if(!REDUCED){const br=Math.sin(t*.9),b=1+br*.03;FIG.grp.scale.set(b,b,b);FIG.mat.opacity*=.85+br*.15;}}
+   if(!REDUCED){const br=Math.sin(t*.9),b=FIG.s*(1+br*.03);FIG.grp.scale.set(b,b,b);FIG.mat.opacity*=.85+br*.15;}}
   if(BY.efv.triG&&!REDUCED)BY.efv.triG.rotation.z=t*.35;
   {const MZ=Math.min(1,Math.max(.55,ovPos().distanceTo(OVERVIEW.target)/camera.position.distanceTo(controls.target))).toFixed(3);tmp2.copy(BY.sevgi.P).addScaledVector(up,BY.sevgi.r+4);toScreen(tmp2,sA);MUP.style.transform=`translate(${sA.x.toFixed(1)}px,${sA.y.toFixed(1)}px) translate(-50%,-50%) scale(${MZ})`;MUP.style.visibility=sA.z<1?'visible':'hidden';
    tmp2.copy(BY.denge.P).addScaledVector(up,-(BY.denge.r+6.8));toScreen(tmp2,sA);MDN.style.transform=`translate(${sA.x.toFixed(1)}px,${sA.y.toFixed(1)}px) translate(-50%,-50%) scale(${MZ})`;MDN.style.visibility=sA.z<1?'visible':'hidden';}
