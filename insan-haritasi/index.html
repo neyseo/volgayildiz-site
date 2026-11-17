@@ -1513,16 +1513,16 @@ const FIG=(function(){
     let dx,dy,dz;do{dx=rnd()*2-1;dy=rnd()*2-1;dz=rnd()*2-1;}while(dx*dx+dy*dy+dz*dz>1);
     pts.push(x+dx*r,y+dy*r,Z+dz*r*.55);}}
   function ell(cx,cy,rx,ry,n){for(let i=0;i<n;i++){let dx,dy,dz;do{dx=rnd()*2-1;dy=rnd()*2-1;dz=rnd()*2-1;}while(dx*dx+dy*dy+dz*dz>1);pts.push(cx+dx*rx,cy+dy*ry,Z+dz*rx*.55);}}
-  /* 8 baş boyu oranı: tepe 20, ayak -33.5 (1 baş ≈ 6.7) */
+  /* Vitruvius oranı: 8 baş boy, kol açıklığı = boy (tepe 20, ayak -33.5) */
   ell(0,16.6,2.6,3.35,800);
   cap(0,13.4,0,11.6,1.25,1.4,160);
   cap(-6.2,10.6,6.2,10.6,2,2,560);
   cap(0,10.6,0,0,5.6,4.1,2200);
   cap(0,0,0,-6.6,4.1,4.7,900);
   [-1,1].forEach(sg=>{
-    cap(6.2*sg,10.6,13.4*sg,4.6,1.7,1.3,520);
-    cap(13.4*sg,4.6,19.8*sg,-.8,1.25,.9,380);
-    cap(19.8*sg,-.8,21.8*sg,-2.5,.9,.6,90);
+    cap(6.2*sg,10.6,15*sg,10.6,1.7,1.25,560);
+    cap(15*sg,10.6,23.4*sg,10.6,1.2,.85,420);
+    cap(23.4*sg,10.6,26.7*sg,10.6,.85,.55,110);
     cap(2.6*sg,-6.6,3.2*sg,-19.8,2.9,1.9,1000);
     cap(3.2*sg,-19.8,3.6*sg,-32,1.9,1.05,640);
     cap(3.6*sg,-32.6,5.6*sg,-33.4,.85,.6,80);
@@ -1531,7 +1531,7 @@ const FIG=(function(){
   const mat=new THREE.PointsMaterial(additive({size:.5,map:DOT,color:0xfff0dc,opacity:.4}));
   const p=new THREE.Points(g,mat);
   const grp=new THREE.Group();grp.add(p);
-  const fog=[];[[0,16.6,7],[0,6,11],[0,-3,10],[-12,5,6],[12,5,6],[-19,-1,4.5],[19,-1,4.5],[-2.9,-14,6.5],[2.9,-14,6.5],[-3.4,-27,5],[3.4,-27,5]].forEach(([x,y,sc])=>{
+  const fog=[];[[0,16.6,7],[0,6,11],[0,-3,10],[-12,10.6,6],[12,10.6,6],[-21,10.6,4.5],[21,10.6,4.5],[-2.9,-14,6.5],[2.9,-14,6.5],[-3.4,-27,5],[3.4,-27,5]].forEach(([x,y,sc])=>{
     const sp=new THREE.Sprite(new THREE.SpriteMaterial(additive({map:GLOW,color:0xffe2bd,opacity:.05})));sp.position.set(x,y,Z-1);sp.scale.setScalar(sc);grp.add(sp);fog.push(sp);});
   grp.position.set(0,-1.2,0);scene.add(grp);
   return {grp,mat,fog,base:.4,fbase:.07,a:1};
