@@ -1506,6 +1506,36 @@ function nebula(center,color,spread,count){
 }
 const dusts=[nebula(BY.sevgi.P,0xff9a4a,11,450),nebula(BY.simdi.P,C.gold,16,500),nebula(BY.ruh.P,0x9b6fe0,16,700),nebula(BY.zhn.P,0x86d0cb,16,700),nebula(BY.bdn.P,0x8a6a50,15,650)];
 
+/* enerji bedeni: kollarını açmış ayakta insan figürü (ışık zerreleri + sis) */
+const FIG=(function(){
+  const pts=[],Z=-5,rnd=Math.random;
+  function cap(ax,ay,bx,by,ra,rb,n){for(let i=0;i<n;i++){const t=rnd(),x=ax+(bx-ax)*t,y=ay+(by-ay)*t,r=ra+(rb-ra)*t;
+    let dx,dy,dz;do{dx=rnd()*2-1;dy=rnd()*2-1;dz=rnd()*2-1;}while(dx*dx+dy*dy+dz*dz>1);
+    pts.push(x+dx*r,y+dy*r,Z+dz*r*.55);}}
+  function ell(cx,cy,rx,ry,n){for(let i=0;i<n;i++){let dx,dy,dz;do{dx=rnd()*2-1;dy=rnd()*2-1;dz=rnd()*2-1;}while(dx*dx+dy*dy+dz*dz>1);pts.push(cx+dx*rx,cy+dy*ry,Z+dz*rx*.55);}}
+  ell(0,17,3.4,4.1,900);
+  cap(0,12.9,0,10.8,1.4,1.6,160);
+  cap(-5.4,9.4,5.4,9.4,1.9,1.9,520);
+  cap(0,9.4,0,-2,5.4,3.9,2200);
+  cap(0,-2,0,-7.5,3.9,4.5,900);
+  [-1,1].forEach(sg=>{
+    cap(5.4*sg,9.4,15*sg,9.6,1.6,1.2,520);
+    cap(15*sg,9.6,24.3*sg,9.6,1.0,.75,300);
+    cap(24.3*sg,9.6,26.2*sg,9.6,.8,.5,70);
+    cap(2.4*sg,-7.5,3.6*sg,-19.5,2.7,1.7,900);
+    cap(3.6*sg,-19.5,4.4*sg,-31,1.7,1,560);
+    cap(4.4*sg,-31.6,6*sg,-32.4,.8,.6,80);
+  });
+  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(new Float32Array(pts),3));
+  const mat=new THREE.PointsMaterial(additive({size:.5,map:DOT,color:0xfff0dc,opacity:.4}));
+  const p=new THREE.Points(g,mat);
+  const grp=new THREE.Group();grp.add(p);
+  const fog=[];[[0,15.6,7],[0,6,10],[0,-3,9],[-13,9.5,6],[13,9.5,6],[-22,9.6,4.5],[22,9.6,4.5],[-2.8,-15,6],[2.8,-15,6],[-3.8,-27,5],[3.8,-27,5]].forEach(([x,y,sc])=>{
+    const sp=new THREE.Sprite(new THREE.SpriteMaterial(additive({map:GLOW,color:0xffe2bd,opacity:.05})));sp.position.set(x,y,Z-1);sp.scale.setScalar(sc);grp.add(sp);fog.push(sp);});
+  grp.position.set(0,-1.2,0);scene.add(grp);
+  return {grp,mat,fog,base:.4,fbase:.07,a:1};
+})();
+
 function link(A,B,color,curve,rad,op){
   let c; if(curve){const mid=A.clone().add(B).multiplyScalar(.5);mid.y+=curve;c=new THREE.QuadraticBezierCurve3(A,mid,B);} else c=new THREE.LineCurve3(A,B);
   scene.add(new THREE.Mesh(new THREE.TubeGeometry(c,curve?64:8,rad,8,false),new THREE.MeshBasicMaterial(additive({color,opacity:op}))));
@@ -1970,6 +2000,8 @@ function loop(){
     w.sp.material.opacity=Math.sin(u*Math.PI)*(.7+.3*glowS);w.sp.scale.setScalar(.7+.5*glowS);});}
   FLOWS.forEach(f=>{const u=(t*f.speed*sp+f.o)%1;f.sp.position.lerpVectors(f.A,f.B,u);f.sp.material.color.copy(f.ca).lerp(f.cb,u);f.sp.material.opacity=Math.sin(u*Math.PI)*.95;});
   coreLight.intensity=1.5+Math.sin(t*1.2)*.2;
+  {const tgt=current?0:1;FIG.a+=(tgt-FIG.a)*.035;FIG.mat.opacity=FIG.base*FIG.a;FIG.fog.forEach(f=>f.material.opacity=FIG.fbase*FIG.a);FIG.grp.visible=FIG.a>.01;
+   if(!REDUCED){const b=1+Math.sin(t*.9)*.012;FIG.grp.scale.set(b,b,1);}}
   if(BY.efv.triG&&!REDUCED)BY.efv.triG.rotation.z=t*.35;
   {const MZ=Math.min(1,Math.max(.55,ovPos().distanceTo(OVERVIEW.target)/camera.position.distanceTo(controls.target))).toFixed(3);tmp2.copy(BY.sevgi.P).addScaledVector(up,BY.sevgi.r+4);toScreen(tmp2,sA);MUP.style.transform=`translate(${sA.x.toFixed(1)}px,${sA.y.toFixed(1)}px) translate(-50%,-50%) scale(${MZ})`;MUP.style.visibility=sA.z<1?'visible':'hidden';
    tmp2.copy(BY.denge.P).addScaledVector(up,-(BY.denge.r+6.8));toScreen(tmp2,sA);MDN.style.transform=`translate(${sA.x.toFixed(1)}px,${sA.y.toFixed(1)}px) translate(-50%,-50%) scale(${MZ})`;MDN.style.visibility=sA.z<1?'visible':'hidden';}
