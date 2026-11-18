@@ -1513,14 +1513,14 @@ const dusts=[nebula(BY.sevgi.P,0xff9a4a,11,450),nebula(BY.simdi.P,C.gold,16,500)
 /* enerji bedeni: kollarını açmış ayakta insan figürü (ışık zerreleri + sis) */
 const FIG=(function(){
   const pts=[],Z=-14,rnd=Math.random;
-  function cap(ax,ay,bx,by,ra,rb,n){for(let i=0;i<n;i++){const t=rnd(),x=ax+(bx-ax)*t,y=ay+(by-ay)*t,r=ra+(rb-ra)*t;
+  const THK=.9;function cap(ax,ay,bx,by,ra,rb,n){ra*=THK;rb*=THK;for(let i=0;i<n;i++){const t=rnd(),x=ax+(bx-ax)*t,y=ay+(by-ay)*t,r=ra+(rb-ra)*t;
     let dx,dy,dz;do{dx=rnd()*2-1;dy=rnd()*2-1;dz=rnd()*2-1;}while(dx*dx+dy*dy+dz*dz>1);
     pts.push(x+dx*r,y+dy*r,Z+dz*r*.55);}}
-  function ell(cx,cy,rx,ry,n){for(let i=0;i<n;i++){let dx,dy,dz;do{dx=rnd()*2-1;dy=rnd()*2-1;dz=rnd()*2-1;}while(dx*dx+dy*dy+dz*dz>1);pts.push(cx+dx*rx,cy+dy*ry,Z+dz*rx*.55);}}
+  function ell(cx,cy,rx,ry,n){if(cy<14){rx*=THK;ry*=(1+(THK-1)*.4);}for(let i=0;i<n;i++){let dx,dy,dz;do{dx=rnd()*2-1;dy=rnd()*2-1;dz=rnd()*2-1;}while(dx*dx+dy*dy+dz*dz>1);pts.push(cx+dx*rx,cy+dy*ry,Z+dz*rx*.55);}}
   /* Vitruvius duruşu, hafif kaslı: kollar yatay, ayaklar hafif açık (tepe 20, ayak -30) */
   ell(0,16.6,2.7,3.35,800);
   cap(0,13.3,0,11.2,1.6,1.95,220);
-  cap(-7,10.6,7,10.6,2.4,2.4,620);
+  cap(-6.6,10.6,6.6,10.6,2.4,2.4,620);
   cap(0,9.6,0,1.5,5.9,4.3,1900);
   cap(0,1.5,0,-2.6,4.2,4.4,700);
   ell(0,-4.8,5.1,3.1,820);
