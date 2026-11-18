@@ -1513,7 +1513,7 @@ const dusts=[nebula(BY.sevgi.P,0xff9a4a,11,450),nebula(BY.simdi.P,C.gold,16,500)
 /* enerji bedeni: kollarını açmış ayakta insan figürü (ışık zerreleri + sis) */
 const FIG=(function(){
   const pts=[],Z=-14,rnd=Math.random;
-  const THK=.9;function cap(ax,ay,bx,by,ra,rb,n){ra*=THK;rb*=THK;for(let i=0;i<n;i++){const t=rnd(),x=ax+(bx-ax)*t,y=ay+(by-ay)*t,r=ra+(rb-ra)*t;
+  const THK=.8;function cap(ax,ay,bx,by,ra,rb,n){ra*=THK;rb*=THK;for(let i=0;i<n;i++){const t=rnd(),x=ax+(bx-ax)*t,y=ay+(by-ay)*t,r=ra+(rb-ra)*t;
     let dx,dy,dz;do{dx=rnd()*2-1;dy=rnd()*2-1;dz=rnd()*2-1;}while(dx*dx+dy*dy+dz*dz>1);
     pts.push(x+dx*r,y+dy*r,Z+dz*r*.55);}}
   function ell(cx,cy,rx,ry,n){if(cy<14){rx*=THK;ry*=(1+(THK-1)*.4);}for(let i=0;i<n;i++){let dx,dy,dz;do{dx=rnd()*2-1;dy=rnd()*2-1;dz=rnd()*2-1;}while(dx*dx+dy*dy+dz*dz>1);pts.push(cx+dx*rx,cy+dy*ry,Z+dz*rx*.55);}}
