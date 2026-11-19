@@ -1478,7 +1478,7 @@ function ovPos(){const base=OVERVIEW.pos.clone().sub(OVERVIEW.target),d0=base.le
 camera.position.copy(ovPos());
 const controls=new THREE.OrbitControls(camera,canvas);
 controls.target.copy(OVERVIEW.target);
-controls.enableDamping=true; controls.dampingFactor=.07;
+controls.enableDamping=true;controls.enablePan=false; controls.dampingFactor=.07;
 controls.minDistance=3; controls.maxDistance=220; controls.rotateSpeed=.6;
 controls.autoRotate=!REDUCED; controls.autoRotateSpeed=.25;
 NODES.forEach(n=>n.P=new THREE.Vector3(...n.pos));
@@ -1839,7 +1839,7 @@ function hideTip(){tip.classList.remove('on');}
 
 function measureLabels(){NODES.forEach(n=>{n.label._w=n.label.offsetWidth;n.label._h=n.label.offsetHeight;});}
 let rzT;function resize(){measureLabels();W=innerWidth;H=innerHeight;renderer.setSize(W,H,false);camera.aspect=W/H;camera.updateProjectionMatrix();
-  clearTimeout(rzT);rzT=setTimeout(()=>{if(current)focus(current.id,true);},250);}
+  clearTimeout(rzT);rzT=setTimeout(()=>{if(current)focus(current.id,true);else if(!tour.on){controls.target.copy(OVERVIEW.target);camera.position.copy(ovPos());}},250);}
 addEventListener('resize',resize);resize();
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(measureLabels);setTimeout(measureLabels,800);
 
