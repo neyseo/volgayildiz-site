@@ -1776,14 +1776,13 @@ function focus(id,quiet){
 const STEP_MS=8000;
 const CLUSTER=NODES.filter(n=>n.kind==='hub'||n.kind==='sub').map(n=>n.id);
 const TOUR=[
- {hl:['sevgi'],title:'SEVGİ',c:0xff8126,t:[0,16.5,0],p:[0,18,22],text:"Sevgiden zıtlık dünyasına geliyoruz. Çıkış noktamız sevgi."},
- {hl:['sevgi','efv','simdi'],title:'ENERJİ · FREKANS · TİTREŞİM',c:0xffd2e0,t:[0,9.5,0],p:[0,10.5,33],text:"Energy - Frequency - Vibration. Evrendeki tüm formlar ve varlıklar enerji, frekans ve titreşimden yaratılmıştır."},
- {hl:['gecmis','gelecek','kalp','zihin','simdi','denge'],title:'ZITLIK DÜNYASI',c:0xc9b8ff,t:[0,-3,0],p:[0,1,52],text:"Zıtlık olmadan hayat var olamaz."},
- {hl:['denge'],title:'DENGE',c:C.gold,t:[0,-12,0],p:[5,-9.5,20],text:"Bu zıtlık dünyasında Denge var."},
- {hl:['simdi'],title:'ŞİMDİ · NEFES',c:0xfff4e4,t:[0,1,0],p:[0,4,22],text:"Dengenin tam merkezinde Nefes var, Bilinç var, Şu an var, Farkındalık var."},
- {hl:['simdi'],title:'FARKINDALIK',c:0xfff0c2,t:[0,1,0],p:[0,3,17],text:"Bu farkındalıktan sonra: Şu an kimsin? Yarın ne istiyorsun? Hayalin, amacın, niyetin nedir?"},
- {hl:['sevgi','efv','simdi'],title:'YARATIM',c:0xffcf85,t:[0,8.5,0],p:[0,10.5,40],text:"Niyetlerini sesle ve hayal ederek pratik edersin ve zaman'a zaman verirsin. Yani beklenti yok."},
- {hl:CLUSTER,title:'Hayatın Temel Üçlemesi',c:C.violet,t:[0,-6,0],p:[0,14,90],tri:true,text:"Hayatın temel üçlemesi: Ruhsal, Zihinsel ve Bedensel"}
+ {hl:['sevgi'],title:'SEVGİ',c:0xff8126,t:[0,11,0],p:[0,14,44],text:"Her şey sevgiyle başlar. Sevgiden zıtlıklar dünyasına geliriz ve hayat bu zıtlıklarla var olur."},
+ {hl:['sevgi','efv','simdi'],title:'ENERJİ · TİTREŞİM · FREKANS',c:0xffd2e0,t:[0,6,0],p:[0,8,46],text:"Sevgi bir enerjidir. Evrendeki tüm formlar ve varlıklar enerji, frekans ve titreşimden yaratılmıştır."},
+ {hl:['gecmis','gelecek','kalp','zihin','denge'],title:'ZITLIKLAR VE DENGE',c:0xf4f1ea,t:[0,-1,0],p:[0,1,56],text:"Zıtlıklar olmadan hayat var olamaz. Gece ile gündüz, eril ile dişil… Ve bu zıtlıkların tam ortasında denge vardır."},
+ {hl:['simdi'],title:'ŞİMDİ · NEFES',c:0xfff4e4,t:[0,5.6,0],p:[0,8,22],text:"Dengede olabilmek için şu an'da olmamız gerekir. Şu an'a gelmenin yolu da nefesten geçer. Nefes aldıkça farkındalığa varırız."},
+ {hl:['simdi'],title:'FARKINDALIK',c:0xfff0c2,t:[0,5.6,0],p:[0,7,17],text:"Bu farkındalıkla kendine sorabilirsin: Şu an kimsin? Yarın ne istiyorsun? Hayalin, amacın, niyetin nedir?"},
+ {hl:['gecmis','simdi','gelecek'],title:'YARATIM',c:0xffcf85,t:[0,5.6,0],p:[0,8,42],text:"Geçmiş değişebilir, gelecek ise farkındalıkla yaratılabilir. Niyetini sesle, sevgiyle ve hayal ederek pratik edebilirsin. Ve zaman'a zaman verirsin; beklentisiz, akışta."},
+ {hl:['efv'].concat(CLUSTER),title:'HAYATIN TEMEL ÜÇLEMESİ',c:0xffd2e0,t:[0,0,0],p:[0,12,100],tri:true,text:"Sevgiden doğan enerji titreşti ve forma büründü. Düşünce söze, söz gerçekliğe dönüştü. Hayat da hep üçlerle akar: doğum, yaşam, ölüm… geçmiş, şimdi, gelecek… ve en temelinde ruh, zihin ve beden."}
 ];
 const tour={on:false,i:0,t0:0,hl:new Set(),hover:false};
 const tourEl=document.getElementById('tour'),tStep=document.getElementById('tStep'),tTitle=document.getElementById('tTitle'),tText=document.getElementById('tText'),tProg=document.getElementById('tProg'),tPrev=document.getElementById('tPrev'),tNext=document.getElementById('tNext');
