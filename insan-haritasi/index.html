@@ -1471,7 +1471,7 @@ const scene=new THREE.Scene();
 scene.fog=new THREE.FogExp2(0x05060d,0.0042);
 const camera=new THREE.PerspectiveCamera(50,1,0.1,2000);
 const TANH=Math.tan(THREE.MathUtils.degToRad(25));
-const OVERVIEW={pos:new THREE.Vector3(0,12.5,79),target:new THREE.Vector3(0,-5.4,0)};
+const OVERVIEW={pos:new THREE.Vector3(0,15.4,79),target:new THREE.Vector3(0,-2.5,0)};
 function ovPos(){const base=OVERVIEW.pos.clone().sub(OVERVIEW.target),d0=base.length(),a=(innerWidth||1)/(innerHeight||1);
   const need=a<1?Math.min(190,36/(Math.tan(THREE.MathUtils.degToRad(25))*a)):d0;
   return OVERVIEW.target.clone().add(base.normalize().multiplyScalar(Math.max(d0,need)));}
