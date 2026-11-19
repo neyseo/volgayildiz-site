@@ -1929,7 +1929,8 @@ function loop(){
   });
 
   // uzaklaşınca yazılar küçülsün
-  const ZS=Math.min(1,Math.max(.55,ovPos().distanceTo(OVERVIEW.target)/camera.position.distanceTo(controls.target)));
+  const ZK=ovPos().distanceTo(OVERVIEW.target)/camera.position.distanceTo(controls.target),ZS=Math.min(1,Math.max(.3,ZK));
+  {const gs=ZK<1?Math.min(1.8,Math.pow(ZK,-.55)):1;NODES.forEach(n=>{if(!n.hidden)O[n.id].g.scale.setScalar(gs);});}
   // isimleri üst üste bindirmeden yerleştir
   LBLS.sort((a,b)=>a.pr-b.pr||a.z-b.z);
   const placed=[];
@@ -2015,7 +2016,7 @@ function loop(){
   {const tgt=current?0:1;FIG.a+=(tgt-FIG.a)*.035;FIG.mat.opacity=FIG.base*FIG.a;FIG.fog.forEach(f=>f.material.opacity=FIG.fbase*FIG.a);FIG.grp.visible=FIG.a>.01;
    if(!REDUCED){const br=Math.sin(t*.9),b=FIG.s*(1+br*.03);FIG.grp.scale.set(b,b,b);FIG.mat.opacity*=.85+br*.15;}}
   if(BY.efv.triG&&!REDUCED)BY.efv.triG.rotation.z=t*.35;
-  {const MZ=Math.min(1,Math.max(.55,ovPos().distanceTo(OVERVIEW.target)/camera.position.distanceTo(controls.target))).toFixed(3);tmp2.copy(BY.sevgi.P).addScaledVector(up,BY.sevgi.r+4);toScreen(tmp2,sA);MUP.style.transform=`translate(${sA.x.toFixed(1)}px,${sA.y.toFixed(1)}px) translate(-50%,-50%) scale(${MZ})`;MUP.style.visibility=sA.z<1?'visible':'hidden';
+  {const MZ=Math.min(1,Math.max(.3,ovPos().distanceTo(OVERVIEW.target)/camera.position.distanceTo(controls.target))).toFixed(3);tmp2.copy(BY.sevgi.P).addScaledVector(up,BY.sevgi.r+4);toScreen(tmp2,sA);MUP.style.transform=`translate(${sA.x.toFixed(1)}px,${sA.y.toFixed(1)}px) translate(-50%,-50%) scale(${MZ})`;MUP.style.visibility=sA.z<1?'visible':'hidden';
    tmp2.copy(BY.denge.P).addScaledVector(up,-(BY.denge.r+6.8));toScreen(tmp2,sA);MDN.style.transform=`translate(${sA.x.toFixed(1)}px,${sA.y.toFixed(1)}px) translate(-50%,-50%) scale(${MZ})`;MDN.style.visibility=sA.z<1?'visible':'hidden';}
   renderer.render(scene,camera);
   requestAnimationFrame(loop);
