@@ -1375,7 +1375,7 @@ const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&g
    ring:  kürenin etrafında yazılı uydular olarak dönen kısa maddeler
    panel: kürenin yanında yüzen hologram paneldeki metinler            */
 const NODES = [
- {id:'sevgi', kind:'trio', shape:'star', name:'SEVGİ', kicker:'Kaynak · Çıkış noktamız', color:0xffb8cf, sc:0xff8126, pos:[0,18,0], r:1.8, noLink:true,
+ {id:'sevgi', kind:'trio', shape:'star', name:'SEVGİ', kicker:'Kaynak · Çıkış noktamız', color:0xffb8cf, sc:0xff8126, pos:[0,18,0], r:2.1, noLink:true,
   panel:[
    {t:'quote', text:'Sevgiden zıtlıklar dünyasına geliriz; hayat bu zıtlıklarla var olur ve bu yüzden hayatımız boyunca dengeyi ararız. Dengede olabilmek için Şu an\'da olmamız gerekir. Şu an\'da olabilmek için de Nefes\'e ihtiyacımız vardır. Nefes\'le de şu anın farkındalığına varırız; bu farkındalıkla da an\'ı yaratırız.'},
    {t:'quote', text:'Sevgi > Zıtlık > Denge > Şu an > Nefes > Farkındalık'}
@@ -1387,18 +1387,18 @@ const NODES = [
  {id:'efv-acik', parent:'efv', kind:'trio', hidden:true, host:'efv', noLink:true, name:'Enerji – Titreşim – Frekans', kicker:'Hayatın Temel Üçlemesi', color:0xffd2e0, pos:[0,-2.6,0], r:.55,
   ring:[{t:'Enerji:',d:'asıl olan',inline:true,tc:'#FFD27A'},{t:'Titreşim:',d:'enerjinin hareketi',inline:true,tc:'#C9A6FF'},{t:'Frekans:',d:'titreşimin hızı',inline:true,tc:'#7FE3E0'}],
   panel:[{t:'quote', text:'Evrendeki tüm formlar ve varlıklar enerji, frekans ve titreşimden yaratılmıştır.'}]},
- {id:'simdi', kind:'core', name:'ŞİMDİ · NEFES', kicker:'Merkez · Dengenin tam ortası', color:C.gold, sc:0xfff4e4, pos:[0,5.6,0], r:2.4, noLink:true, breath:true,
+ {id:'simdi', kind:'core', name:'ŞİMDİ · NEFES', kicker:'Merkez · Dengenin tam ortası', color:C.gold, sc:0xfff4e4, pos:[0,5.6,0], r:2.5, noLink:true, breath:true,
   panel:[
    {t:'quote', text:'Hepsi aynı nokta:\nNefes > Bilinç > Şu an > [[Farkındalık|fark]]'},
    {t:'quote', text:'Nefes anı yaratmanın anahtarıdır.'},
    {t:'quote', text:'İnsanın en büyük gücü anı yaratabilmesidir. Anı yaratabilmesi için ise anın farkındalığına ihtiyaç duyar. Anın farkındalığına gelebilmesi için de nefese ihtiyacı vardır.'},
    {t:'quote', text:'Zaman: Her şeyin şu an\'da var olduğunu algılayıp ve kabullendikten sonra an\'ı yaşayabilirsiniz. An\'a vardığınızda geçmiş ve geleceğin olmadığını anlarsınız-bilirsiniz.'}
   ]},
- {id:'fark', parent:'simdi', kind:'trio', hidden:true, host:'simdi', name:'Farkındalık', kicker:'Şimdi · Nefes · Farkındalık', color:0xfff0c2, pos:[0,5.6,0], r:2.4, noLink:true,
+ {id:'fark', parent:'simdi', kind:'trio', hidden:true, host:'simdi', name:'Farkındalık', kicker:'Şimdi · Nefes · Farkındalık', color:0xfff0c2, pos:[0,5.6,0], r:2.5, noLink:true,
   ring:[{t:'Şu an kimsin?'},{t:'Yarın ne istiyorsun?'},{t:'Hayalin? / Amacın? / Niyetin?'},{t:'Kendini sev',more:['Kendini tanı','Kendine inan','Kendini dinle']}],
   panel:[{t:'quotes', items:['Bir şey her şeyden oluşur.','Herkesin doğrusu kendisine ve o doğru da zamanla değişebilir.','Başkasını anlamak mümkün değildir. Ancak kişi kendisini anlayabilir.']}],
   links:[{go:'yaratim', label:'Nasıl yaratıyoruz?', note:'Yaratmaya geç'}]},
- {id:'yaratim', parent:'fark', kind:'trio', hidden:true, host:'simdi', name:'Nasıl yaratıyoruz?', kicker:'Yaratım', color:0xffcf85, pos:[0,5.6,0], r:2.4, noLink:true,
+ {id:'yaratim', parent:'fark', kind:'trio', hidden:true, host:'simdi', name:'Nasıl yaratıyoruz?', kicker:'Yaratım', color:0xffcf85, pos:[0,5.6,0], r:2.5, noLink:true,
   panel:[{t:'quote', text:'Niyetlerini sesle, sevgiyle ve hayal kurarak pratik et.'},{t:'quote', text:'Her şeyin titreşimden yaratıldığını unutma.'},{t:'quote', text:'Zaman\'a zaman ver ( Beklenti yok ).'},{t:'quote', text:'Düşünce > Söz > Gerçeklik ( düşünce söze dönüşür, söz gerçekliğe )'}],
   links:[{go:'zhn', label:'Niyetten Gerçeğe', note:'Zihinsel'},{go:'sevgi', label:'SEVGİ', note:'Kaynak'}]},
  {id:'gecmis', parent:'simdi', kind:'trio', name:'Geçmiş', kicker:'Zaman Ekseni', color:0xc9b8ff, vc:0xc9c4bb, pos:[-14,5.6,0], r:1.9, noLink:true,
@@ -1439,13 +1439,13 @@ const NODES = [
  {id:'secim', parent:'zihin', kind:'trio', hidden:true, host:'zihin', noLink:true, name:'Zihin & Seçimler', kicker:'Zihin', color:C.amber, pos:[10,-10,0], r:1.9,
   panel:[{t:'quotes', items:['Her an bir seçimdir.','Seçimler ise bilinçaltının nasıl kodlandığı ile alakalıdır.','Genlerden gelenler sadece çıkış noktasıdır; etkileri değişebilir.','Zihin sonsuz bir evren olduğundan dolayı kaosa açıktır.']}]},
 
- {id:'bdn', parent:'simdi', kind:'hub', name:'Bedensel', title:'Bedensel', kicker:'Hayatın Temel Üçlemesi · 3', color:C.leaf, sc:0x96d6a4, vc:0x8a6a50, pos:[0,-31.5,-9], r:2.2, panel:[], links:[{go:'sifa', label:'Şifalanmanın Yolu', note:''}]},
+ {id:'bdn', parent:'simdi', kind:'hub', name:'Bedensel', title:'Bedensel', kicker:'Hayatın Temel Üçlemesi · 3', color:C.leaf, sc:0x96d6a4, vc:0x8a6a50, pos:[0,-31.5,-9], r:1.9, panel:[], links:[{go:'sifa', label:'Şifalanmanın Yolu', note:''}]},
  {id:'beden-ihtiyac', parent:'bdn', kind:'sub', name:'Bedenin Temel İhtiyaçları', kicker:'Bedensel Alan', color:C.leaf, sc:0x96d6a4, vc:0x8a6a50, noSat:true, off:[10.5,3,-3], r:1.25,
   rows:15,
   ring:[{t:'Besleyenler',hd:true},...['Tuz','Tahin','Spirulina','Zeytin','Shilajit','Zerdeçal-Zencefil-Keten tohumu','Sarımsak','Ceviz-badem-fındık-Çekirdek','Bitkisel çaylar','Küçük balık','Maca powder','Magnezyum','Krill yağı','Probiyotik'].map(t=>({t})),
    {t:'Arındıranlar',hd:true},...['İsveç şurubu','Chlorella','Karbonat','Limon/Lime','Susam yağı ( Ağız çalkalama )','Sirke','Safran','Bentonite Clay','Cayenne pepper'].map(t=>({t}))],
   panel:[]},
- {id:'sifa', parent:'bdn', kind:'sub', hidden:true, host:'bdn', noLink:true, name:'Şifalanmanın Yolu', kicker:'Bedensel Alan', color:C.leaf, off:[0,0,0], r:2.2,
+ {id:'sifa', parent:'bdn', kind:'sub', hidden:true, host:'bdn', noLink:true, name:'Şifalanmanın Yolu', kicker:'Bedensel Alan', color:C.leaf, off:[0,0,0], r:1.9,
   panel:[{t:'quotes', items:['Şifanın Allah\'tan ( Yaratıcı\'dan ) geldiğini bilirsen, şifanın her yerden ve her formdan gelebileceğini de bilirsin.','Şifalanmak için: Sonuca değil, sorunun özündeki sebebe bakıp, görüp, kabul ettikten sonra da özdeki sorunu organik yolla çözdüğümüzde şifalanma gerçekleşir.','Beden sakinken, huzurluyken rahatça iyileşebilir.']}]}
 ];
 NODES.forEach(n=>{if(n.sc)n.color=n.sc;});
