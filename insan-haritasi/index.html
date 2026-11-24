@@ -1385,9 +1385,12 @@ const NODES = [
    {t:'quote', text:'Sevgi > Zıtlık > Denge > Şu an > Nefes > Farkındalık'}
   ]},
  {id:'efv', parent:'sevgi', kind:'trio', shape:'wave', name:'Hayatın Temel Üçlemesi', title:'Hayatın Temel Üçlemesi', kicker:'Hayatın Temel Üçlemesi', color:0xffd2e0, pos:[0,-2.6,0], r:1.6, tri:true, noLink:true,
-  ring:[{t:'Enerji – Titreşim – Frekans',kw:'efv-acik',nou:true},
+  ring:[{t:'Enerji – Titreşim – Frekans',kw:'efv-acik',nou:true},{t:'Proton – Nötron – Elektron',kw:'atom-acik',nou:true},
    ...['Düşünce > Söz > Gerçeklik','Mer – Ka – Ba = Işık – Ruh – Beden','Zaman – Mekân – Madde','Yükseklik – Genişlik – Derinlik','Katı – Sıvı – Gaz','Sarı – Mavi – Kırmızı','Zihin – Beden – Ruh','Baba – Anne – Çocuk','Doğum – Yaşam – Ölüm','Geçmiş – Şimdi – Gelecek','3 – 6 – 9'].map(t=>({t}))],
   panel:[]},
+ {id:'atom-acik', parent:'efv', kind:'trio', hidden:true, host:'efv', noLink:true, name:'Proton – Nötron – Elektron', kicker:'Hayatın Temel Üçlemesi', color:0xffd2e0, pos:[0,-2.6,0], r:.55,
+  ring:[{t:'Proton:',d:'var olan',inline:true},{t:'Elektron:',d:'olmayan; hareket ve itme–çekme',inline:true},{t:'Nötron:',d:'ruh; dengeyi tutan',inline:true}],
+  panel:[{t:'quote', text:'Atom = Hayat'}]},
  {id:'efv-acik', parent:'efv', kind:'trio', hidden:true, host:'efv', noLink:true, name:'Enerji – Titreşim – Frekans', kicker:'Hayatın Temel Üçlemesi', color:0xffd2e0, pos:[0,-2.6,0], r:.55,
   ring:[{t:'Enerji:',d:'asıl olan',inline:true,tc:'#FFD27A'},{t:'Titreşim:',d:'enerjinin hareketi',inline:true,tc:'#C9A6FF'},{t:'Frekans:',d:'titreşimin hızı',inline:true,tc:'#7FE3E0'}],
   panel:[{t:'quote', text:'Evrendeki tüm formlar ve varlıklar enerji, frekans ve titreşimden yaratılmıştır.'}]},
