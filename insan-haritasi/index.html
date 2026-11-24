@@ -134,6 +134,9 @@ body.focused .legend,body.focused .brand p{opacity:0;pointer-events:none;}
 .motto{position:fixed;left:0;top:0;transform:translate(-50%,-50%);pointer-events:none;white-space:nowrap;z-index:2;
   font:italic 700 clamp(15px,1.6vw,19px)/1 var(--body);letter-spacing:.14em;color:#a9a6b4;text-shadow:0 0 10px rgba(5,6,16,.9),0 0 3px rgba(5,6,16,.9);transition:opacity .5s;}
 body.focused .motto{opacity:0;}
+.motto .pol{position:absolute;left:50%;transform:translateX(-50%);font-size:.72em;letter-spacing:.12em;font-style:normal;opacity:.8;}
+.motto .pol.up{bottom:calc(100% + 8px);}
+.motto .pol.dn{top:calc(100% + 8px);}
 /* yolculuk */
 #tourBtn{pointer-events:auto;margin-top:10px;display:inline-flex;align-items:center;gap:7px;padding:8px 13px 8px 10px;border-radius:999px;
   border:1px solid rgba(255,217,143,.55);background:rgba(255,217,143,.12);color:var(--ink);font:800 10.5px/1 var(--body);cursor:pointer;
@@ -287,7 +290,7 @@ body.focused #hsh{opacity:0;}
 <button id="fsBtn" type="button" hidden><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path id="fsIco" d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg><span id="fsTxt">Tam ekran</span></button>
 <button id="sound" type="button" aria-pressed="false"><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span id="soundTxt">Sesi aç</span><small>432 Hz</small></button>
 
-<div class="motto" id="mUp">As above</div><div class="motto" id="mDn">so below</div>
+<div class="motto" id="mUp"><span class="pol up">Eril (+)</span>As above</div><div class="motto" id="mDn">so below<span class="pol dn">Dişil (−)</span></div>
 <h1 class="title">İnsan Haritası</h1>
 <header class="brand">
   <button id="tourBtn" type="button"><b aria-hidden="true">▶</b>Yolculuğa başla</button>
