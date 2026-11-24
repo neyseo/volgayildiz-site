@@ -1425,6 +1425,7 @@ const NODES = [
  {id:'denge', parent:'simdi', kind:'trio', shape:'octa', noDot:true, cols:2, name:'DENGE', kicker:'Dayanak Noktası', color:C.gold, vc:0xf4f1ea, pos:[0,-10,0], r:1.7, noLink:true,
   ring:[{t:'Eril & Dişil'},{t:'İyi & Kötü'},{t:'Gece & Gündüz'},{t:'Ayık & Uyku'},{t:'Yapıcı & Yıkıcı'},{t:'Kalp & Zihin'}], ringTitle:'Zıtlıklar',
   panel:[
+   {t:'quote', lead:true, top:true, h:'Sessiz Merkez: Alma ⇄ Verme', hb:true, text:'Güç, hareketin kendisinde değil, ortadaki sessiz merkezdedir. Her verme bir geri dönüşle dengelenir; bu akış bozulunca uyumsuzluk başlar.'},
    {t:'quote', lead:true, text:'Ana rahminden önce biriz. Bu dünyaya geldiğimizde zıtlıklar dünyasına varırız: eril ile dişil, iyi ile kötü, gece ile gündüz… Kötü aslında kötü değildir; iyinin var olabilmesi için kötünün de olması gerekir. Zıtlıklar birbirini tamamlar. Hayatımız boyunca bu zıtlıkların yarattığı dengesizlikleri dengelemeye ve bir olduğumuzu hatırlamaya çalışırız.'},
    {t:'quote', lead:true, text:'Her insan ya zihin ağırlıklı ya da kalp ağırlıklı doğar. Farkında olursa güçsüz olan tarafını güçlendirip dengeye gelebilir. Örneğin duygusal ağırlıklı doğan birinin zihni çok aktif değildir; ama zamanla ve farkındalıkla zihnini güçlendirip dengeye gelebilir.'},
    {t:'quote', text:'As within so without'},
@@ -1690,11 +1691,11 @@ function fillHolo(n){
   const rows=[],notes=[];
   n.panel.forEach(s=>{
     if(s.t==='note')notes.push(s.text);
-    if(s.t==='quote')rows.push({h:s.h,hb:s.hb,text:s.text,lead:s.lead});
+    if(s.t==='quote')rows.push({h:s.h,hb:s.hb,text:s.text,lead:s.lead,top:s.top});
     if(s.t==='quotes')s.items.forEach(q=>rows.push({text:q}));
     if(s.t==='question')rows.push({h:s.h,text:s.text,q:true});
   });
-  let h=rows.map((r,i)=>`<div class="row${r.q?' question':''}${r.lead?' lead':''}" style="--d:${i*160}ms"><span class="orb"></span><div class="txt">${r.h?`<h3${r.hb?' class="big"':''}>${/^YYYY/.test(r.h)?esc(r.h).replace(/Y/g,'<span style="color:var(--c)">Y</span>'):esc(r.h)}</h3>`:''}<p>${fmt(r.text)}</p></div></div>`).join('');
+  let h=rows.map((r,i)=>`<div class="row${r.q?' question':''}${r.lead?' lead':''}${r.top?' top':''}" style="--d:${i*160}ms"><span class="orb"></span><div class="txt">${r.h?`<h3${r.hb?' class="big"':''}>${/^YYYY/.test(r.h)?esc(r.h).replace(/Y/g,'<span style="color:var(--c)">Y</span>'):esc(r.h)}</h3>`:''}<p>${fmt(r.text)}</p></div></div>`).join('');
   h=notes.map(t=>`<p class="note">${esc(t)}</p>`).join('')+h;
   if(n.triad) h+=`<div class="sec"><h3>Hayatın temel üçlemesi</h3><div class="kids">`+n.triad.map(id=>{const c=BY[id];return `<button type="button" data-go="${id}" style="--kc:${hex(c.color)}"><i aria-hidden="true">→</i><span>${esc(c.title||c.name)}</span></button>`;}).join('')+'</div></div>';
   if(n.links) h+=`<div class="sec"><h3>Bağlantı</h3><div class="kids">`+n.links.map(l=>{const c=BY[l.go];return `<button type="button" data-go="${l.go}" style="--kc:${hex(c.color)}"><i aria-hidden="true">→</i><span>${esc(l.label)}</span><small>${esc(l.note)}</small></button>`;}).join('')+'</div></div>';
@@ -1716,7 +1717,7 @@ function fillHolo(n){
 const pt=a=>a.map(([w,c])=>`<span style="color:${c}">${esc(w)}</span>`).join(' – ');
 const listEl=document.getElementById('list'),fanG=document.getElementById('fan');
 let slots=[],rowsEl=[],fanLines=[],listT=0,listMode=null,sceneR=60,sceneExt=75;
-function placeLead(){const L=[...holo.querySelectorAll('.row.lead')],P=listEl.parentNode;if(!L.length)return;const split=listEl.classList.contains('nodot');let ref=listEl;L.forEach((r,k)=>{if(k===0||!split)P.insertBefore(r,listEl);else{P.insertBefore(r,ref.nextSibling);}ref=(k===0||!split)?listEl:r;});}
+function placeLead(){const P=listEl.parentNode;holo.querySelectorAll('.row.lead.top').forEach(r=>P.insertBefore(r,listEl));const L=[...holo.querySelectorAll('.row.lead:not(.top)')];if(!L.length)return;const split=listEl.classList.contains('nodot');let ref=listEl;L.forEach((r,k)=>{if(k===0||!split)P.insertBefore(r,listEl);else{P.insertBefore(r,ref.nextSibling);}ref=(k===0||!split)?listEl:r;});}
 function toPanel(){listMode='panel';listEl.classList.add('inpanel');hBody.prepend(listEl);placeLead();holo.classList.add('haslist');fanG.innerHTML='';fanLines=[];}
 const threadsG=document.getElementById('threads');let threads=[],revealed=false,revealT=0;
 function reveal(){
