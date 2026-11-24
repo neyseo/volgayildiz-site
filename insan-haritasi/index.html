@@ -1372,7 +1372,7 @@ const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const C = {gold:0xffd98f, violet:0xb994ff, teal:0x86d0cb, leaf:0x96d6a4, rose:0xff8aa5, sky:0xcfe6ff, amber:0xffc46b};
 const hex = n => '#'+n.toString(16).padStart(6,'0');
 const rgba = (n,a) => `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`;
-const fmt = s => esc(s).replace(/YYYY/g,'<b>YYYY</b>').replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g,'<button type="button" class="kw" data-go="$2">$1<i aria-hidden="true">→</i></button>');
+const fmt = s => esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/YYYY/g,'<b>YYYY</b>').replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g,'<button type="button" class="kw" data-go="$2">$1<i aria-hidden="true">→</i></button>');
 const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
 /* ---------- İÇERİK (kelimesi kelimesine) ----------
@@ -1390,7 +1390,7 @@ const NODES = [
   panel:[]},
  {id:'atom-acik', parent:'efv', kind:'trio', hidden:true, host:'efv', noLink:true, name:'Proton – Nötron – Elektron', kicker:'Hayatın Temel Üçlemesi', color:0xffd2e0, pos:[0,-2.6,0], r:.55,
   ring:[{t:'Proton:',d:'var olan',inline:true},{t:'Elektron:',d:'olmayan; hareket ve itme–çekme',inline:true},{t:'Nötron:',d:'ruh; dengeyi tutan',inline:true}],
-  panel:[{t:'quote', lead:true, text:'Atom = Hayat'}]},
+  panel:[{t:'quote', lead:true, text:'**Atom** = Hayat'}]},
  {id:'efv-acik', parent:'efv', kind:'trio', hidden:true, host:'efv', noLink:true, name:'Enerji – Titreşim – Frekans', kicker:'Hayatın Temel Üçlemesi', color:0xffd2e0, pos:[0,-2.6,0], r:.55,
   ring:[{t:'Enerji:',d:'asıl olan',inline:true,tc:'#FFD27A'},{t:'Titreşim:',d:'enerjinin hareketi',inline:true,tc:'#C9A6FF'},{t:'Frekans:',d:'titreşimin hızı',inline:true,tc:'#7FE3E0'}],
   panel:[{t:'quote', text:'Evrendeki tüm formlar ve varlıklar enerji, frekans ve titreşimden yaratılmıştır.'}]},
