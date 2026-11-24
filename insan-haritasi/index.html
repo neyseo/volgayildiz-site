@@ -1439,8 +1439,8 @@ const NODES = [
   ring:['Su\'yu içmeden önce suya konuşmak','Bağırsaklar soğuk sıvıyı sevmez','Nefes Pratikleri','Kendi sesimizle iyileşme: Om sesi','Her gün tüm bedene masaj-vuruş','Fiziksel esneklik ve Hareket ( kas-esnemek )','Sabah egzersizleri','Uyku - Dinlenmek','Enerji - Qi Gong','Fasting','Geç kahvaltı','Güneşlenmek','Terlemek','Dil temizliği','Çıplak ayak topraklanmak ve Ağaca sarılmak'].map(t=>t==='Nefes Pratikleri'?{t,go:'ruh-nefes'}:{t}),
   panel:[]},
  {id:'ruh-nefes', parent:'ruh-ihtiyac', kind:'sub', hidden:true, host:'ruh-ihtiyac', noLink:true, name:'Nefes Çeşitleri', kicker:'Bedensel', color:C.leaf, off:[0,0,0], r:1.25,
-  ring:[['Meditasyon','burundan kısa, ağızdan uzun','#C9A0FF'],['Sıkıntıyı serbest bırakır','ağızdan uzun al ve uzun ver','#7FB8FF'],['Topraklanma ve beden bağlantısı','ağızdan O şeklinde al ver','#7DE39A'],['Enerji artışı','ağızdan nefes alıp vermek','#FFE066'],['Coşku ve enerjiyi artırır','burundan hızlı al-ver','#FFA552'],['Anında neşe','ağızdan nefes alıp vererek ıslık çal','#FF6B6B']].map(([t,d,tc])=>({t:t+':',d,tc,inline:true})),
-  panel:[]},
+  ring:[{t:'İhtiyaca Göre Nefes',hd:true},...[['Meditasyon','burundan kısa, ağızdan uzun','#C9A0FF'],['Sıkıntıyı serbest bırakır','ağızdan uzun al ve uzun ver','#7FB8FF'],['Topraklanma ve beden bağlantısı','ağızdan O şeklinde al ver','#7DE39A'],['Enerji artışı','ağızdan nefes alıp vermek','#FFE066'],['Coşku ve enerjiyi artırır','burundan hızlı al-ver','#FFA552'],['Anında neşe','ağızdan nefes alıp vererek ıslık çal','#FF6B6B']].map(([t,d,tc])=>({t:t+':',d,tc,inline:true}))],
+  panel:[{t:'quote', lead:true, h:'Nefesin İki Yönü', hb:true, text:'İçe nefes toplar, dışa nefes bırakır. Nefesi tam vermek, almak kadar önemlidir.'}]},
 
  {id:'zhn', parent:'zihin', kind:'hub', name:'Niyetten Gerçeğe', title:'Niyetten Gerçeğe', kicker:'Zihinsel', color:C.teal, sc:0x86d0cb, pos:[26,10,-6], r:2.2,
   ring:[{t:'Farkındalık > Kabullenme > İnanarak pratik > Zaman\'a zaman vermek'}],
