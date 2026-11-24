@@ -106,7 +106,8 @@ body.focused .legend,body.focused .brand p{opacity:0;pointer-events:none;}
 .kw:hover i,.kw:focus-visible i{transform:translateX(3px);}
 .kw:focus-visible{outline:2px solid var(--c);outline-offset:3px;border-radius:4px;}
 @media (min-width:761px){#list.nw .it .lbl{white-space:nowrap;}}
-.it.hd .slot{visibility:hidden;}
+.it.hd .slot,.it.nd .slot{visibility:hidden;}
+.label .stk{display:block;text-align:center;line-height:1.15;}
 #list.nodot .slot{visibility:hidden;width:0!important;margin:0!important;}
 #list.nodot .it{grid-template-columns:0 minmax(0,1fr);gap:0;}
 #list.nodot{column-gap:72px!important;margin-left:0!important;justify-content:center!important;}
@@ -1386,7 +1387,7 @@ const NODES = [
   ]},
  {id:'efv', parent:'sevgi', kind:'trio', shape:'wave', name:'Hayatın Temel Üçlemesi', title:'Hayatın Temel Üçlemesi', kicker:'Hayatın Temel Üçlemesi', color:0xffd2e0, pos:[0,-2.6,0], r:1.6, tri:true, noLink:true,
   ring:[{t:'Enerji – Titreşim – Frekans',kw:'efv-acik',nou:true},{t:'Proton – Nötron – Elektron',kw:'atom-acik',nou:true},
-   ...['Düşünce > Söz > Gerçeklik','Mer – Ka – Ba = Işık – Ruh – Beden','Zaman – Mekân – Madde','Yükseklik – Genişlik – Derinlik','Katı – Sıvı – Gaz','Sarı – Mavi – Kırmızı','Zihin – Beden – Ruh','Baba – Anne – Çocuk','Doğum – Yaşam – Ölüm','Geçmiş – Şimdi – Gelecek','3 – 6 – 9'].map(t=>({t}))],
+   ...['Düşünce > Söz > Gerçeklik','Mer – Ka – Ba = Işık – Ruh – Beden','Zaman – Mekân – Madde','Yükseklik – Genişlik – Derinlik','Katı – Sıvı – Gaz','Sarı – Mavi – Kırmızı','Zihin – Beden – Ruh','Baba – Anne – Çocuk','Doğum – Yaşam – Ölüm','Geçmiş – Şu an – Gelecek','3 – 6 – 9'].map(t=>({t}))],
   panel:[]},
  {id:'atom-acik', parent:'efv', kind:'trio', hidden:true, host:'efv', noLink:true, name:'Proton – Nötron – Elektron', kicker:'Hayatın Temel Üçlemesi', color:0xffd2e0, pos:[0,-2.6,0], r:.55,
   ring:[{t:'Proton:',d:'var olan',inline:true},{t:'Elektron:',d:'olmayan; hareket ve itme–çekme',inline:true},{t:'Nötron:',d:'ruh; dengeyi tutan',inline:true}],
@@ -1394,15 +1395,15 @@ const NODES = [
  {id:'efv-acik', parent:'efv', kind:'trio', hidden:true, host:'efv', noLink:true, name:'Enerji – Titreşim – Frekans', kicker:'Hayatın Temel Üçlemesi', color:0xffd2e0, pos:[0,-2.6,0], r:.55,
   ring:[{t:'Enerji:',d:'asıl olan',inline:true,tc:'#FFD27A'},{t:'Titreşim:',d:'enerjinin hareketi',inline:true,tc:'#C9A6FF'},{t:'Frekans:',d:'titreşimin hızı',inline:true,tc:'#7FE3E0'}],
   panel:[{t:'quote', text:'Evrendeki tüm formlar ve varlıklar enerji, frekans ve titreşimden yaratılmıştır.'}]},
- {id:'simdi', kind:'core', name:'ŞİMDİ · NEFES', kicker:'Merkez · Dengenin tam ortası', color:C.gold, sc:0xfff4e4, pos:[0,5.6,0], r:2.5, noLink:true, breath:true,
+ {id:'simdi', kind:'core', name:'ŞU AN · NEFES', stack:true, kicker:'Merkez · Dengenin tam ortası', color:C.gold, sc:0xfff4e4, pos:[0,5.6,0], r:2.5, noLink:true, breath:true,
   panel:[
    {t:'quote', text:'Hepsi aynı nokta:\nNefes > Bilinç > Şu an > [[Farkındalık|fark]]'},
    {t:'quote', text:'Nefes anı yaratmanın anahtarıdır.'},
    {t:'quote', text:'İnsanın en büyük gücü anı yaratabilmesidir. Anı yaratabilmesi için ise anın farkındalığına ihtiyaç duyar. Anın farkındalığına gelebilmesi için de nefese ihtiyacı vardır.'},
    {t:'quote', text:'Zaman: Her şeyin şu an\'da var olduğunu algılayıp ve kabullendikten sonra an\'ı yaşayabilirsiniz. An\'a vardığınızda geçmiş ve geleceğin olmadığını anlarsınız-bilirsiniz.'}
   ]},
- {id:'fark', parent:'simdi', kind:'trio', hidden:true, host:'simdi', name:'Farkındalık', kicker:'Şimdi · Nefes · Farkındalık', color:0xfff0c2, pos:[0,5.6,0], r:2.5, noLink:true,
-  ring:[{t:'Şu an kimsin?'},{t:'Yarın ne istiyorsun?'},{t:'Hayalin? / Amacın? / Niyetin?'},{t:'Kendini sev',more:['Kendini tanı','Kendine inan','Kendini dinle']}],
+ {id:'fark', parent:'simdi', kind:'trio', hidden:true, host:'simdi', name:'Farkındalık', kicker:'Şu an · Nefes · Farkındalık', color:0xfff0c2, pos:[0,5.6,0], r:2.5, noLink:true,
+  ring:[{t:'Şu an kimsin?'},{t:'Yarın ne istiyorsun?',nd:true},{t:'Hayalin? / Amacın? / Niyetin?',nd:true},{t:'Kendini sev',more:['Kendini tanı','Kendine inan','Kendini dinle']}],
   panel:[{t:'quotes', items:['Bir şey her şeyden oluşur.','Herkesin doğrusu kendisine ve o doğru da zamanla değişebilir.','Başkasını anlamak mümkün değildir. Ancak kişi kendisini anlayabilir.']}],
   links:[{go:'yaratim', label:'Nasıl yaratıyoruz?', note:'Yaratmaya geç'}]},
  {id:'yaratim', parent:'fark', kind:'trio', hidden:true, host:'simdi', name:'Nasıl yaratıyoruz?', kicker:'Yaratım', color:0xffcf85, pos:[0,5.6,0], r:2.5, noLink:true,
@@ -1671,7 +1672,7 @@ NODES.forEach(n=>{
   const b=document.createElement('button');b.type='button';
   b.className='label '+(n.kind==='core'?'core':(n.kind==='hub'||n.kind==='trio')?'hub':'');
   b.style.setProperty('--c',hex(n.vc||n.sc||n.color));
-  b.innerHTML='<span class="dot"></span>'+esc(n.name);
+  b.innerHTML='<span class="dot"></span>'+(n.stack?'<span class="stk">'+esc(n.name).replace(' · ','<br>')+'</span>':esc(n.name));
   b.addEventListener('click',e=>{e.stopPropagation();focus(n.id);});
   labelsEl.appendChild(b);n.label=b;
 });
@@ -1707,7 +1708,7 @@ function fillHolo(n){
   listEl.style.setProperty('--c',hex(n.color));
   const N=n.ring.length,cols=n.cols||((N>12&&!n.oneCol)?2:1);listEl.classList.toggle('nw',!!n.oneCol);listEl.classList.toggle('nodot',!!n.noDot);
   listEl.style.gridTemplateRows=N?`repeat(${n.rows||Math.ceil(N/cols)},auto)`:'';
-  listEl.innerHTML=n.ring.map((it,i)=>`<div class="it${it.hd?' hd':''}${it.go?' go':''}${it.more?' multi':''}"${it.go?` data-go="${it.go}" role="button" tabindex="0"`:''} style="--d:${300+i*45}ms"><span class="slot"></span><span class="lbl">${it.h?`<span class="ih">${esc(it.h)}</span>`:''}${it.kw?`<button type="button" class="kw${it.nou?' nou':''}" data-go="${it.kw}">${it.parts?pt(it.parts):esc(it.t)}<i aria-hidden="true">→</i></button>`:it.parts?pt(it.parts)+esc(it.tail||''):it.more?esc(it.t)+it.more.map(x=>'<br>'+esc(x)).join(''):it.d?(it.inline?`<b${it.tc?` style="color:${it.tc}"`:''}>${esc(it.t)}</b> <span class="in">${esc(it.d)}</span>`:`<b>${esc(it.t)}</b><small>${esc(it.d)}</small>`):esc(it.t)}</span></div>`).join('');
+  listEl.innerHTML=n.ring.map((it,i)=>`<div class="it${it.hd?' hd':''}${it.nd?' nd':''}${it.go?' go':''}${it.more?' multi':''}"${it.go?` data-go="${it.go}" role="button" tabindex="0"`:''} style="--d:${300+i*45}ms"><span class="slot"></span><span class="lbl">${it.h?`<span class="ih">${esc(it.h)}</span>`:''}${it.kw?`<button type="button" class="kw${it.nou?' nou':''}" data-go="${it.kw}">${it.parts?pt(it.parts):esc(it.t)}<i aria-hidden="true">→</i></button>`:it.parts?pt(it.parts)+esc(it.tail||''):it.more?esc(it.t)+it.more.map(x=>'<br>'+esc(x)).join(''):it.d?(it.inline?`<b${it.tc?` style="color:${it.tc}"`:''}>${esc(it.t)}</b> <span class="in">${esc(it.d)}</span>`:`<b>${esc(it.t)}</b><small>${esc(it.d)}</small>`):esc(it.t)}</span></div>`).join('');
   slots=[...listEl.querySelectorAll('.slot')];rowsEl=[...listEl.querySelectorAll('.it')];
   fanG.innerHTML='';fanLines=n.ring.map(()=>{const l=document.createElementNS('http://www.w3.org/2000/svg','line');l.setAttribute('stroke',hex(n.color));l.setAttribute('stroke-width','1');l.setAttribute('opacity','0');fanG.appendChild(l);return l;});
   threadsG.innerHTML='';threads=[...hBody.querySelectorAll('.row')].map(r=>{const l=document.createElementNS('http://www.w3.org/2000/svg','line');l.setAttribute('stroke',hex(n.color));l.setAttribute('stroke-width','1');l.setAttribute('opacity','0');threadsG.appendChild(l);return{r,l,orb:r.querySelector('.orb'),d:parseFloat(r.style.getPropertyValue('--d'))||0};});
@@ -1781,7 +1782,7 @@ const TOUR=[
  {hl:['sevgi'],title:'SEVGİ',c:0xff8126,t:[0,11,0],p:[0,14,44],text:"Her şey sevgiyle başlar. Sevgiden zıtlıklar dünyasına geliriz ve hayat bu zıtlıklarla var olur."},
  {hl:['sevgi','efv','simdi'],title:'ENERJİ · TİTREŞİM · FREKANS',c:0xffd2e0,t:[0,6,0],p:[0,8,46],text:"Sevgi bir enerjidir. Evrendeki tüm formlar ve varlıklar enerji, frekans ve titreşimden yaratılmıştır."},
  {hl:['gecmis','gelecek','kalp','zihin','denge'],title:'ZITLIKLAR VE DENGE',c:0xf4f1ea,t:[0,-1,0],p:[0,1,56],text:"Zıtlıklar olmadan hayat var olamaz. Gece ile gündüz, eril ile dişil… Ve bu zıtlıkların tam ortasında denge vardır."},
- {hl:['simdi'],title:'ŞİMDİ · NEFES',c:0xfff4e4,t:[0,5.6,0],p:[0,8,22],text:"Dengede olabilmek için şu an'da olmamız gerekir. Şu an'a gelmenin yolu da nefesten geçer. Nefes aldıkça farkındalığa varırız."},
+ {hl:['simdi'],title:'ŞU AN · NEFES',c:0xfff4e4,t:[0,5.6,0],p:[0,8,22],text:"Dengede olabilmek için şu an'da olmamız gerekir. Şu an'a gelmenin yolu da nefesten geçer. Nefes aldıkça farkındalığa varırız."},
  {hl:['simdi'],title:'FARKINDALIK',c:0xfff0c2,t:[0,5.6,0],p:[0,7,17],text:"Bu farkındalıkla kendine sorabilirsin: Şu an kimsin? Yarın ne istiyorsun? Hayalin, amacın, niyetin nedir?"},
  {hl:['gecmis','simdi','gelecek'],title:'YARATIM',c:0xffcf85,t:[0,5.6,0],p:[0,8,42],text:"Geçmiş değişebilir, gelecek ise farkındalıkla yaratılabilir. Niyetini sesle, sevgiyle ve hayal ederek pratik edebilirsin. Ve zaman'a zaman verirsin, beklentisiz."},
  {hl:['efv'].concat(CLUSTER),title:'HAYATIN TEMEL ÜÇLEMESİ',c:0xffd2e0,t:[0,0,0],p:[0,12,100],tri:true,text:"Sevgiden doğan enerji titreşti ve forma büründü. Düşünce söze, söz gerçekliğe dönüştü. Hayat da hep üçlerle akar: doğum, yaşam, ölüm… geçmiş, şimdi, gelecek… ve en temelinde ruh, zihin ve beden."}
