@@ -1481,7 +1481,7 @@ const scene=new THREE.Scene();
 scene.fog=new THREE.FogExp2(0x05060d,0.0042);
 const camera=new THREE.PerspectiveCamera(50,1,0.1,2000);
 const TANH=Math.tan(THREE.MathUtils.degToRad(25));
-const OVERVIEW={pos:new THREE.Vector3(0,15.4,79),target:new THREE.Vector3(0,-2.5,0)};
+const OVERVIEW={pos:new THREE.Vector3(0,16.58,94.8),target:new THREE.Vector3(0,-4.9,0)};
 function ovPos(){const base=OVERVIEW.pos.clone().sub(OVERVIEW.target),d0=base.length(),a=(innerWidth||1)/(innerHeight||1);
   const need=a<1?Math.min(190,36/(Math.tan(THREE.MathUtils.degToRad(25))*a)):d0;
   return OVERVIEW.target.clone().add(base.normalize().multiplyScalar(Math.max(d0,need)));}
@@ -2054,7 +2054,7 @@ function loop(){
    if(!REDUCED){const br=Math.sin(t*.9),b=FIG.s*(1+br*.03);FIG.grp.scale.set(b,b,b);FIG.mat.opacity*=.85+br*.15;}}
   if(BY.efv.triG&&!REDUCED)BY.efv.triG.rotation.z=t*.35;
   {const MZ=Math.min(1,Math.max(.3,ovPos().distanceTo(OVERVIEW.target)/camera.position.distanceTo(controls.target))).toFixed(3);tmp2.copy(BY.sevgi.P).addScaledVector(up,BY.sevgi.r+4);toScreen(tmp2,sA);MUP.style.transform=`translate(${sA.x.toFixed(1)}px,${sA.y.toFixed(1)}px) translate(-50%,-50%) scale(${MZ})`;MUP.style.visibility=sA.z<1?'visible':'hidden';
-   tmp2.copy(BY.denge.P).addScaledVector(up,-(BY.denge.r+6.8));toScreen(tmp2,sA);MDN.style.transform=`translate(${sA.x.toFixed(1)}px,${sA.y.toFixed(1)}px) translate(-50%,-50%) scale(${MZ})`;MDN.style.visibility=sA.z<1?'visible':'hidden';}
+   tmp2.copy(BY.bdn.P).addScaledVector(up,-(BY.bdn.r+7.1));toScreen(tmp2,sA);MDN.style.transform=`translate(${sA.x.toFixed(1)}px,${sA.y.toFixed(1)}px) translate(-50%,-50%) scale(${MZ})`;MDN.style.visibility=sA.z<1?'visible':'hidden';}
   renderer.render(scene,camera);
   requestAnimationFrame(loop);
 }
