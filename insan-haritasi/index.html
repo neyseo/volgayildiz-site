@@ -1383,8 +1383,9 @@ const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&g
 const NODES = [
  {id:'sevgi', kind:'trio', shape:'star', name:'SEVGİ', kicker:'Kaynak · Çıkış noktamız', color:0xffb8cf, sc:0xff8126, pos:[0,18,0], r:2.1, noLink:true,
   panel:[
+   {t:'quote', text:'Sevgi > Zıtlık > Denge > Şu an > Nefes > Farkındalık'},
    {t:'quote', text:'Sevgiden zıtlıklar dünyasına geliriz; hayat bu zıtlıklarla var olur ve bu yüzden hayatımız boyunca dengeyi ararız. Dengede olabilmek için Şu an\'da olmamız gerekir. Şu an\'da olabilmek için de Nefes\'e ihtiyacımız vardır. Nefes\'le de şu anın farkındalığına varırız; bu farkındalıkla da an\'ı yaratırız.'},
-   {t:'quote', text:'Sevgi > Zıtlık > Denge > Şu an > Nefes > Farkındalık'}
+   {t:'quote', h:'Her daim:', hb:true, text:'Kendini sev\nKendini tanı\nKendine inan\nKendini dinle'}
   ]},
  {id:'efv', parent:'sevgi', kind:'trio', shape:'wave', name:'Hayatın Temel Üçlemesi', title:'Hayatın Temel Üçlemesi', kicker:'Hayatın Temel Üçlemesi', color:0xffd2e0, pos:[0,-2.6,0], r:1.6, tri:true, noLink:true,
   ring:[{t:'Enerji – Titreşim – Frekans',kw:'efv-acik',nou:true},{t:'Proton – Nötron – Elektron',kw:'atom-acik',nou:true},
@@ -1403,7 +1404,7 @@ const NODES = [
    {t:'quote', text:'Zaman: Her şeyin şu an\'da var olduğunu algılayıp kabullendiğinde an\'ı yaşayabilirsin. An\'a vardığında geçmişin ve geleceğin de yalnızca şu an\'da var olduğunu anlarsın.'}
   ]},
  {id:'fark', parent:'simdi', kind:'trio', hidden:true, host:'simdi', name:'Farkındalık', kicker:'Şu an · Nefes · Farkındalık', color:0xfff0c2, pos:[0,5.6,0], r:2.5, noLink:true,
-  ring:[{t:'Şu an kimsin?'},{t:'Yarın ne istiyorsun?',nd:true},{t:'Hayalin? / Amacın? / Niyetin?',nd:true},{t:'Kendini sev',more:['Kendini tanı','Kendine inan','Kendini dinle']}],
+  ring:[{t:'Şu an kimsin?'},{t:'Yarın ne istiyorsun?',nd:true},{t:'Hayalin? / Amacın? / Niyetin?',nd:true}],
   panel:[{t:'quotes', items:['Bir şey her şeyden oluşur.','Herkesin doğrusu kendisine ve o doğru da zamanla değişebilir.','Başkasını anlamak mümkün değildir. Ancak kişi kendisini anlayabilir.']}],
   links:[{go:'yaratim', label:'Nasıl yaratıyoruz?', note:'Yaratmaya geç'}]},
  {id:'yaratim', parent:'fark', kind:'trio', hidden:true, host:'simdi', name:'Nasıl yaratıyoruz?', kicker:'Yaratım', color:0xffcf85, pos:[0,5.6,0], r:2.5, noLink:true,
