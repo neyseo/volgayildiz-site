@@ -114,6 +114,8 @@ body.focused .legend,body.focused .brand p{opacity:0;pointer-events:none;}
 #list.nodot .it{grid-template-columns:0 minmax(0,1fr);gap:0;}
 #list.nodot{column-gap:72px!important;margin-left:0!important;justify-content:center!important;}
 #list.nodot.inpanel{grid-template-columns:repeat(2,auto);grid-auto-flow:column;grid-template-rows:repeat(3,auto)!important;justify-content:start;}
+#list.nodot.inholo,#list.nodot.inpanel{grid-template-columns:repeat(2,minmax(0,1fr))!important;column-gap:20px!important;justify-content:stretch!important;padding-left:31px;box-sizing:border-box;width:100%;max-width:100%;}
+#list.nodot.inholo .it .lbl,#list.nodot.inpanel .it .lbl{white-space:normal!important;}
 .it.hd .lbl{font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--c);opacity:.9;}
 .it .lbl .ih{display:block;font-size:.82em;font-weight:700;color:var(--ink);opacity:.8;margin-bottom:2px;}
 .it .lbl .in{font-weight:600;color:var(--ink);}
