@@ -1879,7 +1879,7 @@ addEventListener('resize',resize);resize();
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(measureLabels);setTimeout(measureLabels,800);
 
 /* ---------- DÖNGÜ ---------- */
-const tmp=new THREE.Vector3(),tmp2=new THREE.Vector3(),right=new THREE.Vector3(),up=new THREE.Vector3(),back=new THREE.Vector3(),clock=new THREE.Clock();
+const sP=new THREE.Vector3(),sD=new THREE.Vector3(),tmp=new THREE.Vector3(),tmp2=new THREE.Vector3(),right=new THREE.Vector3(),up=new THREE.Vector3(),back=new THREE.Vector3(),clock=new THREE.Clock();
 function toScreen(v,out){tmp.copy(v).project(camera);out.x=(tmp.x*.5+.5)*W;out.y=(-tmp.y*.5+.5)*H;out.z=tmp.z;return out;}
 function family(n){if(!current||n===current)return true;
   if(current.host===n.id)return true;
@@ -1969,25 +1969,31 @@ function loop(){
 
   // uzaklaşınca yazılar küçülsün
   const ZK=ovPos().distanceTo(OVERVIEW.target)/camera.position.distanceTo(controls.target),ZS=Math.min(1,Math.max(.3,ZK));
-  {const gs=ZK<1?Math.min(1.8,Math.pow(ZK,-.55)):1;NODES.forEach(n=>{if(!n.hidden)O[n.id].g.scale.setScalar(gs);});}
+  const gsN=ZK<1?Math.min(1.8,Math.pow(ZK,-.55)):1;{const gs=gsN;NODES.forEach(n=>{if(!n.hidden)O[n.id].g.scale.setScalar(gs);});}
   // isimleri üst üste bindirmeden yerleştir
   LBLS.sort((a,b)=>a.pr-b.pr||a.z-b.z);
   const placed=[];
+  // küreler de engel: bir isim başka bir kürenin üstüne binmesin
+  const SPH=[];
+  NODES.forEach(n=>{if(n.hidden)return;const o=O[n.id];if(o.mesh.material.opacity<.25)return;
+    toScreen(n.P,sP);if(sP.z>1||sP.z<-1)return;toScreen(tmp2.copy(n.P).addScaledVector(right,n.r*gsN*(n.shape==='octa'?1.25:1)),sD);
+    const rad=Math.abs(sD.x-sP.x)*.92;SPH.push({L:n.label,a:sP.x-rad,b:sP.x+rad,c:sP.y-rad,d:sP.y+rad});});
   LBLS.forEach(l=>{
     const L=l.L;
     if(l.op<.03){L.style.visibility='hidden';return;}
     const w=(L._w||80)*ZS,h=(L._h||24)*ZS;
     l.x=Math.min(Math.max(l.x,w/2+6),W-w/2-6);
-    let tdx=0,tdy=0;
+    let tdx=0,tdy=0,free=false;
     const C2=[[0,0],[w*.22,0],[-w*.22,0],[w*.45,0],[-w*.45,0],[0,h*.9],[0,-h*.9-6],[w*.35,h*.9],[-w*.35,h*.9],[0,h*1.8],[0,-h*1.8-6],[0,h*2.7]];
     for(const [dx,dy] of C2){
       const r={a:l.x+dx-w/2+7,b:l.x+dx+w/2-7,c:l.y+dy+3,d:l.y+dy+h-3};
-      if(!placed.some(q=>r.a<q.b&&r.b>q.a&&r.c<q.d&&r.d>q.c)){tdx=dx;tdy=dy;break;}
+      if(!placed.some(q=>r.a<q.b&&r.b>q.a&&r.c<q.d&&r.d>q.c)&&!SPH.some(q=>q.L!==L&&r.a<q.b&&r.b>q.a&&r.c<q.d&&r.d>q.c)){tdx=dx;tdy=dy;free=true;break;}
     }
     const k=Math.min(1,dt*10);
     L._dx=(L._dx===undefined?tdx:L._dx+(tdx-L._dx)*k);L._dy=(L._dy===undefined?tdy:L._dy+(tdy-L._dy)*k);
     placed.push({a:l.x+tdx-w/2+7,b:l.x+tdx+w/2-7,c:l.y+tdy+3,d:l.y+tdy+h-3});
-    L.style.visibility='visible';L.style.opacity=l.op.toFixed(2);
+    L._fo=(L._fo===undefined?1:L._fo+((free?1:.18)-L._fo)*k);
+    L.style.visibility='visible';L.style.opacity=(l.op*L._fo).toFixed(2);
     L.style.transform=`translate(${(l.x+L._dx).toFixed(1)}px,${(l.y+L._dy).toFixed(1)}px) translate(-50%,0) scale(${ZS.toFixed(3)})`;L.style.transformOrigin='50% 0';
   });
 
