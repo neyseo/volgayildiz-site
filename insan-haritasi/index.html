@@ -1429,7 +1429,7 @@ const NODES = [
  {id:'kalp', parent:'simdi', kind:'trio', name:'KALP', kicker:'İç Mekanizma · Karar Veren', color:C.rose, vc:0xe2523e, pos:[-10,-12.6,0], r:1.9, noLink:true,
   panel:[{t:'quote', h:'Kalbin nasıl?', hb:true, text:'Kendine şefkatin var mı?\nKendini seviyor musun?'},{t:'quote', text:'Kırma - Kırılma'}],
   links:[{go:'bes-element', label:'Beş Element', note:'Duygular'}]},
- {id:'bes-element', parent:'kalp', kind:'trio', hidden:true, host:'kalp', noLink:true, name:'Beş Element', kicker:'Kalp · Duygular', color:C.rose, pos:[-10,-12.6,0], r:1.9,
+ {id:'bes-element', parent:'bdn', kind:'sub', hidden:true, host:'bdn', noLink:true, name:'Beş Element', kicker:'Bedensel · Duygular', color:C.leaf, off:[0,0,0], r:1.9,
   ring:[{t:'Ağaç:',d:'Karaciğer · Öfke ⇄ Şefkat',inline:true,tc:'#7DD68A'},{t:'Ateş:',d:'Kalp · Sabırsızlık ⇄ Neşe',inline:true,tc:'#FF7A6B'},{t:'Toprak:',d:'Dalak · Endişe ⇄ Güven',inline:true,tc:'#E8C36A'},{t:'Metal:',d:'Akciğer · Üzüntü ⇄ Cesaret',inline:true,tc:'#D9DDE3'},{t:'Su:',d:'Böbrek · Korku ⇄ Huzur',inline:true,tc:'#7FB8FF'}],
   panel:[]},
  {id:'zihin', parent:'simdi', kind:'trio', name:'ZİHİN', kicker:'İç Mekanizma · Kararı Uygulayan', color:C.amber, vc:0xe9b35f, pos:[10,-12.6,0], r:1.9, noLink:true,
@@ -1462,14 +1462,12 @@ const NODES = [
  {id:'secim', parent:'zihin', kind:'trio', hidden:true, host:'zihin', noLink:true, name:'Zihin & Seçimler', kicker:'Zihin', color:C.amber, pos:[10,-12.6,0], r:1.9,
   panel:[{t:'quotes', items:['Her an bir seçimdir.','Seçimler ise bilinçaltının nasıl kodlandığı ile alakalıdır.','Genlerden gelenler sadece çıkış noktasıdır; etkileri değişebilir.','Zihin sonsuz bir evren olduğundan dolayı kaosa açıktır.']}]},
 
- {id:'bdn', parent:'simdi', kind:'hub', name:'Bedensel', title:'Bedensel', kicker:'Hayatın Temel Üçlemesi · 3', color:C.leaf, sc:0x96d6a4, vc:0x8a6a50, pos:[0,-31.5,-9], r:1.9, panel:[{t:'quote', h:'Sağlık nedir?', hb:true, text:'Sağlık, insanın önce kendi bedenini ve sistemini tanımasıyla, aynı zamanda içinde yaşadığı dünyanın sistemini bilmesiyle başlar. Kendisi de dahil her şeyin enerji, titreşim ve frekanstan oluştuğunu bilmek, algılamak ve kabul etmek, sağlığı bilinçli olarak korumanın ilk adımıdır.'}], links:[{go:'sifa', label:'Şifalanmanın Yolu', note:''}]},
+ {id:'bdn', parent:'simdi', kind:'hub', name:'Bedensel', title:'Bedensel', kicker:'Hayatın Temel Üçlemesi · 3', color:C.leaf, sc:0x96d6a4, vc:0x8a6a50, pos:[0,-31.5,-9], r:1.9, panel:[{t:'quote', h:'Sağlık nedir?', hb:true, text:'Sağlık, insanın önce kendi bedenini ve sistemini tanımasıyla, aynı zamanda içinde yaşadığı dünyanın sistemini bilmesiyle başlar. Kendisi de dahil her şeyin enerji, titreşim ve frekanstan oluştuğunu bilmek, algılamak ve kabul etmek, sağlığı bilinçli olarak korumanın ilk adımıdır.'},{t:'quotes', items:['Şifanın Allah\'tan ( Yaratıcı\'dan ) geldiğini bilirsen, şifanın her yerden ve her formdan gelebileceğini de bilirsin.','Şifalanmak için: Sonuca değil, sorunun özündeki sebebe bakıp, görüp, kabul ettikten sonra da özdeki sorunu organik yolla çözdüğümüzde şifalanma gerçekleşir.','Beden sakinken, huzurluyken rahatça iyileşebilir.']}], links:[{go:'bes-element', label:'Beş Element', note:'Organlar · Duygular'}]},
  {id:'beden-ihtiyac', parent:'bdn', kind:'sub', name:'Bedenin Temel İhtiyaçları', kicker:'Bedensel Alan', color:C.leaf, sc:0x96d6a4, vc:0x8a6a50, noSat:true, off:[10.5,3,-3], r:1.25,
   rows:15,
   ring:[{t:'Besleyenler',hd:true},...['Tuz','Tahin','Spirulina','Zeytin','Shilajit','Zerdeçal-Zencefil-Keten tohumu','Sarımsak','Ceviz-badem-fındık-Çekirdek','Bitkisel çaylar','Küçük balık','Maca powder','Magnezyum','Krill yağı','Probiyotik'].map(t=>({t})),
    {t:'Arındıranlar',hd:true},...['İsveç şurubu','Chlorella','Karbonat','Limon/Lime','Susam yağı ( Ağız çalkalama )','Sirke','Safran','Bentonite Clay','Cayenne pepper'].map(t=>({t}))],
-  panel:[]},
- {id:'sifa', parent:'bdn', kind:'sub', hidden:true, host:'bdn', noLink:true, name:'Şifalanmanın Yolu', kicker:'Bedensel Alan', color:C.leaf, off:[0,0,0], r:1.9,
-  panel:[{t:'quotes', items:['Şifanın Allah\'tan ( Yaratıcı\'dan ) geldiğini bilirsen, şifanın her yerden ve her formdan gelebileceğini de bilirsin.','Şifalanmak için: Sonuca değil, sorunun özündeki sebebe bakıp, görüp, kabul ettikten sonra da özdeki sorunu organik yolla çözdüğümüzde şifalanma gerçekleşir.','Beden sakinken, huzurluyken rahatça iyileşebilir.']}]}
+  panel:[]}
 ];
 NODES.forEach(n=>{if(n.sc)n.color=n.sc;});
 const BY={}; NODES.forEach(n=>BY[n.id]=n);
