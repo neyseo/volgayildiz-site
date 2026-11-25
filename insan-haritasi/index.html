@@ -107,6 +107,8 @@ body.focused .legend,body.focused .brand p{opacity:0;pointer-events:none;}
 .kw:focus-visible{outline:2px solid var(--c);outline-offset:3px;border-radius:4px;}
 @media (min-width:761px){#list.nw .it .lbl{white-space:nowrap;}}
 .it.hd .slot,.it.nd .slot{visibility:hidden;}
+.it .lbl:has(.two){display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:.3em;}
+.it .lbl .in.two{display:block;}
 .it.hd.dot .slot{visibility:visible;}
 .it.hd.dot .lbl{font-size:21px!important;font-weight:800;letter-spacing:.02em;text-transform:none;color:var(--ink);opacity:1;}
 .label .stk{display:block;text-align:center;line-height:1.15;}
@@ -1430,7 +1432,7 @@ const NODES = [
   panel:[{t:'quote', h:'Kalbin nasıl?', hb:true, text:'Kendine şefkatin var mı?\nKendini seviyor musun?'},{t:'quote', text:'Kırma - Kırılma'}],
   links:[{go:'bes-element', label:'Beş Element', note:'Duygular'}]},
  {id:'bes-element', parent:'bdn', kind:'sub', hidden:true, host:'bdn', noLink:true, name:'Beş Element', kicker:'Bedensel · Duygular', color:C.leaf, off:[0,0,0], r:1.9,
-  ring:[{t:'Ağaç:',d:'Karaciğer – Safra kesesi · Öfke / Kin ⇄ Şefkat / Anlayış',inline:true,tc:'#7DD68A'},{t:'Ateş:',d:'Kalp – İnce bağırsak · Acelecilik ⇄ Neşe',inline:true,tc:'#FF7A6B'},{t:'Toprak:',d:'Dalak – Mide · Endişe ⇄ Denge / Uyum',inline:true,tc:'#E8C36A'},{t:'Metal:',d:'Akciğer – Kalın bağırsak · Hüzün / Keder ⇄ Cesaret',inline:true,tc:'#D9DDE3'},{t:'Su:',d:'Böbrek – Mesane · Korku / Dehşet ⇄ Dinginlik / Huzur',inline:true,tc:'#7FB8FF'}],
+  ring:[{t:'Ağaç:',two:true,d:'Karaciğer – Safra kesesi\nÖfke / Kin ⇄ Şefkat / Anlayış',inline:true,tc:'#7DD68A'},{t:'Ateş:',two:true,d:'Kalp – İnce bağırsak\nAcelecilik ⇄ Neşe',inline:true,tc:'#FF7A6B'},{t:'Toprak:',two:true,d:'Dalak – Mide\nEndişe ⇄ Denge / Uyum',inline:true,tc:'#E8C36A'},{t:'Metal:',two:true,d:'Akciğer – Kalın bağırsak\nHüzün / Keder ⇄ Cesaret',inline:true,tc:'#D9DDE3'},{t:'Su:',two:true,d:'Böbrek – Mesane\nKorku / Dehşet ⇄ Dinginlik / Huzur',inline:true,tc:'#7FB8FF'}],
   panel:[]},
  {id:'zihin', parent:'simdi', kind:'trio', name:'ZİHİN', kicker:'İç Mekanizma · Kararı Uygulayan', color:C.amber, vc:0xe9b35f, pos:[10,-12.6,0], r:1.9, noLink:true,
   panel:[{t:'quote', text:'Zihin aktifken farkında olmadan nefesimizi tutarız.'},{t:'quote', text:'Şüphe yok'},{t:'quote', h:'YYYY: Yargı Yok Yorum Yok', hb:true, text:'Zıtlıklar birbirini tamamlar; bu yüzden hiçbir şeyi yorumlamaya veya yargılamaya gerek yoktur. Yorum ve yargı, zaman kaybı olduğu kadar enerji de tüketir. Haklı olsak bile egomuzu şişirir; çoğu zaman negatif enerji taşır ve bu da bedenimize iyi gelmez.'},{t:'quote', h:'Zihnin nasıl?', hb:true, text:'Geçmişte misin? Şüphede misin? Yargılıyor musun? Zihninin yönü ne?'}],
@@ -1721,7 +1723,7 @@ function fillHolo(n){
   listEl.style.setProperty('--c',hex(n.color));
   const N=n.ring.length,cols=n.cols||((N>12&&!n.oneCol)?2:1);listEl.classList.toggle('nw',!!n.oneCol);listEl.classList.toggle('nodot',!!n.noDot);
   listEl.style.gridTemplateRows=N?`repeat(${n.rows||Math.ceil(N/cols)},auto)`:'';
-  listEl.innerHTML=n.ring.map((it,i)=>`<div class="it${it.hd?' hd':''}${it.nd?' nd':''}${it.dot?' dot':''}${it.go?' go':''}${it.more?' multi':''}"${it.go?` data-go="${it.go}" role="button" tabindex="0"`:''} style="--d:${300+i*45}ms"><span class="slot"></span><span class="lbl">${it.h?`<span class="ih">${esc(it.h)}</span>`:''}${it.kw?`<button type="button" class="kw${it.nou?' nou':''}" data-go="${it.kw}">${it.parts?pt(it.parts):esc(it.t)}<i aria-hidden="true">→</i></button>`:it.parts?pt(it.parts)+esc(it.tail||''):it.more?esc(it.t)+it.more.map(x=>'<br>'+esc(x)).join(''):it.d?(it.inline?`<b${it.tc?` style="color:${it.tc}"`:''}>${esc(it.t)}</b> <span class="in">${esc(it.d)}</span>`:`<b>${esc(it.t)}</b><small>${esc(it.d)}</small>`):esc(it.t)}</span></div>`).join('');
+  listEl.innerHTML=n.ring.map((it,i)=>`<div class="it${it.hd?' hd':''}${it.nd?' nd':''}${it.dot?' dot':''}${it.go?' go':''}${it.more?' multi':''}"${it.go?` data-go="${it.go}" role="button" tabindex="0"`:''} style="--d:${300+i*45}ms"><span class="slot"></span><span class="lbl">${it.h?`<span class="ih">${esc(it.h)}</span>`:''}${it.kw?`<button type="button" class="kw${it.nou?' nou':''}" data-go="${it.kw}">${it.parts?pt(it.parts):esc(it.t)}<i aria-hidden="true">→</i></button>`:it.parts?pt(it.parts)+esc(it.tail||''):it.more?esc(it.t)+it.more.map(x=>'<br>'+esc(x)).join(''):it.d?(it.inline?`<b${it.tc?` style="color:${it.tc}"`:''}>${esc(it.t)}</b> <span class="in${it.two?' two':''}">${it.two?it.d.split('\n').map(esc).join('<br>'):esc(it.d)}</span>`:`<b>${esc(it.t)}</b><small>${esc(it.d)}</small>`):esc(it.t)}</span></div>`).join('');
   slots=[...listEl.querySelectorAll('.slot')];rowsEl=[...listEl.querySelectorAll('.it')];
   fanG.innerHTML='';fanLines=n.ring.map(()=>{const l=document.createElementNS('http://www.w3.org/2000/svg','line');l.setAttribute('stroke',hex(n.color));l.setAttribute('stroke-width','1');l.setAttribute('opacity','0');fanG.appendChild(l);return l;});
   threadsG.innerHTML='';threads=[...hBody.querySelectorAll('.row')].map(r=>{const l=document.createElementNS('http://www.w3.org/2000/svg','line');l.setAttribute('stroke',hex(n.color));l.setAttribute('stroke-width','1');l.setAttribute('opacity','0');threadsG.appendChild(l);return{r,l,orb:r.querySelector('.orb'),d:parseFloat(r.style.getPropertyValue('--d'))||0};});
