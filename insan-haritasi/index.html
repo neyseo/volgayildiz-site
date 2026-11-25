@@ -1896,6 +1896,57 @@ function family(n){if(!current||n===current)return true;
   if(current.kind==='sub'&&n.parent===current.parent)return true;return false;}
 let glowS=0;const MUP=document.getElementById('mUp'),MDN=document.getElementById('mDn');
 const sA={x:0,y:0,z:0},sB={x:0,y:0,z:0},sC={x:0,y:0,z:0};let HB=null,LB=null;
+
+/* ---------- AKAN BAĞLANTILAR · SİNEMATİK DERİNLİK · SESSİZ TUR ---------- */
+const LINKF={pool:[],key:undefined,paths:[],a:0};
+for(let i=0;i<48;i++){const sp=new THREE.Sprite(new THREE.SpriteMaterial(additive({map:GLOW,opacity:0})));sp.scale.setScalar(.7);sp.visible=false;sp.layers.enableAll();scene.add(sp);LINKF.pool.push(sp);}
+function visOf(m){return m&&m.hidden&&m.host?BY[m.host]:m;}
+function linkTargets(n){const from=visOf(n),set=new Set();
+  const add=m=>{const v=visOf(m);if(v&&v!==from&&!v.hidden)set.add(v);};
+  if(from.parent)add(BY[from.parent]);NODES.forEach(m=>{if(m.parent===from.id)add(m);});
+  [...(n.links||[]),...(from.links||[])].forEach(l=>add(BY[l.go]));
+  return {from,to:[...set].slice(0,12)};}
+function updLinks(dt,t){const L=LINKF,key=current?current.id:null;
+  if(key!==L.key){L.key=key;if(current){const {from,to}=linkTargets(current);
+    L.paths=to.map(m=>({A:from.P,B:m.P,c:new THREE.Color(from.vc||from.sc||from.color),c2:new THREE.Color(m.vc||m.sc||m.color)}));}}
+  L.a+=((current&&!tour.on?1:0)-L.a)*Math.min(1,dt*1.6);
+  const per=4;L.pool.forEach((sp,i)=>{const pth=L.paths[Math.floor(i/per)];if(!pth||L.a<.01){sp.visible=false;return;}
+    const u=(t*(REDUCED?.05:.16)+(i%per)/per)%1;sp.visible=true;sp.position.lerpVectors(pth.A,pth.B,u);
+    sp.material.color.copy(pth.c).lerp(pth.c2,u);sp.material.opacity=Math.sin(u*Math.PI)*.8*L.a;});}
+scene.traverse(o=>{if(o.isLight)o.layers.enableAll();});
+const DOF=(function(){const mk=()=>new THREE.WebGLRenderTarget(2,2,{minFilter:THREE.LinearFilter,magFilter:THREE.LinearFilter,depthBuffer:true});
+  const VS='varying vec2 v;void main(){v=uv;gl_Position=vec4(position.xy,0.,1.);}';
+  const blurMat=new THREE.ShaderMaterial({uniforms:{t:{value:null},d:{value:new THREE.Vector2()}},vertexShader:VS,depthTest:false,depthWrite:false,
+    fragmentShader:'uniform sampler2D t;uniform vec2 d;varying vec2 v;void main(){vec4 c=texture2D(t,v)*.227027;c+=(texture2D(t,v+d*1.3846)+texture2D(t,v-d*1.3846))*.316216;c+=(texture2D(t,v+d*3.2308)+texture2D(t,v-d*3.2308))*.070270;gl_FragColor=c;}'});
+  const mixMat=new THREE.ShaderMaterial({uniforms:{a:{value:null},b:{value:null},k:{value:0}},vertexShader:VS,depthTest:false,depthWrite:false,
+    fragmentShader:'uniform sampler2D a;uniform sampler2D b;uniform float k;varying vec2 v;void main(){gl_FragColor=mix(texture2D(a,v),texture2D(b,v),k);}'});
+  const qs=new THREE.Scene(),qc=new THREE.OrthographicCamera(-1,1,1,-1,0,1),quad=new THREE.Mesh(new THREE.PlaneGeometry(2,2),blurMat);qs.add(quad);
+  return {sharp:mk(),b1:mk(),b2:mk(),blurMat,mixMat,qs,qc,quad,k:0,fn:null,objs:[],w:0,h:0};})();
+function dofLayers(list,l){list.forEach(o=>o.traverse(c=>c.layers.set(l)));}
+function renderFrame(dt){const D=DOF;
+  if(current){const fn=visOf(current);if(D.fn!==fn||D.cur!==current){dofLayers(D.objs,0);D.fn=fn;D.cur=current;
+    D.objs=[O[fn.id].g,...O[current.id].sats.map(s=>s.mini).filter(Boolean),...(O[fn.id].sats||[]).map(s=>s.mini).filter(Boolean)];dofLayers(D.objs,1);}}
+  D.k+=(((current&&!tour.on&&!REDUCED)?1:0)-D.k)*Math.min(1,dt*2.2);
+  if(D.k<.01||!D.fn){if(D.objs.length){dofLayers(D.objs,0);D.objs=[];D.fn=null;D.cur=null;}renderer.setRenderTarget(null);renderer.render(scene,camera);return;}
+  const pr=renderer.getPixelRatio(),w=Math.max(2,Math.floor(W*pr)),h=Math.max(2,Math.floor(H*pr));
+  if(w!==D.w||h!==D.h){D.w=w;D.h=h;D.sharp.setSize(w,h);D.b1.setSize(Math.max(1,w>>2),Math.max(1,h>>2));D.b2.setSize(Math.max(1,w>>2),Math.max(1,h>>2));}
+  camera.layers.set(0);renderer.setRenderTarget(D.sharp);renderer.render(scene,camera);
+  D.quad.material=D.blurMat;const U=D.blurMat.uniforms;let src=D.sharp.texture;
+  for(let it=0;it<2;it++){U.t.value=src;U.d.value.set(1/D.b1.width,0);renderer.setRenderTarget(D.b1);renderer.render(D.qs,D.qc);
+    U.t.value=D.b1.texture;U.d.value.set(0,1/D.b1.height);renderer.setRenderTarget(D.b2);renderer.render(D.qs,D.qc);src=D.b2.texture;}
+  D.quad.material=D.mixMat;D.mixMat.uniforms.a.value=D.sharp.texture;D.mixMat.uniforms.b.value=D.b2.texture;D.mixMat.uniforms.k.value=D.k*.85;
+  renderer.setRenderTarget(null);renderer.render(D.qs,D.qc);
+  camera.layers.set(1);renderer.autoClear=false;renderer.clearDepth();renderer.render(scene,camera);renderer.autoClear=true;camera.layers.set(0);}
+let lastAct=performance.now(),idleK=0;
+['pointerdown','wheel','keydown','touchstart'].forEach(ev=>addEventListener(ev,()=>{lastAct=performance.now();},{passive:true}));
+function updIdle(dt,t,now){const on=!current&&!tour.on&&!tween&&!REDUCED&&now-lastAct>20000;
+  idleK+=((on?1:0)-idleK)*Math.min(1,dt*(on?.35:3));
+  if(on&&!controls.autoRotate)controls.autoRotate=true;
+  controls.autoRotateSpeed=.25+.45*idleK;
+  if(idleK>.002){const off=camera.position.clone().sub(controls.target),d0=ovPos().distanceTo(OVERVIEW.target);
+    const want=d0*(1+.14*Math.sin(t*.06)),len=off.length();off.setLength(len+(want-len)*Math.min(1,dt*.4)*idleK);
+    controls.target.y+=((OVERVIEW.target.y+2.5*Math.sin(t*.045))-controls.target.y)*Math.min(1,dt*.3)*idleK;
+    camera.position.copy(controls.target).add(off);}}
 function loop(){
   const dt=Math.min(clock.getDelta(),.05),t=clock.elapsedTime,sp=REDUCED?.15:1;
   if(tween){const k=Math.min(1,(performance.now()-tween.t0)/tween.dur),e=ease(k);
@@ -1917,7 +1968,7 @@ function loop(){
   triMat.opacity+=(((tour.on&&TOUR[tour.i].tri)?.42:.07)-triMat.opacity)*Math.min(1,dt*3);
   const ok=1-Math.pow(.92,dt*60);offset.x+=(tx-offset.x)*ok;offset.y+=(ty-offset.y)*ok;
   if(Math.abs(offset.x)>.5||Math.abs(offset.y)>.5)camera.setViewOffset(W,H,offset.x,offset.y,W,H);else camera.clearViewOffset();
-  controls.update();camera.updateMatrixWorld();
+  updIdle(dt,t,now);controls.update();camera.updateMatrixWorld();
   right.setFromMatrixColumn(camera.matrixWorld,0);up.setFromMatrixColumn(camera.matrixWorld,1);back.setFromMatrixColumn(camera.matrixWorld,2);
   const {sx,sy}=ringScale();
   HB=current&&holo.classList.contains('on')?holo.getBoundingClientRect():null;
@@ -2070,7 +2121,7 @@ function loop(){
   if(BY.efv.triG&&!REDUCED)BY.efv.triG.rotation.z=t*.35;
   {const MZ=Math.min(1,Math.max(.3,ovPos().distanceTo(OVERVIEW.target)/camera.position.distanceTo(controls.target))).toFixed(3);tmp2.copy(BY.sevgi.P).addScaledVector(up,BY.sevgi.r+4);toScreen(tmp2,sA);MUP.style.transform=`translate(${sA.x.toFixed(1)}px,${sA.y.toFixed(1)}px) translate(-50%,-50%) scale(${MZ})`;MUP.style.visibility=sA.z<1?'visible':'hidden';
    tmp2.copy(BY.bdn.P).addScaledVector(up,-(BY.bdn.r+7.1));toScreen(tmp2,sA);MDN.style.transform=`translate(${sA.x.toFixed(1)}px,${sA.y.toFixed(1)}px) translate(-50%,-50%) scale(${MZ})`;MDN.style.visibility=sA.z<1?'visible':'hidden';}
-  renderer.render(scene,camera);
+  updLinks(dt,t);renderFrame(dt);
   requestAnimationFrame(loop);
 }
 loop();
