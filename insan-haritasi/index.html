@@ -1939,13 +1939,18 @@ function renderFrame(dt){const D=DOF;
   camera.layers.set(1);renderer.autoClear=false;renderer.clearDepth();renderer.render(scene,camera);renderer.autoClear=true;camera.layers.set(0);}
 let lastAct=performance.now(),idleK=0;
 ['pointerdown','wheel','keydown','touchstart'].forEach(ev=>addEventListener(ev,()=>{lastAct=performance.now();},{passive:true}));
+let idleT0=0;
 function updIdle(dt,t,now){const on=!current&&!tour.on&&!tween&&!REDUCED&&now-lastAct>20000;
-  idleK+=((on?1:0)-idleK)*Math.min(1,dt*(on?.35:3));
+  if(on&&idleK<.01)idleT0=t;
+  idleK+=((on?1:0)-idleK)*Math.min(1,dt*(on?.5:3));
   if(on&&!controls.autoRotate)controls.autoRotate=true;
-  controls.autoRotateSpeed=.25+.45*idleK;
-  if(idleK>.002){const off=camera.position.clone().sub(controls.target),d0=ovPos().distanceTo(OVERVIEW.target);
-    const want=d0*(1+.14*Math.sin(t*.06)),len=off.length();off.setLength(len+(want-len)*Math.min(1,dt*.4)*idleK);
-    controls.target.y+=((OVERVIEW.target.y+2.5*Math.sin(t*.045))-controls.target.y)*Math.min(1,dt*.3)*idleK;
+  controls.autoRotateSpeed=.25+.35*idleK;
+  {const hs=document.getElementById('hsh');if(hs)hs.style.opacity=idleK>.01?(1-idleK).toFixed(2):'';}
+  if(idleK>.002){const ti=t-idleT0,off=camera.position.clone().sub(controls.target),d0=ovPos().distanceTo(OVERVIEW.target);
+    const w=.5-.5*Math.cos(ti*.11);
+    const want=d0*(1-.42*w),len=off.length();off.setLength(len+(want-len)*Math.min(1,dt*.6)*idleK);
+    const ty=OVERVIEW.target.y+4*Math.sin(ti*.07);
+    controls.target.y+=(ty-controls.target.y)*Math.min(1,dt*.4)*idleK;
     camera.position.copy(controls.target).add(off);}}
 function loop(){
   const dt=Math.min(clock.getDelta(),.05),t=clock.elapsedTime,sp=REDUCED?.15:1;
@@ -2043,11 +2048,12 @@ function loop(){
     l.x=Math.min(Math.max(l.x,w/2+6),W-w/2-6);
     let tdx=0,tdy=0,free=false;
     const C2=[[0,0],[w*.22,0],[-w*.22,0],[w*.45,0],[-w*.45,0],[0,h*.9],[0,-h*.9-6],[w*.35,h*.9],[-w*.35,h*.9],[0,h*1.8],[0,-h*1.8-6],[0,h*2.7]];
-    for(const [dx,dy] of C2){
+    const CC=L._tx!==undefined?[[L._tx,L._ty],...C2]:C2;
+    for(const [dx,dy] of CC){
       const r={a:l.x+dx-w/2+7,b:l.x+dx+w/2-7,c:l.y+dy+3,d:l.y+dy+h-3};
       if(!placed.some(q=>r.a<q.b&&r.b>q.a&&r.c<q.d&&r.d>q.c)&&!SPH.some(q=>q.L!==L&&r.a<q.b&&r.b>q.a&&r.c<q.d&&r.d>q.c)){tdx=dx;tdy=dy;free=true;break;}
     }
-    const k=Math.min(1,dt*10);
+    L._tx=tdx;L._ty=tdy;const k=Math.min(1,dt*2.6);
     L._dx=(L._dx===undefined?tdx:L._dx+(tdx-L._dx)*k);L._dy=(L._dy===undefined?tdy:L._dy+(tdy-L._dy)*k);
     placed.push({a:l.x+tdx-w/2+7,b:l.x+tdx+w/2-7,c:l.y+tdy+3,d:l.y+tdy+h-3});
     L._fo=(L._fo===undefined?1:L._fo+((free?1:.18)-L._fo)*k);
@@ -2119,8 +2125,8 @@ function loop(){
   {const tgt=current?0:1;FIG.a+=(tgt-FIG.a)*.035;FIG.mat.opacity=FIG.base*FIG.a;FIG.fog.forEach(f=>f.material.opacity=FIG.fbase*FIG.a);FIG.grp.visible=FIG.a>.01;
    if(!REDUCED){const br=Math.sin(t*.9),b=FIG.s*(1+br*.03);FIG.grp.scale.set(b,b,b);FIG.mat.opacity*=.85+br*.15;}}
   if(BY.efv.triG&&!REDUCED)BY.efv.triG.rotation.z=t*.35;
-  {const MZ=Math.min(1,Math.max(.3,ovPos().distanceTo(OVERVIEW.target)/camera.position.distanceTo(controls.target))).toFixed(3);tmp2.copy(BY.sevgi.P).addScaledVector(up,BY.sevgi.r+4);toScreen(tmp2,sA);MUP.style.transform=`translate(${sA.x.toFixed(1)}px,${sA.y.toFixed(1)}px) translate(-50%,-50%) scale(${MZ})`;MUP.style.visibility=sA.z<1?'visible':'hidden';
-   tmp2.copy(BY.bdn.P).addScaledVector(up,-(BY.bdn.r+7.1));toScreen(tmp2,sA);MDN.style.transform=`translate(${sA.x.toFixed(1)}px,${sA.y.toFixed(1)}px) translate(-50%,-50%) scale(${MZ})`;MDN.style.visibility=sA.z<1?'visible':'hidden';}
+  {const MZ=Math.min(1,Math.max(.3,ovPos().distanceTo(OVERVIEW.target)/camera.position.distanceTo(controls.target))).toFixed(3);tmp2.copy(BY.sevgi.P).addScaledVector(up,BY.sevgi.r+4);toScreen(tmp2,sA);MUP.style.transform=`translate(${sA.x.toFixed(1)}px,${sA.y.toFixed(1)}px) translate(-50%,-50%) scale(${MZ})`;MUP.style.visibility=sA.z<1?'visible':'hidden';MUP.style.opacity=sA.y<92?'0':'';
+   tmp2.copy(BY.bdn.P).addScaledVector(up,-(BY.bdn.r+7.1));toScreen(tmp2,sA);MDN.style.transform=`translate(${sA.x.toFixed(1)}px,${sA.y.toFixed(1)}px) translate(-50%,-50%) scale(${MZ})`;MDN.style.visibility=sA.z<1?'visible':'hidden';MDN.style.opacity=sA.y>H-95?'0':'';}
   updLinks(dt,t);renderFrame(dt);
   requestAnimationFrame(loop);
 }
