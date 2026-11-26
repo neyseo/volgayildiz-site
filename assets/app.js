@@ -57,7 +57,6 @@
   /* ---------------------------------------------------------------- cover */
   function renderCover(settings) {
     getJSON('/content/cover.json').then(function (c) {
-      document.title = settings.title;
       var wrap = el('div', { class: 'cover' });
       var slides = (c.slides || []).map(function (s, i) {
         var d = el('div', { class: 'slide' + (i === 0 ? ' on' : '') });
@@ -141,7 +140,7 @@
   /* ---------------------------------------------------------------- gallery */
   function renderGallery(settings) {
     getJSON('/content/galleries/' + PAGE + '.json').then(function (g) {
-      document.title = (g.title || PAGE) + ' — ' + settings.title;
+      var altBase = 'Volga Yıldız — ' + (g.title || PAGE) + ' photography, Istanbul';
       var photos = (g.photos || []).filter(function (p) { return p && p.image; });
       var main = el('main', { class: 'main' });
       var stage = el('div', { class: 'stage' });
@@ -165,7 +164,7 @@
         img.classList.remove('ready');
         var src = url(p.image);
         var pre = new Image();
-        pre.onload = function () { img.src = src; img.alt = (p.caption || '').replace(/\n/g, ', '); img.classList.add('ready'); };
+        pre.onload = function () { img.src = src; img.alt = (p.caption || '').replace(/\n/g, ', ') || altBase; img.classList.add('ready'); };
         pre.src = src;
         cap.textContent = p.caption || '';
         mcap.firstChild.textContent = p.caption || '';
@@ -222,7 +221,7 @@
       }
 
       photos.forEach(function (p, i) {
-        var timg = el('img', { src: url(p.image), loading: 'lazy', alt: '' });
+        var timg = el('img', { src: url(p.image), loading: 'lazy', alt: (p.caption || '').replace(/\n/g, ', ') || altBase });
         var b = el('button', { type: 'button', 'aria-label': 'Photo ' + (i + 1) }, [timg]);
         timg.addEventListener('load', function () { b._ar = timg.naturalWidth / timg.naturalHeight; layoutThumbs(); });
         b.addEventListener('click', function () { setThumbs(false); show(i); window.scrollTo(0, 0); });
@@ -253,7 +252,6 @@
   /* ---------------------------------------------------------------- text pages */
   function renderPage(settings) {
     getJSON('/content/pages/' + PAGEFILE[PAGE] + '.json').then(function (p) {
-      document.title = (p.title || PAGE) + ' — ' + settings.title;
       var main = el('main', { class: 'main' });
       var images = (p.images || []).filter(function (im) { return im && im.image; });
       function figure(im) {
@@ -267,7 +265,7 @@
         // About: text on the left, photo on the right, side by side (as on the old site)
         page = el('div', { class: 'about' }, [
           el('div', { class: 'about-text' }, [el('p', { text: p.text || '' })]),
-          images[0] ? el('div', { class: 'about-photo' }, [el('img', { src: url(images[0].image), alt: '' })]) : null
+          images[0] ? el('div', { class: 'about-photo' }, [el('img', { src: url(images[0].image), alt: 'Volga Yıldız, photographer' })]) : null
         ]);
         images.slice(1).forEach(function (im) { page.appendChild(figure(im)); });
       } else {
