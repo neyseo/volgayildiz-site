@@ -1499,7 +1499,7 @@ const controls=new THREE.OrbitControls(camera,canvas);
 controls.target.copy(OVERVIEW.target);
 controls.enableDamping=true;controls.enablePan=false; controls.dampingFactor=.07;
 controls.minDistance=3; controls.maxDistance=220; controls.rotateSpeed=.6;
-controls.autoRotate=!REDUCED; controls.autoRotateSpeed=.25;
+controls.autoRotate=!REDUCED; controls.autoRotateSpeed=.125;
 NODES.forEach(n=>n.P=new THREE.Vector3(...n.pos));
 
 scene.add(new THREE.AmbientLight(0x9090c0,.32));
@@ -1947,7 +1947,7 @@ function updIdle(dt,t,now){const on=!current&&!tour.on&&!tween&&!REDUCED&&now-la
   if(on&&idleK<.01)idleT0=t;
   idleK+=((on?1:0)-idleK)*Math.min(1,dt*(on?.5:3));
   if(on&&!controls.autoRotate)controls.autoRotate=true;
-  controls.autoRotateSpeed=.25+.35*idleK;
+  controls.autoRotateSpeed=.125+.175*idleK;
   {const hs=document.getElementById('hsh');if(hs)hs.style.opacity=idleK>.01?(1-idleK).toFixed(2):'';}
   if(idleK>.002){const ti=t-idleT0,off=camera.position.clone().sub(controls.target),d0=ovPos().distanceTo(OVERVIEW.target);
     const w=.5-.5*Math.cos(ti*.11);
