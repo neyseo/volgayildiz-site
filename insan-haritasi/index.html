@@ -1392,7 +1392,7 @@ const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&g
    ring:  kürenin etrafında yazılı uydular olarak dönen kısa maddeler
    panel: kürenin yanında yüzen hologram paneldeki metinler            */
 const NODES = [
- {id:'sevgi', kind:'trio', shape:'star', name:'SEVGİ', kicker:'Kaynak · Çıkış noktamız', color:0xffb8cf, sc:0xff8126, pos:[0,18,0], r:2.1, noLink:true,
+ {id:'sevgi', kind:'trio', shape:'star', name:'SEVGİ', kicker:'Kaynak · Çıkış noktamız', color:0xffb8cf, sc:0xffa63a, pos:[0,18,0], r:2.1, noLink:true,
   panel:[
    {t:'quote', h:'Sevgi > Zıtlık > Denge > Şu an > Nefes > Farkındalık', hb:true, text:'Sevgiden zıtlıklar dünyasına geliriz; hayat bu zıtlıklarla var olur ve bu yüzden hayatımız boyunca dengeyi ararız. Dengede olabilmek için Şu an\'da olmamız gerekir. Şu an\'da olabilmek için de Nefes\'e ihtiyacımız vardır. Nefes\'le de şu anın farkındalığına varırız; bu farkındalıkla da an\'ı yaratırız.'},
    {t:'quote', h:'Her daim:', hb:true, text:'Kendini sev\nKendini tanı\nKendine inan\nKendini affet\nKendini dinle'}
@@ -1501,7 +1501,7 @@ controls.minDistance=3; controls.maxDistance=220; controls.rotateSpeed=.6;
 controls.autoRotate=!REDUCED; controls.autoRotateSpeed=.25;
 NODES.forEach(n=>n.P=new THREE.Vector3(...n.pos));
 
-scene.add(new THREE.AmbientLight(0x9090c0,.24));
+scene.add(new THREE.AmbientLight(0x9090c0,.32));
 const coreLight=new THREE.PointLight(0xffe6b0,1.6,90); scene.add(coreLight);
 
 function radialTex(size,stops){const c=document.createElement('canvas');c.width=c.height=size;const g=c.getContext('2d');
@@ -1604,7 +1604,7 @@ flow(BY.kalp.P,BY.zihin.P,BY.kalp.vc,BY.zihin.vc,3,.09,.9);
 // SEVGİ → ŞİMDİ: enerji · frekans · titreşim (dalgalı akış)
 const sevgiBeam=beam(BY.sevgi.P,BY.simdi.P,0xffa65a,.09,.35);
 const WAVES=[...Array(14)].map((_,i)=>{const sp=new THREE.Sprite(new THREE.SpriteMaterial(additive({map:GLOW,color:0xffc07a,opacity:.9})));sp.scale.setScalar(.8);scene.add(sp);return{sp,o:i/14};});
-const sevgiLight=new THREE.PointLight(0xffe0bd,1.35,0);sevgiLight.position.copy(BY.sevgi.P);scene.add(sevgiLight);
+const sevgiLight=new THREE.PointLight(0xffe6c2,1.75,0);sevgiLight.position.copy(BY.sevgi.P);scene.add(sevgiLight);
 const NLINK={pulses:[]};
 
 /* ---------- DÜĞÜMLER ve UYDULAR ---------- */
@@ -1620,8 +1620,9 @@ const satLayer=document.getElementById('sats');
 NODES.forEach(n=>{
   const g=new THREE.Group();g.position.copy(n.P);scene.add(g);if(n.hidden)g.visible=false;
   const SC=n.vc||n.sc||n.color;
-  const mesh=new THREE.Mesh(n.shape==='octa'?octaGeo:sphereGeo,new THREE.MeshPhongMaterial({color:SC,emissive:SC,emissiveIntensity:n.id==='sevgi'?1:n.kind==='core'?.3:n.shape==='octa'?.45:.16,shininess:60,flatShading:false,transparent:true,opacity:.95}));
+  const mesh=new THREE.Mesh(n.shape==='octa'?octaGeo:sphereGeo,new THREE.MeshPhongMaterial({color:SC,emissive:SC,emissiveIntensity:n.id==='sevgi'?1.05:n.kind==='core'?.38:n.shape==='octa'?.45:.22,shininess:60,flatShading:false,transparent:true,opacity:.95}));
   mesh.scale.setScalar(n.r);g.add(mesh);
+  if(n.id==='sevgi')mesh.material.onBeforeCompile=sh=>{sh.fragmentShader=sh.fragmentShader.replace('#include <emissivemap_fragment>','#include <emissivemap_fragment>\n float frs=pow(1.0-abs(dot(normal,normalize(vViewPosition))),1.4);\n totalEmissiveRadiance*=mix(vec3(1.08,1.02,.78),vec3(.95,.5,.22),frs);');};
   const dark=null;if(n.shape==='octa'){mesh.material=new THREE.MeshBasicMaterial({map:YY,transparent:true,opacity:.95,side:THREE.DoubleSide});mesh.scale.setScalar(n.r*1.25);}
   const halo=new THREE.Sprite(new THREE.SpriteMaterial(additive({map:GLOW,color:SC,opacity:n.kind==='core'?.75:.55})));
   halo.scale.setScalar(n.r*(n.kind==='core'?7:5));g.add(halo);
@@ -2116,7 +2117,7 @@ function loop(){
 
   dusts[0].rotation.y+=dt*.01*sp;
   const snd=window.__soundOn?1:0;glowS+=(snd-glowS)*Math.min(1,dt*1.5);
-  sevgiBeam.material.opacity=.32+.38*glowS;sevgiLight.intensity=1.3+.3*glowS+Math.sin(t*1.1)*.06;
+  sevgiBeam.material.opacity=.32+.38*glowS;sevgiLight.intensity=1.75+.3*glowS+Math.sin(t*1.1)*.06;
   {const A=BY.sevgi.P,B=BY.simdi.P;WAVES.forEach((w,i)=>{const u=(t*.12*sp+w.o)%1,amp=(.45+.35*glowS)*Math.sin(u*Math.PI);
     w.sp.position.lerpVectors(A,B,u);w.sp.position.x+=Math.sin(u*Math.PI*10-t*3*sp)*amp;w.sp.position.z+=Math.cos(u*Math.PI*10-t*3*sp)*amp*.5;
     w.sp.material.opacity=Math.sin(u*Math.PI)*(.7+.3*glowS);w.sp.scale.setScalar(.7+.5*glowS);});}
