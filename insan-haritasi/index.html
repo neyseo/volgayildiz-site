@@ -1397,14 +1397,14 @@ const NODES = [
    {t:'quote', h:'Sevgi > Zıtlık > Denge > Şu an > Nefes > Farkındalık', hb:true, text:'Sevgiden zıtlıklar dünyasına geliriz; hayat bu zıtlıklarla var olur ve bu yüzden hayatımız boyunca dengeyi ararız. Dengede olabilmek için Şu an\'da olmamız gerekir. Şu an\'da olabilmek için de Nefes\'e ihtiyacımız vardır. Nefes\'le de şu anın farkındalığına varırız; bu farkındalıkla da an\'ı yaratırız.'},
    {t:'quote', h:'Her daim:', hb:true, text:'Kendini sev\nKendini tanı\nKendine inan\nKendini affet\nKendini dinle'}
   ]},
- {id:'efv', parent:'sevgi', kind:'trio', shape:'wave', name:'Temel Üçleme', title:'Hayatın Temel Üçlemesi', kicker:'Hayatın Temel Üçlemesi', color:0xffd2e0, pos:[0,-2.2,0], r:1.6, tri:true, noLink:true,
+ {id:'efv', parent:'sevgi', kind:'trio', shape:'wave', name:'Temel Üçleme', title:'Hayatın Temel Üçlemesi', kicker:'Hayatın Temel Üçlemesi', color:0xffd2e0, pos:[0,-3.2,0], r:1.6, tri:true, noLink:true,
   ring:[{t:'Enerji – Titreşim – Frekans',kw:'efv-acik',nou:true},{t:'Proton – Nötron – Elektron',kw:'atom-acik',nou:true},
    ...['Düşünce > Söz > Gerçeklik','Mer – Ka – Ba = Işık – Ruh – Beden','Zaman – Mekân – Madde','Yükseklik – Genişlik – Derinlik','Katı – Sıvı – Gaz','Sarı – Mavi – Kırmızı','Zihin – Beden – Ruh','Baba – Anne – Çocuk','Doğum – Yaşam – Ölüm','Geçmiş – Şu an – Gelecek','3 – 6 – 9'].map(t=>({t}))],
   panel:[]},
- {id:'atom-acik', parent:'efv', kind:'trio', hidden:true, host:'efv', noLink:true, name:'Proton – Nötron – Elektron', kicker:'Hayatın Temel Üçlemesi', color:0xffd2e0, pos:[0,-2.2,0], r:.55,
+ {id:'atom-acik', parent:'efv', kind:'trio', hidden:true, host:'efv', noLink:true, name:'Proton – Nötron – Elektron', kicker:'Hayatın Temel Üçlemesi', color:0xffd2e0, pos:[0,-3.2,0], r:.55,
   ring:[{t:'Proton:',d:'var olan',inline:true},{t:'Elektron:',d:'olmayan; hareket ve itme–çekme',inline:true},{t:'Nötron:',d:'ruh; dengeyi tutan',inline:true}],
   panel:[{t:'quote', lead:true, text:'**Atom** = Hayat'}]},
- {id:'efv-acik', parent:'efv', kind:'trio', hidden:true, host:'efv', noLink:true, name:'Enerji – Titreşim – Frekans', kicker:'Hayatın Temel Üçlemesi', color:0xffd2e0, pos:[0,-2.2,0], r:.55,
+ {id:'efv-acik', parent:'efv', kind:'trio', hidden:true, host:'efv', noLink:true, name:'Enerji – Titreşim – Frekans', kicker:'Hayatın Temel Üçlemesi', color:0xffd2e0, pos:[0,-3.2,0], r:.55,
   ring:[{t:'Enerji:',d:'asıl olan',inline:true,tc:'#FFD27A'},{t:'Titreşim:',d:'enerjinin hareketi',inline:true,tc:'#C9A6FF'},{t:'Frekans:',d:'titreşimin hızı',inline:true,tc:'#7FE3E0'}],
   panel:[{t:'quote', text:'Evrendeki tüm formlar ve varlıklar enerji, frekans ve titreşimden yaratılmıştır.'}]},
  {id:'simdi', kind:'core', name:'ŞU AN · NEFES', stack:true, kicker:'Merkez · Dengenin tam ortası', color:C.gold, sc:0xfff4e4, pos:[0,5.6,0], r:1.9, noLink:true, breath:true,
@@ -1428,16 +1428,16 @@ const NODES = [
  {id:'gelecek', parent:'simdi', kind:'trio', name:'Gelecek', kicker:'Zaman Ekseni', color:0xffc98a, vc:0xf2a48c, pos:[14,5.6,0], r:1.9, noLink:true,
   panel:[{t:'quote', text:'Farkındalıkla istenilen yaratılabilir'}],
   links:[{go:'zhn', label:'Niyetten Gerçeğe', note:'Zihinsel'}]},
- {id:'kalp', parent:'simdi', kind:'trio', name:'KALP', kicker:'İç Mekanizma · Karar Veren', color:C.rose, vc:0xe2523e, pos:[-10,-9,0], r:1.9, noLink:true,
+ {id:'kalp', parent:'simdi', kind:'trio', name:'KALP', kicker:'İç Mekanizma · Karar Veren', color:C.rose, vc:0xe2523e, pos:[-10,-11.9,0], r:1.9, noLink:true,
   panel:[{t:'quote', h:'Kalbin nasıl?', hb:true, text:'Kendine şefkatin var mı?\nKendini seviyor musun?'},{t:'quote', text:'Kırma - Kırılma'}],
   links:[{go:'bes-element', label:'Beş Element', note:'Duygular'}]},
  {id:'bes-element', parent:'bdn', kind:'sub', hidden:true, host:'bdn', noLink:true, name:'Beş Element', kicker:'Bedensel · Duygular', color:C.leaf, off:[0,0,0], r:1.9,
   ring:[{t:'Ağaç:',two:true,d:'Karaciğer – Safra kesesi\nÖfke / Kin ⇄ Şefkat / Anlayış',inline:true,tc:'#7DD68A'},{t:'Ateş:',two:true,d:'Kalp – İnce bağırsak\nAcelecilik ⇄ Neşe',inline:true,tc:'#FF7A6B'},{t:'Toprak:',two:true,d:'Dalak – Mide\nEndişe ⇄ Denge / Uyum',inline:true,tc:'#E8C36A'},{t:'Metal:',two:true,d:'Akciğer – Kalın bağırsak\nHüzün / Keder ⇄ Cesaret',inline:true,tc:'#D9DDE3'},{t:'Su:',two:true,d:'Böbrek – Mesane\nKorku / Dehşet ⇄ Dinginlik / Huzur',inline:true,tc:'#7FB8FF'}],
   panel:[]},
- {id:'zihin', parent:'simdi', kind:'trio', name:'ZİHİN', kicker:'İç Mekanizma · Kararı Uygulayan', color:C.amber, vc:0xe9b35f, pos:[10,-9,0], r:1.9, noLink:true,
+ {id:'zihin', parent:'simdi', kind:'trio', name:'ZİHİN', kicker:'İç Mekanizma · Kararı Uygulayan', color:C.amber, vc:0xe9b35f, pos:[10,-11.9,0], r:1.9, noLink:true,
   panel:[{t:'quote', text:'Zihin aktifken farkında olmadan nefesimizi tutarız.'},{t:'quote', text:'Şüphe yok'},{t:'quote', h:'YYYY: Yargı Yok Yorum Yok', hb:true, text:'Zıtlıklar birbirini tamamlar; bu yüzden hiçbir şeyi yorumlamaya veya yargılamaya gerek yoktur. Yorum ve yargı, zaman kaybı olduğu kadar enerji de tüketir. Haklı olsak bile egomuzu şişirir; çoğu zaman negatif enerji taşır ve bu da bedenimize iyi gelmez.'},{t:'quote', h:'Zihnin nasıl?', hb:true, text:'Geçmişte misin? Şüphede misin? Yargılıyor musun? Zihninin yönü ne?'}],
   links:[{go:'secim', label:'Zihin & Seçimler', note:''}]},
- {id:'denge', parent:'simdi', kind:'trio', shape:'octa', noDot:true, cols:2, name:'DENGE', kicker:'Dayanak Noktası', color:C.gold, vc:0xf4f1ea, pos:[0,-9,0], r:1.7, noLink:true,
+ {id:'denge', parent:'simdi', kind:'trio', shape:'octa', noDot:true, cols:2, name:'DENGE', kicker:'Dayanak Noktası', color:C.gold, vc:0xf4f1ea, pos:[0,-11.9,0], r:1.7, noLink:true,
   ring:[{t:'Eril & Dişil'},{t:'İyi & Kötü'},{t:'Gece & Gündüz'},{t:'Varlık & Yokluk'},{t:'Yapıcı & Yıkıcı'},{t:'Kalp & Zihin'}], ringTitle:'Zıtlıklar',
   panel:[
    {t:'quote', lead:true, top:true, h:'Sessiz Merkez: Alma ⇄ Verme', hb:true, text:'Güç, hareketin kendisinde değil, ortadaki sessiz merkezdedir. Her verme bir geri dönüşle dengelenir; bu akış bozulunca uyumsuzluk başlar.'},
@@ -1461,7 +1461,7 @@ const NODES = [
  {id:'zhn', parent:'zihin', kind:'hub', name:'Niyetten Gerçeğe', title:'Niyetten Gerçeğe', kicker:'Zihinsel', color:C.teal, sc:0x86d0cb, pos:[26,10,-6], r:2.2,
   ring:[{t:'Farkındalık > Kabullenme > İnanarak pratik > Zaman\'a zaman vermek'}],
   panel:[{t:'quote', text:'Öncelikle durumu fark ederiz, sonra kabulleniriz, sonra değiştirmek için inanarak pratik ederiz ( sözle + fiziksel + hayal ederek ) ve bu pratikleri uygularken zaman\'a zaman veririz.'},{t:'quote', text:'Her şey pratik.'}]},
- {id:'secim', parent:'zihin', kind:'trio', hidden:true, host:'zihin', noLink:true, name:'Zihin & Seçimler', kicker:'Zihin', color:C.amber, pos:[10,-9,0], r:1.9,
+ {id:'secim', parent:'zihin', kind:'trio', hidden:true, host:'zihin', noLink:true, name:'Zihin & Seçimler', kicker:'Zihin', color:C.amber, pos:[10,-11.9,0], r:1.9,
   panel:[{t:'quotes', items:['Her an bir seçimdir.','Seçimler ise bilinçaltının nasıl kodlandığı ile alakalıdır.','Genlerden gelenler sadece çıkış noktasıdır; etkileri değişebilir.','Zihin sonsuz bir evren olduğundan dolayı kaosa açıktır.']}]},
 
  {id:'bdn', parent:'simdi', kind:'hub', name:'Bedensel', title:'Bedensel', kicker:'Hayatın Temel Üçlemesi · 3', color:C.leaf, sc:0x96d6a4, vc:0x8a6a50, pos:[0,-31.5,-9], r:1.9, panel:[{t:'quote', text:'Sağlık, insanın önce kendi bedenini ve sistemini tanımasıyla, aynı zamanda içinde yaşadığı dünyanın sistemini bilmesiyle başlar. Kendisi de dahil her şeyin enerji, titreşim ve frekanstan oluştuğunu bilmek, algılamak ve kabul etmek, sağlığı bilinçli olarak korumanın ilk adımıdır.'},{t:'quotes', items:['Şifanın Allah\'tan ( Yaratıcı\'dan ) geldiğini bilirsen, şifanın her yerden ve her formdan gelebileceğini de bilirsin.','Şifalanmak için: Sonuca değil, sorunun özündeki sebebe bakıp, görüp, kabul ettikten sonra da özdeki sorunu organik yolla çözdüğümüzde şifalanma gerçekleşir.','Beden sakinken, huzurluyken rahatça iyileşebilir.']}], links:[{go:'bes-element', label:'Beş Element', note:'Organlar · Duygular'}]},
@@ -1798,7 +1798,7 @@ const CLUSTER=NODES.filter(n=>n.kind==='hub'||n.kind==='sub').map(n=>n.id);
 const TOUR=[
  {hl:['sevgi'],title:'SEVGİ',c:0xff8126,t:[0,11,0],p:[0,14,44],text:"Her şey sevgiyle başlar. Sevgiden zıtlıklar dünyasına geliriz ve hayat bu zıtlıklarla var olur."},
  {hl:['sevgi','efv','simdi'],title:'ENERJİ · TİTREŞİM · FREKANS',c:0xffd2e0,t:[0,6,0],p:[0,8,46],text:"Sevgi bir enerjidir. Evrendeki tüm formlar ve varlıklar enerji, frekans ve titreşimden yaratılmıştır."},
- {hl:['gecmis','gelecek','kalp','zihin','denge'],title:'ZITLIKLAR VE DENGE',c:0xf4f1ea,t:[0,-0.5,0],p:[0,1.5,56],text:"Zıtlıklar olmadan hayat var olamaz. Gece ile gündüz, eril ile dişil… Ve bu zıtlıkların tam ortasında denge vardır."},
+ {hl:['gecmis','gelecek','kalp','zihin','denge'],title:'ZITLIKLAR VE DENGE',c:0xf4f1ea,t:[0,-2,0],p:[0,0,56],text:"Zıtlıklar olmadan hayat var olamaz. Gece ile gündüz, eril ile dişil… Ve bu zıtlıkların tam ortasında denge vardır."},
  {hl:['simdi'],title:'ŞU AN · NEFES',c:0xfff4e4,t:[0,5.6,0],p:[0,8,22],text:"Dengede olabilmek için şu an'da olmamız gerekir. Şu an'a gelmenin yolu da nefesten geçer. Nefes aldıkça farkındalığa varırız."},
  {hl:['simdi'],title:'FARKINDALIK',c:0xfff0c2,t:[0,5.6,0],p:[0,7,17],text:"Bu farkındalıkla kendine sorabilirsin: Şu an kimsin? Yarın ne istiyorsun? Hayalin, amacın, niyetin nedir?"},
  {hl:['gecmis','simdi','gelecek'],title:'YARATIM',c:0xffcf85,t:[0,5.6,0],p:[0,8,42],text:"Geçmiş değişebilir, gelecek ise farkındalıkla yaratılabilir. Niyetini sesle, sevgiyle ve hayal ederek pratik edebilirsin. Ve zaman'a zaman verirsin, beklentisiz."},
@@ -2025,7 +2025,7 @@ function loop(){
     const hb=HB;
     let rpx=0;const SIDE={ruh:-1,zhn:1,'ruh-ihtiyac':-1,'beden-ihtiyac':1}[n.id]||0;
     if(SIDE){toScreen(tmp2.copy(n.P).addScaledVector(right,n.r*LGS),sD);toScreen(n.P,sA);rpx=Math.abs(sD.x-sA.x);}
-    else if(n.tri)toScreen(tmp2.set(n.P.x,n.P.y-2*LGS,n.P.z),sA);else toScreen(tmp2.set(n.P.x,n.P.y-n.r*1.25*LGS,n.P.z),sA);
+    else if(n.tri)toScreen(tmp2.set(n.P.x,n.P.y-1.65*LGS,n.P.z),sA);else toScreen(tmp2.set(n.P.x,n.P.y-n.r*1.25*LGS,n.P.z),sA);
     if(n.hidden||sA.z>1||sA.z<-1||(focused&&!tween)){L.style.visibility='hidden';return;}
     let op=1;
     if(narrow()&&!current&&!tour.on&&n.kind==='sub')op=0;
