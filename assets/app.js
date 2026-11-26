@@ -40,7 +40,7 @@
 
   var GALLERIES = ['home', 'interior', 'editorial', 'inprint'];
   var EXHIBITS = [['book-lab', 'Book Lab'], ['auction', 'Auction'], ['fresh-brains', 'Fresh Brains'], ['quick-art', 'Quick Art']];
-  var PAGEFILE = { 'book-lab': 'book-lab', auction: 'auction', 'fresh-brains': 'fresh-brains', 'quick-art': 'quick-art', contact: 'about' };
+  var PAGEFILE = { 'book-lab': 'book-lab', auction: 'auction', 'fresh-brains': 'fresh-brains', 'quick-art': 'quick-art', contact: 'about', clients: 'clients' };
 
   getJSON('/content/settings.json').then(function (settings) {
     if (settings.logo) {
@@ -103,6 +103,7 @@
     exBtn.addEventListener('click', function () { sub.classList.toggle('open'); });
     nav.appendChild(el('li', null, [exBtn, sub]));
 
+    nav.appendChild(item('clients', 'Clients'));
     nav.appendChild(item('inprint', 'In Print'));
     nav.appendChild(item('home', 'Home'));
     navwrap.appendChild(nav);
@@ -261,7 +262,16 @@
         ]);
       }
       var page;
-      if (PAGE === 'contact') {
+      if (PAGE === 'clients') {
+        // Clients: simple name lists, one column per group
+        page = el('div', { class: 'clients' });
+        (p.groups || []).forEach(function (g) {
+          var ul = el('ul');
+          (g.names || '').split('\n').map(function (n) { return n.trim(); }).filter(Boolean)
+            .forEach(function (n) { ul.appendChild(el('li', { text: n })); });
+          page.appendChild(el('section', null, [g.heading ? el('h2', { text: g.heading }) : null, ul]));
+        });
+      } else if (PAGE === 'contact') {
         // About: text on the left, photo on the right, side by side (as on the old site)
         page = el('div', { class: 'about' }, [
           el('div', { class: 'about-text' }, [el('p', { text: p.text || '' })]),

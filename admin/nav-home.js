@@ -23,6 +23,7 @@
     { label: 'Auction', icon: 'page', href: E + 'pages/entries/auction', sub: true },
     { label: 'Fresh Brains', icon: 'page', href: E + 'pages/entries/fresh-brains', sub: true },
     { label: 'Quick Art', icon: 'page', href: E + 'pages/entries/quick-art', sub: true, last: true },
+    { label: 'Clients', icon: 'page', href: E + 'pages/entries/clients', chev: true },
     { label: 'In Print', icon: 'gallery', href: E + 'galleries/entries/inprint', chev: true },
     { label: 'Home', icon: 'gallery', href: E + 'galleries/entries/home', chev: true },
     { head: 'Secondary navigation' },

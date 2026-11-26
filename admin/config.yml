@@ -81,6 +81,19 @@ collections:
               - { name: caption, label: Caption, widget: text, required: false }
           - { name: video, label: Video, widget: file, required: false, hint: "MP4 file, under 50 MB." }
           - { name: video_poster, label: Video cover image, widget: image, required: false }
+      - name: clients
+        label: Clients
+        file: content/pages/clients.json
+        fields:
+          - { name: title, label: Title, widget: string }
+          - name: groups
+            label: Lists
+            label_singular: list
+            widget: list
+            summary: "{{fields.heading}}"
+            fields:
+              - { name: heading, label: Heading, widget: string }
+              - { name: names, label: Names, widget: text, hint: "One name per line." }
       - { <<: *page, name: auction, label: "Exhibits › Auction", file: content/pages/auction.json }
       - { <<: *page, name: fresh-brains, label: "Exhibits › Fresh Brains", file: content/pages/fresh-brains.json }
       - { <<: *page, name: quick-art, label: "Exhibits › Quick Art", file: content/pages/quick-art.json }
