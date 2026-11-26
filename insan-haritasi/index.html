@@ -1975,7 +1975,9 @@ function loop(){
   triMat.opacity+=(((tour.on&&TOUR[tour.i].tri)?.42:.07)-triMat.opacity)*Math.min(1,dt*3);
   const ok=1-Math.pow(.92,dt*60);offset.x+=(tx-offset.x)*ok;offset.y+=(ty-offset.y)*ok;
   if(Math.abs(offset.x)>.5||Math.abs(offset.y)>.5)camera.setViewOffset(W,H,offset.x,offset.y,W,H);else camera.clearViewOffset();
-  updIdle(dt,t,now);controls.update();camera.updateMatrixWorld();
+  updIdle(dt,t,now);
+  if(!current&&!tour.on&&!tween){const kk=Math.min(1,dt*1.2)*(1-idleK);const dv=OVERVIEW.target.clone().sub(controls.target).multiplyScalar(kk);controls.target.add(dv);camera.position.add(dv);}
+  controls.update();camera.updateMatrixWorld();
   right.setFromMatrixColumn(camera.matrixWorld,0);up.setFromMatrixColumn(camera.matrixWorld,1);back.setFromMatrixColumn(camera.matrixWorld,2);
   const {sx,sy}=ringScale();
   HB=current&&holo.classList.contains('on')?holo.getBoundingClientRect():null;
