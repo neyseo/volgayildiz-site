@@ -110,7 +110,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 }
 .stage img.ready { opacity: 1; }
 /* Home: same height as the gallery photos (850px), smaller on small screens */
-body[data-page="home"] .stage img { max-width: 100%; max-height: min(100%, 850px); }
+@media (min-width: 801px) { body[data-page="home"] .stage img { max-height: min(100%, 850px); } }
 .stage .hit { position: absolute; top: 0; bottom: 0; width: 50%; }
 .stage .hit.prev { left: 0; cursor: w-resize; }
 .stage .hit.next { right: 0; cursor: e-resize; }
