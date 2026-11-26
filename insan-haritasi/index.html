@@ -1397,14 +1397,14 @@ const NODES = [
    {t:'quote', h:'Sevgi > Zıtlık > Denge > Şu an > Nefes > Farkındalık', hb:true, text:'Sevgiden zıtlıklar dünyasına geliriz; hayat bu zıtlıklarla var olur ve bu yüzden hayatımız boyunca dengeyi ararız. Dengede olabilmek için Şu an\'da olmamız gerekir. Şu an\'da olabilmek için de Nefes\'e ihtiyacımız vardır. Nefes\'le de şu anın farkındalığına varırız; bu farkındalıkla da an\'ı yaratırız.'},
    {t:'quote', h:'Her daim:', hb:true, text:'Kendini sev\nKendini tanı\nKendine inan\nKendini affet\nKendini dinle'}
   ]},
- {id:'efv', parent:'sevgi', kind:'trio', shape:'wave', name:'Temel Üçleme', title:'Hayatın Temel Üçlemesi', kicker:'Hayatın Temel Üçlemesi', color:0xffd2e0, pos:[0,-2.9,0], r:1.6, tri:true, noLink:true,
+ {id:'efv', parent:'sevgi', kind:'trio', shape:'wave', name:'Temel Üçleme', title:'Hayatın Temel Üçlemesi', kicker:'Hayatın Temel Üçlemesi', color:0xffd2e0, pos:[0,-2.2,0], r:1.6, tri:true, noLink:true,
   ring:[{t:'Enerji – Titreşim – Frekans',kw:'efv-acik',nou:true},{t:'Proton – Nötron – Elektron',kw:'atom-acik',nou:true},
    ...['Düşünce > Söz > Gerçeklik','Mer – Ka – Ba = Işık – Ruh – Beden','Zaman – Mekân – Madde','Yükseklik – Genişlik – Derinlik','Katı – Sıvı – Gaz','Sarı – Mavi – Kırmızı','Zihin – Beden – Ruh','Baba – Anne – Çocuk','Doğum – Yaşam – Ölüm','Geçmiş – Şu an – Gelecek','3 – 6 – 9'].map(t=>({t}))],
   panel:[]},
- {id:'atom-acik', parent:'efv', kind:'trio', hidden:true, host:'efv', noLink:true, name:'Proton – Nötron – Elektron', kicker:'Hayatın Temel Üçlemesi', color:0xffd2e0, pos:[0,-2.9,0], r:.55,
+ {id:'atom-acik', parent:'efv', kind:'trio', hidden:true, host:'efv', noLink:true, name:'Proton – Nötron – Elektron', kicker:'Hayatın Temel Üçlemesi', color:0xffd2e0, pos:[0,-2.2,0], r:.55,
   ring:[{t:'Proton:',d:'var olan',inline:true},{t:'Elektron:',d:'olmayan; hareket ve itme–çekme',inline:true},{t:'Nötron:',d:'ruh; dengeyi tutan',inline:true}],
   panel:[{t:'quote', lead:true, text:'**Atom** = Hayat'}]},
- {id:'efv-acik', parent:'efv', kind:'trio', hidden:true, host:'efv', noLink:true, name:'Enerji – Titreşim – Frekans', kicker:'Hayatın Temel Üçlemesi', color:0xffd2e0, pos:[0,-2.9,0], r:.55,
+ {id:'efv-acik', parent:'efv', kind:'trio', hidden:true, host:'efv', noLink:true, name:'Enerji – Titreşim – Frekans', kicker:'Hayatın Temel Üçlemesi', color:0xffd2e0, pos:[0,-2.2,0], r:.55,
   ring:[{t:'Enerji:',d:'asıl olan',inline:true,tc:'#FFD27A'},{t:'Titreşim:',d:'enerjinin hareketi',inline:true,tc:'#C9A6FF'},{t:'Frekans:',d:'titreşimin hızı',inline:true,tc:'#7FE3E0'}],
   panel:[{t:'quote', text:'Evrendeki tüm formlar ve varlıklar enerji, frekans ve titreşimden yaratılmıştır.'}]},
  {id:'simdi', kind:'core', name:'ŞU AN · NEFES', stack:true, kicker:'Merkez · Dengenin tam ortası', color:C.gold, sc:0xfff4e4, pos:[0,5.6,0], r:1.9, noLink:true, breath:true,
@@ -2020,7 +2020,7 @@ function loop(){
     // ad etiketi
     const L=n.label;
     const hb=HB;
-    if(n.tri)toScreen(tmp2.set(n.P.x-3.6*LGS,n.P.y-.9*LGS,n.P.z),sA);else toScreen(tmp2.set(n.P.x,n.P.y-n.r*1.25*LGS,n.P.z),sA);
+    if(n.tri)toScreen(tmp2.set(n.P.x,n.P.y-2*LGS,n.P.z),sA);else toScreen(tmp2.set(n.P.x,n.P.y-n.r*1.25*LGS,n.P.z),sA);
     if(n.hidden||sA.z>1||sA.z<-1||(focused&&!tween)){L.style.visibility='hidden';return;}
     let op=1;
     if(narrow()&&!current&&!tour.on&&n.kind==='sub')op=0;
@@ -2029,7 +2029,7 @@ function loop(){
     if(current&&o.w>.5)op=0;
     if(hb&&sA.x>hb.left-60&&sA.x<hb.right+60&&sA.y>hb.top-20&&sA.y<hb.bottom+10)op=0;
     if(LB&&sA.x>LB.left-60&&sA.x<LB.right+40&&sA.y>LB.top-20&&sA.y<LB.bottom+10)op=0;
-    LBLS.push({L,x:sA.x,y:sA.y,z:sA.z,op,pr:{core:0,hub:1,trio:2,sub:3}[n.kind]});
+    LBLS.push({L,x:sA.x,y:sA.y,z:sA.z,op,fix:!!n.tri,pr:n.tri?-1:{core:0,hub:1,trio:2,sub:3}[n.kind]});
   });
 
   // uzaklaşınca yazılar küçülsün
@@ -2052,7 +2052,7 @@ function loop(){
     const C2=[[0,0],[w*.22,0],[-w*.22,0],[w*.45,0],[-w*.45,0],[0,h*.9],[0,-h*.9-6],[w*.35,h*.9],[-w*.35,h*.9],[0,h*1.8],[0,-h*1.8-6],[0,h*2.7]];
     const isFree=([dx,dy])=>{const r={a:l.x+dx-w/2+7,b:l.x+dx+w/2-7,c:l.y+dy+3,d:l.y+dy+h-3};
       return !placed.some(q=>r.a<q.b&&r.b>q.a&&r.c<q.d&&r.d>q.c)&&!SPH.some(q=>q.L!==L&&r.a<q.b&&r.b>q.a&&r.c<q.d&&r.d>q.c);};
-    let ci=C2.findIndex(isFree);
+    let ci=l.fix?0:C2.findIndex(isFree);
     if(ci>=0&&L._ci!==undefined&&L._ci>ci&&L._ci<=ci+1&&isFree(C2[L._ci]))ci=L._ci;
     if(ci>=0){[tdx,tdy]=C2[ci];free=true;}else ci=0;
     L._ci=ci;const k=Math.min(1,dt*2.6);
