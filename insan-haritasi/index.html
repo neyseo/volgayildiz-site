@@ -48,8 +48,7 @@ body,body *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none
 .label:hover,.label:focus-visible{color:#fff;background:rgba(255,255,255,.08);outline:none;}
 .label:focus-visible{box-shadow:0 0 0 1px var(--c);}
 .label .dot{width:8px;height:8px;border-radius:50%;background:var(--c);box-shadow:0 0 8px var(--c);flex:none;}
-.label.hub{font-family:var(--body);font-size:18px;letter-spacing:.03em;font-weight:800;}
-.label.core{font-family:var(--body);font-size:18px;font-weight:800;letter-spacing:.08em;}
+.label,.label.hub,.label.core{font-family:var(--body);font-size:18px;letter-spacing:.03em;font-weight:800;}
 .label.core .dot{display:none;}
 .label .dot{display:none!important;}
 
@@ -274,8 +273,7 @@ body.focused #hsh{opacity:0;}
   .row .txt h3.big{font-size:19px;}
   .label{font-size:11.5px;padding:2px 5px;gap:5px;}
   .label .dot{width:6px;height:6px;}
-  .label.hub{font-size:13px;}
-  .label.core{font-size:13px;}
+  .label,.label.hub,.label.core{font-size:13px;}
   .sat{max-width:150px;font-size:15.5px;}
   .sat small{font-size:14px;}
   .brand p{display:none;}
@@ -1393,7 +1391,7 @@ const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&g
    ring:  kürenin etrafında yazılı uydular olarak dönen kısa maddeler
    panel: kürenin yanında yüzen hologram paneldeki metinler            */
 const NODES = [
- {id:'sevgi', kind:'trio', shape:'star', name:'SEVGİ', kicker:'Kaynak · Çıkış noktamız', color:0xffb8cf, sc:0xffa63a, pos:[0,18,0], r:2.5, noLink:true,
+ {id:'sevgi', kind:'trio', shape:'star', name:'Sevgi', kicker:'Kaynak · Çıkış noktamız', color:0xffb8cf, sc:0xffa63a, pos:[0,18,0], r:2.5, noLink:true,
   panel:[
    {t:'quote', h:'Sevgi > Zıtlık > Denge > Şu an > Nefes > Farkındalık', hb:true, text:'Sevgiden zıtlıklar dünyasına geliriz; hayat bu zıtlıklarla var olur ve bu yüzden hayatımız boyunca dengeyi ararız. Dengede olabilmek için Şu an\'da olmamız gerekir. Şu an\'da olabilmek için de Nefes\'e ihtiyacımız vardır. Nefes\'le de şu anın farkındalığına varırız; bu farkındalıkla da an\'ı yaratırız.'},
    {t:'quote', h:'Her daim:', hb:true, text:'Kendini sev\nKendini tanı\nKendine inan\nKendini affet\nKendini dinle'}
@@ -1408,7 +1406,7 @@ const NODES = [
  {id:'efv-acik', parent:'efv', kind:'trio', hidden:true, host:'efv', noLink:true, name:'Enerji – Titreşim – Frekans', kicker:'Hayatın Temel Üçlemesi', color:0xffd2e0, pos:[0,-4.3,0], r:.55,
   ring:[{t:'Enerji:',d:'asıl olan',inline:true,tc:'#FFD27A'},{t:'Titreşim:',d:'enerjinin hareketi',inline:true,tc:'#C9A6FF'},{t:'Frekans:',d:'titreşimin hızı',inline:true,tc:'#7FE3E0'}],
   panel:[{t:'quote', text:'Evrendeki tüm formlar ve varlıklar enerji, frekans ve titreşimden yaratılmıştır.'}]},
- {id:'simdi', kind:'core', name:'ŞU AN · NEFES', stack:true, kicker:'Merkez · Dengenin tam ortası', color:C.gold, sc:0xfff4e4, pos:[0,5.6,0], r:1.9, noLink:true, breath:true,
+ {id:'simdi', kind:'core', name:'Şu an · Nefes', stack:true, kicker:'Merkez · Dengenin tam ortası', color:C.gold, sc:0xfff4e4, pos:[0,5.6,0], r:1.9, noLink:true, breath:true,
   panel:[
    {t:'quote', text:'Şu an\'a giden yol:\nNefes > Bilinç > Şu an > [[Farkındalık|fark]]'},
    {t:'quote', text:'İnsanın en büyük gücü an\'ı yaratabilmesidir. Bunun için an\'ın farkındalığına, farkındalık için de nefese ihtiyaç duyar. **Nefes, an\'ı yaratmanın anahtarıdır.**'},
@@ -1420,7 +1418,7 @@ const NODES = [
   links:[{go:'yaratim', label:'Nasıl yaratıyoruz?', note:'Yaratmaya geç'}]},
  {id:'yaratim', parent:'fark', kind:'trio', hidden:true, host:'simdi', name:'Nasıl yaratıyoruz?', kicker:'Yaratım', color:0xffcf85, pos:[0,5.6,0], r:2.5, noLink:true,
   panel:[{t:'quote', text:'Kendi evrenini kur: Niyetlerini sesle, sevgiyle ve hayal kurarak pratik et.'},{t:'quote', text:'Düşünce > Söz > Gerçeklik\n( düşünce söze dönüşür, söz gerçekliğe )'},{t:'quote', text:'Her şeyin titreşimden yaratıldığını unutma.'},{t:'quote', text:'Zaman\'a zaman ver ( Beklenti yok ).'}],
-  links:[{go:'zhn', label:'Niyetten Gerçeğe', note:'Zihinsel'},{go:'sevgi', label:'SEVGİ', note:'Kaynak'}]},
+  links:[{go:'zhn', label:'Niyetten Gerçeğe', note:'Zihinsel'},{go:'sevgi', label:'Sevgi', note:'Kaynak'}]},
  {id:'gecmis', parent:'simdi', kind:'trio', name:'Geçmiş', kicker:'Zaman Ekseni', color:0xc9b8ff, vc:0xc9c4bb, pos:[-14,5.6,0], r:1.9, noLink:true,
   panel:[
    {t:'quote', text:'Değişebilir'},
@@ -1429,16 +1427,16 @@ const NODES = [
  {id:'gelecek', parent:'simdi', kind:'trio', name:'Gelecek', kicker:'Zaman Ekseni', color:0xffc98a, vc:0xf2a48c, pos:[14,5.6,0], r:1.9, noLink:true,
   panel:[{t:'quote', text:'Farkındalıkla istenilen yaratılabilir'}],
   links:[{go:'zhn', label:'Niyetten Gerçeğe', note:'Zihinsel'}]},
- {id:'kalp', parent:'simdi', kind:'trio', name:'KALP', kicker:'İç Mekanizma · Karar Veren', color:C.rose, vc:0xe2523e, pos:[-10,-11.9,0], r:1.9, noLink:true,
+ {id:'kalp', parent:'simdi', kind:'trio', name:'Kalp', kicker:'İç Mekanizma · Karar Veren', color:C.rose, vc:0xe2523e, pos:[-10,-11.9,0], r:1.9, noLink:true,
   panel:[{t:'quote', h:'Kalbin nasıl?', hb:true, text:'Kendine şefkatin var mı?\nKendini seviyor musun?'},{t:'quote', text:'Kırma - Kırılma'}],
   links:[{go:'bes-element', label:'Beş Element', note:'Duygular'}]},
  {id:'bes-element', parent:'bdn', kind:'sub', hidden:true, host:'bdn', noLink:true, name:'Beş Element', kicker:'Bedensel · Duygular', color:C.leaf, off:[0,0,0], r:1.9,
   ring:[{t:'Ağaç:',two:true,d:'Karaciğer – Safra kesesi\nÖfke / Kin ⇄ Şefkat / Anlayış',inline:true,tc:'#7DD68A'},{t:'Ateş:',two:true,d:'Kalp – İnce bağırsak\nAcelecilik ⇄ Neşe',inline:true,tc:'#FF7A6B'},{t:'Toprak:',two:true,d:'Dalak – Mide\nEndişe ⇄ Denge / Uyum',inline:true,tc:'#E8C36A'},{t:'Metal:',two:true,d:'Akciğer – Kalın bağırsak\nHüzün / Keder ⇄ Cesaret',inline:true,tc:'#D9DDE3'},{t:'Su:',two:true,d:'Böbrek – Mesane\nKorku / Dehşet ⇄ Dinginlik / Huzur',inline:true,tc:'#7FB8FF'}],
   panel:[]},
- {id:'zihin', parent:'simdi', kind:'trio', name:'ZİHİN', kicker:'İç Mekanizma · Kararı Uygulayan', color:C.amber, vc:0xe9b35f, pos:[10,-11.9,0], r:1.9, noLink:true,
+ {id:'zihin', parent:'simdi', kind:'trio', name:'Zihin', kicker:'İç Mekanizma · Kararı Uygulayan', color:C.amber, vc:0xe9b35f, pos:[10,-11.9,0], r:1.9, noLink:true,
   panel:[{t:'quote', text:'Zihin aktifken farkında olmadan nefesimizi tutarız.'},{t:'quote', text:'Şüphe yok'},{t:'quote', h:'YYYY: Yargı Yok Yorum Yok', hb:true, text:'Zıtlıklar birbirini tamamlar; bu yüzden hiçbir şeyi yorumlamaya veya yargılamaya gerek yoktur. Yorum ve yargı, zaman kaybı olduğu kadar enerji de tüketir. Haklı olsak bile egomuzu şişirir; çoğu zaman negatif enerji taşır ve bu da bedenimize iyi gelmez.'},{t:'quote', h:'Zihnin nasıl?', hb:true, text:'Geçmişte misin? Şüphede misin? Yargılıyor musun? Zihninin yönü ne?'}],
   links:[{go:'secim', label:'Zihin & Seçimler', note:''}]},
- {id:'denge', parent:'simdi', kind:'trio', shape:'octa', noDot:true, cols:2, name:'DENGE', kicker:'Dayanak Noktası', color:C.gold, vc:0xf4f1ea, pos:[0,-11.9,0], r:1.7, noLink:true,
+ {id:'denge', parent:'simdi', kind:'trio', shape:'octa', noDot:true, cols:2, name:'Denge', kicker:'Dayanak Noktası', color:C.gold, vc:0xf4f1ea, pos:[0,-11.9,0], r:1.7, noLink:true,
   ring:[{t:'Eril & Dişil'},{t:'İyi & Kötü'},{t:'Gece & Gündüz'},{t:'Varlık & Yokluk'},{t:'Yapıcı & Yıkıcı'},{t:'Kalp & Zihin'}], ringTitle:'Zıtlıklar',
   panel:[
    {t:'quote', lead:true, top:true, h:'Sessiz Merkez: Alma ⇄ Verme', hb:true, text:'Güç, hareketin kendisinde değil, ortadaki sessiz merkezdedir. Her verme bir geri dönüşle dengelenir; bu akış bozulunca uyumsuzluk başlar.'},
@@ -1499,7 +1497,7 @@ const controls=new THREE.OrbitControls(camera,canvas);
 controls.target.copy(OVERVIEW.target);
 controls.enableDamping=true;controls.enablePan=false; controls.dampingFactor=.07;
 controls.minDistance=3; controls.maxDistance=220; controls.rotateSpeed=.6;
-controls.autoRotate=!REDUCED; controls.autoRotateSpeed=.125;
+controls.autoRotate=!REDUCED; controls.autoRotateSpeed=.06;
 NODES.forEach(n=>n.P=new THREE.Vector3(...n.pos));
 
 scene.add(new THREE.AmbientLight(0x9090c0,.32));
@@ -1947,7 +1945,7 @@ function updIdle(dt,t,now){const on=!current&&!tour.on&&!tween&&!REDUCED&&now-la
   if(on&&idleK<.01)idleT0=t;
   idleK+=((on?1:0)-idleK)*Math.min(1,dt*(on?.5:3));
   if(on&&!controls.autoRotate)controls.autoRotate=true;
-  controls.autoRotateSpeed=.125+.175*idleK;
+  controls.autoRotateSpeed=.06+.06*idleK;
   {const hs=document.getElementById('hsh');if(hs)hs.style.opacity=idleK>.01?(1-idleK).toFixed(2):'';}
   if(idleK>.002){const ti=t-idleT0,off=camera.position.clone().sub(controls.target),d0=ovPos().distanceTo(OVERVIEW.target);
     const w=.5-.5*Math.cos(ti*.11);
