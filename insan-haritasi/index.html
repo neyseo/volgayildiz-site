@@ -2023,7 +2023,9 @@ function loop(){
     // ad etiketi
     const L=n.label;
     const hb=HB;
-    if(n.tri)toScreen(tmp2.set(n.P.x,n.P.y-2*LGS,n.P.z),sA);else toScreen(tmp2.set(n.P.x,n.P.y-n.r*1.25*LGS,n.P.z),sA);
+    let rpx=0;const SIDE={ruh:-1,zhn:1,'ruh-ihtiyac':-1,'beden-ihtiyac':1}[n.id]||0;
+    if(SIDE){toScreen(tmp2.copy(n.P).addScaledVector(right,n.r*LGS),sD);toScreen(n.P,sA);rpx=Math.abs(sD.x-sA.x);}
+    else if(n.tri)toScreen(tmp2.set(n.P.x,n.P.y-2*LGS,n.P.z),sA);else toScreen(tmp2.set(n.P.x,n.P.y-n.r*1.25*LGS,n.P.z),sA);
     if(n.hidden||sA.z>1||sA.z<-1||(focused&&!tween)){L.style.visibility='hidden';return;}
     let op=1;
     if(narrow()&&!current&&!tour.on&&n.kind==='sub')op=0;
@@ -2032,14 +2034,14 @@ function loop(){
     if(current&&o.w>.5)op=0;
     if(hb&&sA.x>hb.left-60&&sA.x<hb.right+60&&sA.y>hb.top-20&&sA.y<hb.bottom+10)op=0;
     if(LB&&sA.x>LB.left-60&&sA.x<LB.right+40&&sA.y>LB.top-20&&sA.y<LB.bottom+10)op=0;
-    LBLS.push({L,x:sA.x,y:sA.y,z:sA.z,op,fix:!!n.tri,pr:n.tri?-1:{core:0,hub:1,trio:2,sub:3}[n.kind]});
+    LBLS.push({L,x:sA.x,y:sA.y,z:sA.z,op,side:SIDE,rpx,fix:!!n.tri,pr:n.tri?-1:{core:0,hub:1,trio:2,sub:3}[n.kind]});
   });
 
   // uzaklaşınca yazılar küçülsün
   const ZK=ovPos().distanceTo(OVERVIEW.target)/camera.position.distanceTo(controls.target),ZS=Math.min(1,Math.max(.3,ZK));
   const gsN=ZK<1?Math.min(1.8,Math.pow(ZK,-.55)):1;{const gs=gsN;NODES.forEach(n=>{if(!n.hidden)O[n.id].g.scale.setScalar(gs);});}
   // isimleri üst üste bindirmeden yerleştir
-  LBLS.sort((a,b)=>a.pr-b.pr||a.z-b.z);
+  LBLS.sort((a,b)=>(a.fix?-1:0)-(b.fix?-1:0)||a.z-b.z);
   const placed=[];
   // küreler de engel: bir isim başka bir kürenin üstüne binmesin
   const SPH=[];
@@ -2050,14 +2052,13 @@ function loop(){
     const L=l.L;
     if(l.op<.03){L.style.visibility='hidden';return;}
     const w=(L._w||80)*ZS,h=(L._h||24)*ZS;
+    if(l.side){const nx=l.x+l.side*(w/2+l.rpx+4);if(nx-w/2>=6&&nx+w/2<=W-6){l.x=nx;l.y-=h/2;}else l.y-=l.rpx*1.2+h;}
     l.x=Math.min(Math.max(l.x,w/2+6),W-w/2-6);
     let tdx=0,tdy=0,free=false;
     const C2=[[0,0],[w*.22,0],[-w*.22,0],[w*.45,0],[-w*.45,0],[0,h*.9],[0,-h*.9-6],[w*.35,h*.9],[-w*.35,h*.9],[0,h*1.8],[0,-h*1.8-6],[0,h*2.7]];
     const isFree=([dx,dy])=>{const r={a:l.x+dx-w/2+7,b:l.x+dx+w/2-7,c:l.y+dy+3,d:l.y+dy+h-3};
       return !placed.some(q=>r.a<q.b&&r.b>q.a&&r.c<q.d&&r.d>q.c)&&!SPH.some(q=>q.L!==L&&r.a<q.b&&r.b>q.a&&r.c<q.d&&r.d>q.c);};
-    let ci=l.fix?0:C2.findIndex(isFree);
-    if(ci>=0&&L._ci!==undefined&&L._ci>ci&&L._ci<=ci+1&&isFree(C2[L._ci]))ci=L._ci;
-    if(ci>=0){[tdx,tdy]=C2[ci];free=true;}else ci=0;
+    let ci=0;free=l.fix||isFree(C2[0]);
     L._ci=ci;const k=Math.min(1,dt*2.6);
     L._dx=(L._dx===undefined?tdx:L._dx+(tdx-L._dx)*k);L._dy=(L._dy===undefined?tdy:L._dy+(tdy-L._dy)*k);
     placed.push({a:l.x+tdx-w/2+7,b:l.x+tdx+w/2-7,c:l.y+tdy+3,d:l.y+tdy+h-3});
