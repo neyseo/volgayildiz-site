@@ -109,6 +109,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   transition: opacity .35s ease;
 }
 .stage img.ready { opacity: 1; }
+/* Home: photo 30% smaller, so it breathes on large screens */
+body[data-page="home"] .stage img { max-width: 70%; max-height: 70%; }
 .stage .hit { position: absolute; top: 0; bottom: 0; width: 50%; }
 .stage .hit.prev { left: 0; cursor: w-resize; }
 .stage .hit.next { right: 0; cursor: e-resize; }
