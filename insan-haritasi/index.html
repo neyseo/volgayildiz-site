@@ -1588,7 +1588,7 @@ beam(BY.simdi.P,BY.denge.P,0xdfe8ff,.08,.4);
 const triMat=new THREE.MeshBasicMaterial(additive({color:0xe8e2ff,opacity:.07}));
 
 // kol uçlarında küçük işaret halkaları
-[BY.gecmis,BY.gelecek,BY.kalp,BY.zihin].forEach(n=>{const t=new THREE.Mesh(new THREE.TorusGeometry(n.r*1.5,.03,6,90),new THREE.MeshBasicMaterial(additive({color:n.vc||n.color,opacity:.4})));
+[].forEach(n=>{const t=new THREE.Mesh(new THREE.TorusGeometry(n.r*1.5,.03,6,90),new THREE.MeshBasicMaterial(additive({color:n.vc||n.color,opacity:.4})));
   t.position.copy(n.P);scene.add(t);});
 // ışık akışları: Şimdi'den geçmişe ve geleceğe ( farkındalıkla yaratım ), Kalp'ten Zihin'e (karar → uygulama), Nefes'ten Şimdi'ye
 const FLOWS=[];
@@ -1633,10 +1633,10 @@ NODES.forEach(n=>{
   if(n.kind==='core'){
     const wire=new THREE.Mesh(new THREE.IcosahedronGeometry(n.r*1.45,1),new THREE.MeshBasicMaterial({color:C.gold,wireframe:true,transparent:true,opacity:.18}));
     g.add(wire);rings.push({o:wire,ax:'y',s:.08});
-    [[.5,0],[-.5,1.2]].forEach(([tilt,rot],i)=>{const t=new THREE.Mesh(new THREE.TorusGeometry(n.r*(2.1+i*.5),.04,8,160),new THREE.MeshBasicMaterial({color:i?C.sky:C.gold,transparent:true,opacity:.5}));
+    [].forEach(([tilt,rot],i)=>{const t=new THREE.Mesh(new THREE.TorusGeometry(n.r*(2.1+i*.5),.04,8,160),new THREE.MeshBasicMaterial({color:i?C.sky:C.gold,transparent:true,opacity:.5}));
       t.rotation.x=Math.PI/2+tilt;t.rotation.y=rot;g.add(t);rings.push({o:t,ax:'z',s:i?-.12:.12});});
   }
-  if(n.kind==='hub'){const t=new THREE.Mesh(new THREE.TorusGeometry(n.r*2,.03,6,120),new THREE.MeshBasicMaterial({color:SC,transparent:true,opacity:.35}));
+  if(false){const t=new THREE.Mesh(new THREE.TorusGeometry(n.r*2,.03,6,120),new THREE.MeshBasicMaterial({color:SC,transparent:true,opacity:.35}));
     t.rotation.x=Math.PI/2.4;g.add(t);rings.push({o:t,ax:'z',s:.1});}
 
   // yörünge halkaları düzeni (odakta, kameraya dönük)
@@ -1939,7 +1939,8 @@ function renderFrame(dt){const D=DOF;
   renderer.setRenderTarget(null);renderer.render(D.qs,D.qc);
   camera.layers.set(1);renderer.autoClear=false;renderer.clearDepth();renderer.render(scene,camera);renderer.autoClear=true;camera.layers.set(0);}
 let lastAct=performance.now(),idleK=0;
-['pointerdown','wheel','keydown','touchstart'].forEach(ev=>addEventListener(ev,()=>{lastAct=performance.now();},{passive:true}));
+['pointerdown','wheel','keydown','touchstart'].forEach(ev=>addEventListener(ev,()=>{lastAct=performance.now();
+  if(idleK>.03&&!current&&!tour.on){idleK=0;flyTo(ovPos(),OVERVIEW.target.clone(),1800);}},{passive:true}));
 let idleT0=0;
 function updIdle(dt,t,now){const on=!current&&!tour.on&&!tween&&!REDUCED&&now-lastAct>20000;
   if(on&&idleK<.01)idleT0=t;
